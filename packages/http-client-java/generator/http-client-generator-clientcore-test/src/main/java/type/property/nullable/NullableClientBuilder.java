@@ -15,6 +15,7 @@ import io.clientcore.core.http.pipeline.HttpRedirectOptions;
 import io.clientcore.core.http.pipeline.HttpRedirectPolicy;
 import io.clientcore.core.http.pipeline.HttpRetryOptions;
 import io.clientcore.core.http.pipeline.HttpRetryPolicy;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.instrumentation.LibraryInstrumentationOptions;
 import io.clientcore.core.instrumentation.logging.ClientLogger;
 import io.clientcore.core.traits.ConfigurationTrait;
@@ -248,7 +249,12 @@ public final class NullableClientBuilder implements HttpTrait<NullableClientBuil
      */
     @Metadata(generated = true)
     public StringOperationClient buildStringOperationClient() {
-        return new StringOperationClient(buildInnerClient().getStringOperations());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new StringOperationClient(buildInnerClient().getStringOperations(), instrumentation);
     }
 
     /**
@@ -258,7 +264,12 @@ public final class NullableClientBuilder implements HttpTrait<NullableClientBuil
      */
     @Metadata(generated = true)
     public BytesClient buildBytesClient() {
-        return new BytesClient(buildInnerClient().getBytes());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new BytesClient(buildInnerClient().getBytes(), instrumentation);
     }
 
     /**
@@ -268,7 +279,12 @@ public final class NullableClientBuilder implements HttpTrait<NullableClientBuil
      */
     @Metadata(generated = true)
     public DatetimeOperationClient buildDatetimeOperationClient() {
-        return new DatetimeOperationClient(buildInnerClient().getDatetimeOperations());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new DatetimeOperationClient(buildInnerClient().getDatetimeOperations(), instrumentation);
     }
 
     /**
@@ -278,7 +294,12 @@ public final class NullableClientBuilder implements HttpTrait<NullableClientBuil
      */
     @Metadata(generated = true)
     public DurationOperationClient buildDurationOperationClient() {
-        return new DurationOperationClient(buildInnerClient().getDurationOperations());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new DurationOperationClient(buildInnerClient().getDurationOperations(), instrumentation);
     }
 
     /**
@@ -288,7 +309,12 @@ public final class NullableClientBuilder implements HttpTrait<NullableClientBuil
      */
     @Metadata(generated = true)
     public CollectionsByteClient buildCollectionsByteClient() {
-        return new CollectionsByteClient(buildInnerClient().getCollectionsBytes());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new CollectionsByteClient(buildInnerClient().getCollectionsBytes(), instrumentation);
     }
 
     /**
@@ -298,7 +324,12 @@ public final class NullableClientBuilder implements HttpTrait<NullableClientBuil
      */
     @Metadata(generated = true)
     public CollectionsModelClient buildCollectionsModelClient() {
-        return new CollectionsModelClient(buildInnerClient().getCollectionsModels());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new CollectionsModelClient(buildInnerClient().getCollectionsModels(), instrumentation);
     }
 
     /**
@@ -308,7 +339,12 @@ public final class NullableClientBuilder implements HttpTrait<NullableClientBuil
      */
     @Metadata(generated = true)
     public CollectionsStringClient buildCollectionsStringClient() {
-        return new CollectionsStringClient(buildInnerClient().getCollectionsStrings());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new CollectionsStringClient(buildInnerClient().getCollectionsStrings(), instrumentation);
     }
 
     private static final ClientLogger LOGGER = new ClientLogger(NullableClientBuilder.class);

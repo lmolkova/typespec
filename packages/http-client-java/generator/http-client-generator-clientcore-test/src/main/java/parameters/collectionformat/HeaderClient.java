@@ -43,7 +43,7 @@ public final class HeaderClient {
      */
     @Metadata(generated = true)
     public Response<Void> csvWithResponse(List<String> colors, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Parameters.CollectionFormat.Header.csv", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Parameters.CollectionFormat.Header.csv", requestOptions,
             updatedOptions -> this.serviceClient.csvWithResponse(colors, updatedOptions));
     }
 

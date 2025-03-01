@@ -15,6 +15,7 @@ import io.clientcore.core.http.pipeline.HttpRedirectOptions;
 import io.clientcore.core.http.pipeline.HttpRedirectPolicy;
 import io.clientcore.core.http.pipeline.HttpRetryOptions;
 import io.clientcore.core.http.pipeline.HttpRetryPolicy;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.instrumentation.LibraryInstrumentationOptions;
 import io.clientcore.core.instrumentation.logging.ClientLogger;
 import io.clientcore.core.traits.ConfigurationTrait;
@@ -257,7 +258,12 @@ public final class OptionalClientBuilder implements HttpTrait<OptionalClientBuil
      */
     @Metadata(generated = true)
     public StringOperationClient buildStringOperationClient() {
-        return new StringOperationClient(buildInnerClient().getStringOperations());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new StringOperationClient(buildInnerClient().getStringOperations(), instrumentation);
     }
 
     /**
@@ -267,7 +273,12 @@ public final class OptionalClientBuilder implements HttpTrait<OptionalClientBuil
      */
     @Metadata(generated = true)
     public BytesClient buildBytesClient() {
-        return new BytesClient(buildInnerClient().getBytes());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new BytesClient(buildInnerClient().getBytes(), instrumentation);
     }
 
     /**
@@ -277,7 +288,12 @@ public final class OptionalClientBuilder implements HttpTrait<OptionalClientBuil
      */
     @Metadata(generated = true)
     public DatetimeOperationClient buildDatetimeOperationClient() {
-        return new DatetimeOperationClient(buildInnerClient().getDatetimeOperations());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new DatetimeOperationClient(buildInnerClient().getDatetimeOperations(), instrumentation);
     }
 
     /**
@@ -287,7 +303,12 @@ public final class OptionalClientBuilder implements HttpTrait<OptionalClientBuil
      */
     @Metadata(generated = true)
     public DurationOperationClient buildDurationOperationClient() {
-        return new DurationOperationClient(buildInnerClient().getDurationOperations());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new DurationOperationClient(buildInnerClient().getDurationOperations(), instrumentation);
     }
 
     /**
@@ -297,7 +318,12 @@ public final class OptionalClientBuilder implements HttpTrait<OptionalClientBuil
      */
     @Metadata(generated = true)
     public PlainDateClient buildPlainDateClient() {
-        return new PlainDateClient(buildInnerClient().getPlainDates());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new PlainDateClient(buildInnerClient().getPlainDates(), instrumentation);
     }
 
     /**
@@ -307,7 +333,12 @@ public final class OptionalClientBuilder implements HttpTrait<OptionalClientBuil
      */
     @Metadata(generated = true)
     public PlainTimeClient buildPlainTimeClient() {
-        return new PlainTimeClient(buildInnerClient().getPlainTimes());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new PlainTimeClient(buildInnerClient().getPlainTimes(), instrumentation);
     }
 
     /**
@@ -317,7 +348,12 @@ public final class OptionalClientBuilder implements HttpTrait<OptionalClientBuil
      */
     @Metadata(generated = true)
     public CollectionsByteClient buildCollectionsByteClient() {
-        return new CollectionsByteClient(buildInnerClient().getCollectionsBytes());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new CollectionsByteClient(buildInnerClient().getCollectionsBytes(), instrumentation);
     }
 
     /**
@@ -327,7 +363,12 @@ public final class OptionalClientBuilder implements HttpTrait<OptionalClientBuil
      */
     @Metadata(generated = true)
     public CollectionsModelClient buildCollectionsModelClient() {
-        return new CollectionsModelClient(buildInnerClient().getCollectionsModels());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new CollectionsModelClient(buildInnerClient().getCollectionsModels(), instrumentation);
     }
 
     /**
@@ -337,7 +378,12 @@ public final class OptionalClientBuilder implements HttpTrait<OptionalClientBuil
      */
     @Metadata(generated = true)
     public StringLiteralClient buildStringLiteralClient() {
-        return new StringLiteralClient(buildInnerClient().getStringLiterals());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new StringLiteralClient(buildInnerClient().getStringLiterals(), instrumentation);
     }
 
     /**
@@ -347,7 +393,12 @@ public final class OptionalClientBuilder implements HttpTrait<OptionalClientBuil
      */
     @Metadata(generated = true)
     public IntLiteralClient buildIntLiteralClient() {
-        return new IntLiteralClient(buildInnerClient().getIntLiterals());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new IntLiteralClient(buildInnerClient().getIntLiterals(), instrumentation);
     }
 
     /**
@@ -357,7 +408,12 @@ public final class OptionalClientBuilder implements HttpTrait<OptionalClientBuil
      */
     @Metadata(generated = true)
     public FloatLiteralClient buildFloatLiteralClient() {
-        return new FloatLiteralClient(buildInnerClient().getFloatLiterals());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new FloatLiteralClient(buildInnerClient().getFloatLiterals(), instrumentation);
     }
 
     /**
@@ -367,7 +423,12 @@ public final class OptionalClientBuilder implements HttpTrait<OptionalClientBuil
      */
     @Metadata(generated = true)
     public BooleanLiteralClient buildBooleanLiteralClient() {
-        return new BooleanLiteralClient(buildInnerClient().getBooleanLiterals());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new BooleanLiteralClient(buildInnerClient().getBooleanLiterals(), instrumentation);
     }
 
     /**
@@ -377,7 +438,12 @@ public final class OptionalClientBuilder implements HttpTrait<OptionalClientBuil
      */
     @Metadata(generated = true)
     public UnionStringLiteralClient buildUnionStringLiteralClient() {
-        return new UnionStringLiteralClient(buildInnerClient().getUnionStringLiterals());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new UnionStringLiteralClient(buildInnerClient().getUnionStringLiterals(), instrumentation);
     }
 
     /**
@@ -387,7 +453,12 @@ public final class OptionalClientBuilder implements HttpTrait<OptionalClientBuil
      */
     @Metadata(generated = true)
     public UnionIntLiteralClient buildUnionIntLiteralClient() {
-        return new UnionIntLiteralClient(buildInnerClient().getUnionIntLiterals());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new UnionIntLiteralClient(buildInnerClient().getUnionIntLiterals(), instrumentation);
     }
 
     /**
@@ -397,7 +468,12 @@ public final class OptionalClientBuilder implements HttpTrait<OptionalClientBuil
      */
     @Metadata(generated = true)
     public UnionFloatLiteralClient buildUnionFloatLiteralClient() {
-        return new UnionFloatLiteralClient(buildInnerClient().getUnionFloatLiterals());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new UnionFloatLiteralClient(buildInnerClient().getUnionFloatLiterals(), instrumentation);
     }
 
     /**
@@ -407,7 +483,12 @@ public final class OptionalClientBuilder implements HttpTrait<OptionalClientBuil
      */
     @Metadata(generated = true)
     public RequiredAndOptionalClient buildRequiredAndOptionalClient() {
-        return new RequiredAndOptionalClient(buildInnerClient().getRequiredAndOptionals());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new RequiredAndOptionalClient(buildInnerClient().getRequiredAndOptionals(), instrumentation);
     }
 
     private static final ClientLogger LOGGER = new ClientLogger(OptionalClientBuilder.class);

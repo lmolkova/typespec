@@ -42,7 +42,7 @@ public final class PathParametersClient {
      */
     @Metadata(generated = true)
     public Response<Void> templateOnlyWithResponse(String param, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Routes.PathParameters.templateOnly", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Routes.PathParameters.templateOnly", requestOptions,
             updatedOptions -> this.serviceClient.templateOnlyWithResponse(param, updatedOptions));
     }
 
@@ -56,7 +56,7 @@ public final class PathParametersClient {
      */
     @Metadata(generated = true)
     public Response<Void> explicitWithResponse(String param, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Routes.PathParameters.explicit", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Routes.PathParameters.explicit", requestOptions,
             updatedOptions -> this.serviceClient.explicitWithResponse(param, updatedOptions));
     }
 
@@ -70,7 +70,7 @@ public final class PathParametersClient {
      */
     @Metadata(generated = true)
     public Response<Void> annotationOnlyWithResponse(String param, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Routes.PathParameters.annotationOnly", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Routes.PathParameters.annotationOnly", requestOptions,
             updatedOptions -> this.serviceClient.annotationOnlyWithResponse(param, updatedOptions));
     }
 

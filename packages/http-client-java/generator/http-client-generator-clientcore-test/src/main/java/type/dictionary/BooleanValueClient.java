@@ -52,7 +52,7 @@ public final class BooleanValueClient {
      */
     @Metadata(generated = true)
     public Response<Map<String, Boolean>> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Dictionary.BooleanValue.get", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Dictionary.BooleanValue.get", requestOptions,
             updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
@@ -75,7 +75,7 @@ public final class BooleanValueClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Dictionary.BooleanValue.put", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Dictionary.BooleanValue.put", requestOptions,
             updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 

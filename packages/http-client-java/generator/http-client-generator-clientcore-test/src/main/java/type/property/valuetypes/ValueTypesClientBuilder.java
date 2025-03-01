@@ -15,6 +15,7 @@ import io.clientcore.core.http.pipeline.HttpRedirectOptions;
 import io.clientcore.core.http.pipeline.HttpRedirectPolicy;
 import io.clientcore.core.http.pipeline.HttpRetryOptions;
 import io.clientcore.core.http.pipeline.HttpRetryPolicy;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.instrumentation.LibraryInstrumentationOptions;
 import io.clientcore.core.instrumentation.logging.ClientLogger;
 import io.clientcore.core.traits.ConfigurationTrait;
@@ -271,7 +272,12 @@ public final class ValueTypesClientBuilder
      */
     @Metadata(generated = true)
     public BooleanOperationClient buildBooleanOperationClient() {
-        return new BooleanOperationClient(buildInnerClient().getBooleanOperations());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new BooleanOperationClient(buildInnerClient().getBooleanOperations(), instrumentation);
     }
 
     /**
@@ -281,7 +287,12 @@ public final class ValueTypesClientBuilder
      */
     @Metadata(generated = true)
     public StringOperationClient buildStringOperationClient() {
-        return new StringOperationClient(buildInnerClient().getStringOperations());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new StringOperationClient(buildInnerClient().getStringOperations(), instrumentation);
     }
 
     /**
@@ -291,7 +302,12 @@ public final class ValueTypesClientBuilder
      */
     @Metadata(generated = true)
     public BytesClient buildBytesClient() {
-        return new BytesClient(buildInnerClient().getBytes());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new BytesClient(buildInnerClient().getBytes(), instrumentation);
     }
 
     /**
@@ -301,7 +317,12 @@ public final class ValueTypesClientBuilder
      */
     @Metadata(generated = true)
     public IntClient buildIntClient() {
-        return new IntClient(buildInnerClient().getInts());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new IntClient(buildInnerClient().getInts(), instrumentation);
     }
 
     /**
@@ -311,7 +332,12 @@ public final class ValueTypesClientBuilder
      */
     @Metadata(generated = true)
     public FloatOperationClient buildFloatOperationClient() {
-        return new FloatOperationClient(buildInnerClient().getFloatOperations());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new FloatOperationClient(buildInnerClient().getFloatOperations(), instrumentation);
     }
 
     /**
@@ -321,7 +347,12 @@ public final class ValueTypesClientBuilder
      */
     @Metadata(generated = true)
     public DecimalClient buildDecimalClient() {
-        return new DecimalClient(buildInnerClient().getDecimals());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new DecimalClient(buildInnerClient().getDecimals(), instrumentation);
     }
 
     /**
@@ -331,7 +362,12 @@ public final class ValueTypesClientBuilder
      */
     @Metadata(generated = true)
     public Decimal128Client buildDecimal128Client() {
-        return new Decimal128Client(buildInnerClient().getDecimal128s());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new Decimal128Client(buildInnerClient().getDecimal128s(), instrumentation);
     }
 
     /**
@@ -341,7 +377,12 @@ public final class ValueTypesClientBuilder
      */
     @Metadata(generated = true)
     public DatetimeOperationClient buildDatetimeOperationClient() {
-        return new DatetimeOperationClient(buildInnerClient().getDatetimeOperations());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new DatetimeOperationClient(buildInnerClient().getDatetimeOperations(), instrumentation);
     }
 
     /**
@@ -351,7 +392,12 @@ public final class ValueTypesClientBuilder
      */
     @Metadata(generated = true)
     public DurationOperationClient buildDurationOperationClient() {
-        return new DurationOperationClient(buildInnerClient().getDurationOperations());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new DurationOperationClient(buildInnerClient().getDurationOperations(), instrumentation);
     }
 
     /**
@@ -361,7 +407,12 @@ public final class ValueTypesClientBuilder
      */
     @Metadata(generated = true)
     public EnumClient buildEnumClient() {
-        return new EnumClient(buildInnerClient().getEnums());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new EnumClient(buildInnerClient().getEnums(), instrumentation);
     }
 
     /**
@@ -371,7 +422,12 @@ public final class ValueTypesClientBuilder
      */
     @Metadata(generated = true)
     public ExtensibleEnumClient buildExtensibleEnumClient() {
-        return new ExtensibleEnumClient(buildInnerClient().getExtensibleEnums());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new ExtensibleEnumClient(buildInnerClient().getExtensibleEnums(), instrumentation);
     }
 
     /**
@@ -381,7 +437,12 @@ public final class ValueTypesClientBuilder
      */
     @Metadata(generated = true)
     public ModelClient buildModelClient() {
-        return new ModelClient(buildInnerClient().getModels());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new ModelClient(buildInnerClient().getModels(), instrumentation);
     }
 
     /**
@@ -391,7 +452,12 @@ public final class ValueTypesClientBuilder
      */
     @Metadata(generated = true)
     public CollectionsStringClient buildCollectionsStringClient() {
-        return new CollectionsStringClient(buildInnerClient().getCollectionsStrings());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new CollectionsStringClient(buildInnerClient().getCollectionsStrings(), instrumentation);
     }
 
     /**
@@ -401,7 +467,12 @@ public final class ValueTypesClientBuilder
      */
     @Metadata(generated = true)
     public CollectionsIntClient buildCollectionsIntClient() {
-        return new CollectionsIntClient(buildInnerClient().getCollectionsInts());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new CollectionsIntClient(buildInnerClient().getCollectionsInts(), instrumentation);
     }
 
     /**
@@ -411,7 +482,12 @@ public final class ValueTypesClientBuilder
      */
     @Metadata(generated = true)
     public CollectionsModelClient buildCollectionsModelClient() {
-        return new CollectionsModelClient(buildInnerClient().getCollectionsModels());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new CollectionsModelClient(buildInnerClient().getCollectionsModels(), instrumentation);
     }
 
     /**
@@ -421,7 +497,12 @@ public final class ValueTypesClientBuilder
      */
     @Metadata(generated = true)
     public DictionaryStringClient buildDictionaryStringClient() {
-        return new DictionaryStringClient(buildInnerClient().getDictionaryStrings());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new DictionaryStringClient(buildInnerClient().getDictionaryStrings(), instrumentation);
     }
 
     /**
@@ -431,7 +512,12 @@ public final class ValueTypesClientBuilder
      */
     @Metadata(generated = true)
     public NeverClient buildNeverClient() {
-        return new NeverClient(buildInnerClient().getNevers());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new NeverClient(buildInnerClient().getNevers(), instrumentation);
     }
 
     /**
@@ -441,7 +527,12 @@ public final class ValueTypesClientBuilder
      */
     @Metadata(generated = true)
     public UnknownStringClient buildUnknownStringClient() {
-        return new UnknownStringClient(buildInnerClient().getUnknownStrings());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new UnknownStringClient(buildInnerClient().getUnknownStrings(), instrumentation);
     }
 
     /**
@@ -451,7 +542,12 @@ public final class ValueTypesClientBuilder
      */
     @Metadata(generated = true)
     public UnknownIntClient buildUnknownIntClient() {
-        return new UnknownIntClient(buildInnerClient().getUnknownInts());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new UnknownIntClient(buildInnerClient().getUnknownInts(), instrumentation);
     }
 
     /**
@@ -461,7 +557,12 @@ public final class ValueTypesClientBuilder
      */
     @Metadata(generated = true)
     public UnknownDictClient buildUnknownDictClient() {
-        return new UnknownDictClient(buildInnerClient().getUnknownDicts());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new UnknownDictClient(buildInnerClient().getUnknownDicts(), instrumentation);
     }
 
     /**
@@ -471,7 +572,12 @@ public final class ValueTypesClientBuilder
      */
     @Metadata(generated = true)
     public UnknownArrayClient buildUnknownArrayClient() {
-        return new UnknownArrayClient(buildInnerClient().getUnknownArrays());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new UnknownArrayClient(buildInnerClient().getUnknownArrays(), instrumentation);
     }
 
     /**
@@ -481,7 +587,12 @@ public final class ValueTypesClientBuilder
      */
     @Metadata(generated = true)
     public StringLiteralClient buildStringLiteralClient() {
-        return new StringLiteralClient(buildInnerClient().getStringLiterals());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new StringLiteralClient(buildInnerClient().getStringLiterals(), instrumentation);
     }
 
     /**
@@ -491,7 +602,12 @@ public final class ValueTypesClientBuilder
      */
     @Metadata(generated = true)
     public IntLiteralClient buildIntLiteralClient() {
-        return new IntLiteralClient(buildInnerClient().getIntLiterals());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new IntLiteralClient(buildInnerClient().getIntLiterals(), instrumentation);
     }
 
     /**
@@ -501,7 +617,12 @@ public final class ValueTypesClientBuilder
      */
     @Metadata(generated = true)
     public FloatLiteralClient buildFloatLiteralClient() {
-        return new FloatLiteralClient(buildInnerClient().getFloatLiterals());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new FloatLiteralClient(buildInnerClient().getFloatLiterals(), instrumentation);
     }
 
     /**
@@ -511,7 +632,12 @@ public final class ValueTypesClientBuilder
      */
     @Metadata(generated = true)
     public BooleanLiteralClient buildBooleanLiteralClient() {
-        return new BooleanLiteralClient(buildInnerClient().getBooleanLiterals());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new BooleanLiteralClient(buildInnerClient().getBooleanLiterals(), instrumentation);
     }
 
     /**
@@ -521,7 +647,12 @@ public final class ValueTypesClientBuilder
      */
     @Metadata(generated = true)
     public UnionStringLiteralClient buildUnionStringLiteralClient() {
-        return new UnionStringLiteralClient(buildInnerClient().getUnionStringLiterals());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new UnionStringLiteralClient(buildInnerClient().getUnionStringLiterals(), instrumentation);
     }
 
     /**
@@ -531,7 +662,12 @@ public final class ValueTypesClientBuilder
      */
     @Metadata(generated = true)
     public UnionIntLiteralClient buildUnionIntLiteralClient() {
-        return new UnionIntLiteralClient(buildInnerClient().getUnionIntLiterals());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new UnionIntLiteralClient(buildInnerClient().getUnionIntLiterals(), instrumentation);
     }
 
     /**
@@ -541,7 +677,12 @@ public final class ValueTypesClientBuilder
      */
     @Metadata(generated = true)
     public UnionFloatLiteralClient buildUnionFloatLiteralClient() {
-        return new UnionFloatLiteralClient(buildInnerClient().getUnionFloatLiterals());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new UnionFloatLiteralClient(buildInnerClient().getUnionFloatLiterals(), instrumentation);
     }
 
     /**
@@ -551,7 +692,12 @@ public final class ValueTypesClientBuilder
      */
     @Metadata(generated = true)
     public UnionEnumValueClient buildUnionEnumValueClient() {
-        return new UnionEnumValueClient(buildInnerClient().getUnionEnumValues());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new UnionEnumValueClient(buildInnerClient().getUnionEnumValues(), instrumentation);
     }
 
     private static final ClientLogger LOGGER = new ClientLogger(ValueTypesClientBuilder.class);

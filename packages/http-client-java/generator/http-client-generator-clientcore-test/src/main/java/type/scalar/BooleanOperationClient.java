@@ -49,7 +49,7 @@ public final class BooleanOperationClient {
      */
     @Metadata(generated = true)
     public Response<Boolean> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Scalar.Boolean.get", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Scalar.Boolean.get", requestOptions,
             updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
@@ -70,7 +70,7 @@ public final class BooleanOperationClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Scalar.Boolean.put", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Scalar.Boolean.put", requestOptions,
             updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 

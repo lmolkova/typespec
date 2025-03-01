@@ -54,8 +54,8 @@ public final class IsFloatClient {
      */
     @Metadata(generated = true)
     public Response<IsFloatAdditionalProperties> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.AdditionalProperties.IsFloat.get", requestOptions,
-            updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Property.AdditionalProperties.IsFloat.get",
+            requestOptions, updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
     /**
@@ -80,8 +80,8 @@ public final class IsFloatClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.AdditionalProperties.IsFloat.put", requestOptions,
-            updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Property.AdditionalProperties.IsFloat.put",
+            requestOptions, updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 
     /**

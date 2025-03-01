@@ -52,7 +52,7 @@ public final class NullableStringValueClient {
      */
     @Metadata(generated = true)
     public Response<List<String>> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Array.NullableStringValue.get", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Array.NullableStringValue.get", requestOptions,
             updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
@@ -75,7 +75,7 @@ public final class NullableStringValueClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Array.NullableStringValue.put", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Array.NullableStringValue.put", requestOptions,
             updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 

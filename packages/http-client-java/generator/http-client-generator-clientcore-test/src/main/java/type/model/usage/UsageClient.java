@@ -52,7 +52,7 @@ public final class UsageClient {
      */
     @Metadata(generated = true)
     public Response<Void> inputWithResponse(BinaryData input, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Model.Usage.input", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Model.Usage.input", requestOptions,
             updatedOptions -> this.serviceClient.inputWithResponse(input, updatedOptions));
     }
 
@@ -74,7 +74,7 @@ public final class UsageClient {
      */
     @Metadata(generated = true)
     public Response<OutputRecord> outputWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Model.Usage.output", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Model.Usage.output", requestOptions,
             updatedOptions -> this.serviceClient.outputWithResponse(updatedOptions));
     }
 
@@ -107,7 +107,7 @@ public final class UsageClient {
      */
     @Metadata(generated = true)
     public Response<InputOutputRecord> inputAndOutputWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Model.Usage.inputAndOutput", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Model.Usage.inputAndOutput", requestOptions,
             updatedOptions -> this.serviceClient.inputAndOutputWithResponse(body, updatedOptions));
     }
 

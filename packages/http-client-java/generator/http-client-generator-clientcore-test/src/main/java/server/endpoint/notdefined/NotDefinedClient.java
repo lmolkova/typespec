@@ -41,7 +41,7 @@ public final class NotDefinedClient {
      */
     @Metadata(generated = true)
     public Response<Void> validWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Server.Endpoint.NotDefined.valid", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Server.Endpoint.NotDefined.valid", requestOptions,
             updatedOptions -> this.serviceClient.validWithResponse(updatedOptions));
     }
 

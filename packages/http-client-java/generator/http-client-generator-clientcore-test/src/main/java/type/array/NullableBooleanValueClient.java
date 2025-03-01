@@ -52,7 +52,7 @@ public final class NullableBooleanValueClient {
      */
     @Metadata(generated = true)
     public Response<List<Boolean>> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Array.NullableBooleanValue.get", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Array.NullableBooleanValue.get", requestOptions,
             updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
@@ -75,7 +75,7 @@ public final class NullableBooleanValueClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Array.NullableBooleanValue.put", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Array.NullableBooleanValue.put", requestOptions,
             updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 

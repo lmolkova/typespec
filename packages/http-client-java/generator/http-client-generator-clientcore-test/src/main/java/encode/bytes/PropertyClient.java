@@ -62,7 +62,7 @@ public final class PropertyClient {
      */
     @Metadata(generated = true)
     public Response<DefaultBytesProperty> defaultMethodWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Bytes.Property.default", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Bytes.Property.default", requestOptions,
             updatedOptions -> this.serviceClient.defaultMethodWithResponse(body, updatedOptions));
     }
 
@@ -95,7 +95,7 @@ public final class PropertyClient {
      */
     @Metadata(generated = true)
     public Response<Base64BytesProperty> base64WithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Bytes.Property.base64", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Bytes.Property.base64", requestOptions,
             updatedOptions -> this.serviceClient.base64WithResponse(body, updatedOptions));
     }
 
@@ -128,7 +128,7 @@ public final class PropertyClient {
      */
     @Metadata(generated = true)
     public Response<Base64urlBytesProperty> base64urlWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Bytes.Property.base64url", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Bytes.Property.base64url", requestOptions,
             updatedOptions -> this.serviceClient.base64urlWithResponse(body, updatedOptions));
     }
 
@@ -166,7 +166,7 @@ public final class PropertyClient {
     @Metadata(generated = true)
     public Response<Base64urlArrayBytesProperty> base64urlArrayWithResponse(BinaryData body,
         RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Bytes.Property.base64urlArray", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Bytes.Property.base64urlArray", requestOptions,
             updatedOptions -> this.serviceClient.base64urlArrayWithResponse(body, updatedOptions));
     }
 

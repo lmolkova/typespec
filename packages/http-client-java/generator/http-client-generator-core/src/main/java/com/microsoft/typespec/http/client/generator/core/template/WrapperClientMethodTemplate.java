@@ -119,15 +119,17 @@ public class WrapperClientMethodTemplate extends ClientMethodTemplateBase {
                 .orElse(null);
 
             String allParams = parameters.stream()
-              .map(p -> p.getClientType() == ClassType.REQUEST_OPTIONS ? "updatedOptions" : p.getName())
-              .collect(Collectors.joining(", "));
+                .map(p -> p.getClientType() == ClassType.REQUEST_OPTIONS ? "updatedOptions" : p.getName())
+                .collect(Collectors.joining(", "));
 
             if (shouldReturn) {
-              function.line(
-                "return this.instrumentation.instrumentWithResponse(\"%1$s\", %2$s, updatedOptions -> this.serviceClient.%3$s(%4$s));", opName, requestOptionsParam, clientMethod.getName(), allParams);
+                function.line(
+                    "return this.instrumentation.instrumentWithResponse(\"%1$s\", %2$s, updatedOptions -> this.serviceClient.%3$s(%4$s));",
+                    opName, requestOptionsParam, clientMethod.getName(), allParams);
             } else {
-              function.line(
-                "this.instrumentation.instrument(\"%1$s\", %2$s, updatedOptions -> this.serviceClient.%3$s(%4$s));", opName, requestOptionsParam, clientMethod.getName(), allParams);
+                function.line(
+                    "this.instrumentation.instrument(\"%1$s\", %2$s, updatedOptions -> this.serviceClient.%3$s(%4$s));",
+                    opName, requestOptionsParam, clientMethod.getName(), allParams);
             }
         }
     }

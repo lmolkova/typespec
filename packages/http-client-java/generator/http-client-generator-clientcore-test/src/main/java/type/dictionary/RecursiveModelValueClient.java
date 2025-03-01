@@ -57,7 +57,7 @@ public final class RecursiveModelValueClient {
      */
     @Metadata(generated = true)
     public Response<Map<String, InnerModel>> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Dictionary.RecursiveModelValue.get", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Dictionary.RecursiveModelValue.get", requestOptions,
             updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
@@ -85,7 +85,7 @@ public final class RecursiveModelValueClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Dictionary.RecursiveModelValue.put", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Dictionary.RecursiveModelValue.put", requestOptions,
             updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 

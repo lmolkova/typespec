@@ -57,7 +57,7 @@ public final class MixedLiteralsClient {
      */
     @Metadata(generated = true)
     public Response<GetResponse1> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Union.MixedLiterals.get", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Union.MixedLiterals.get", requestOptions,
             updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
@@ -85,7 +85,7 @@ public final class MixedLiteralsClient {
      */
     @Metadata(generated = true)
     public Response<Void> sendWithResponse(BinaryData sendRequest1, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Union.MixedLiterals.send", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Union.MixedLiterals.send", requestOptions,
             updatedOptions -> this.serviceClient.sendWithResponse(sendRequest1, updatedOptions));
     }
 

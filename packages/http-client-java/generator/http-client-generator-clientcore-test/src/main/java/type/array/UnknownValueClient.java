@@ -52,7 +52,7 @@ public final class UnknownValueClient {
      */
     @Metadata(generated = true)
     public Response<List<Object>> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Array.UnknownValue.get", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Array.UnknownValue.get", requestOptions,
             updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
@@ -75,7 +75,7 @@ public final class UnknownValueClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Array.UnknownValue.put", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Array.UnknownValue.put", requestOptions,
             updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 

@@ -51,7 +51,7 @@ public final class BytesClient {
      */
     @Metadata(generated = true)
     public Response<BytesProperty> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.ValueTypes.Bytes.get", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.ValueTypes.Bytes.get", requestOptions,
             updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
@@ -74,7 +74,7 @@ public final class BytesClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.ValueTypes.Bytes.put", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.ValueTypes.Bytes.put", requestOptions,
             updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 

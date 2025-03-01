@@ -16,6 +16,7 @@ import io.clientcore.core.http.pipeline.HttpRedirectOptions;
 import io.clientcore.core.http.pipeline.HttpRedirectPolicy;
 import io.clientcore.core.http.pipeline.HttpRetryOptions;
 import io.clientcore.core.http.pipeline.HttpRetryPolicy;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.instrumentation.LibraryInstrumentationOptions;
 import io.clientcore.core.instrumentation.logging.ClientLogger;
 import io.clientcore.core.traits.ConfigurationTrait;
@@ -246,7 +247,12 @@ public final class BytesClientBuilder implements HttpTrait<BytesClientBuilder>, 
      */
     @Metadata(generated = true)
     public QueryClient buildQueryClient() {
-        return new QueryClient(buildInnerClient().getQueries());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new QueryClient(buildInnerClient().getQueries(), instrumentation);
     }
 
     /**
@@ -256,7 +262,12 @@ public final class BytesClientBuilder implements HttpTrait<BytesClientBuilder>, 
      */
     @Metadata(generated = true)
     public PropertyClient buildPropertyClient() {
-        return new PropertyClient(buildInnerClient().getProperties());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new PropertyClient(buildInnerClient().getProperties(), instrumentation);
     }
 
     /**
@@ -266,7 +277,12 @@ public final class BytesClientBuilder implements HttpTrait<BytesClientBuilder>, 
      */
     @Metadata(generated = true)
     public HeaderClient buildHeaderClient() {
-        return new HeaderClient(buildInnerClient().getHeaders());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new HeaderClient(buildInnerClient().getHeaders(), instrumentation);
     }
 
     /**
@@ -276,7 +292,12 @@ public final class BytesClientBuilder implements HttpTrait<BytesClientBuilder>, 
      */
     @Metadata(generated = true)
     public RequestBodyClient buildRequestBodyClient() {
-        return new RequestBodyClient(buildInnerClient().getRequestBodies());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new RequestBodyClient(buildInnerClient().getRequestBodies(), instrumentation);
     }
 
     /**
@@ -286,7 +307,12 @@ public final class BytesClientBuilder implements HttpTrait<BytesClientBuilder>, 
      */
     @Metadata(generated = true)
     public ResponseBodyClient buildResponseBodyClient() {
-        return new ResponseBodyClient(buildInnerClient().getResponseBodies());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new ResponseBodyClient(buildInnerClient().getResponseBodies(), instrumentation);
     }
 
     private static final ClientLogger LOGGER = new ClientLogger(BytesClientBuilder.class);

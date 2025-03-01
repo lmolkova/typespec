@@ -62,7 +62,7 @@ public final class ExtendsDifferentSpreadModelArrayClient {
      */
     @Metadata(generated = true)
     public Response<DifferentSpreadModelArrayDerived> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument(
+        return this.instrumentation.instrumentWithResponse(
             "Type.Property.AdditionalProperties.ExtendsDifferentSpreadModelArray.get", requestOptions,
             updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
@@ -96,7 +96,7 @@ public final class ExtendsDifferentSpreadModelArrayClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument(
+        return this.instrumentation.instrumentWithResponse(
             "Type.Property.AdditionalProperties.ExtendsDifferentSpreadModelArray.put", requestOptions,
             updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }

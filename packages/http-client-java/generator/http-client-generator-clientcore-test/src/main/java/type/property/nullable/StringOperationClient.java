@@ -53,7 +53,7 @@ public final class StringOperationClient {
      */
     @Metadata(generated = true)
     public Response<StringProperty> getNonNullWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Nullable.String.getNonNull", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.Nullable.String.getNonNull", requestOptions,
             updatedOptions -> this.serviceClient.getNonNullWithResponse(updatedOptions));
     }
 
@@ -76,7 +76,7 @@ public final class StringOperationClient {
      */
     @Metadata(generated = true)
     public Response<StringProperty> getNullWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Nullable.String.getNull", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.Nullable.String.getNull", requestOptions,
             updatedOptions -> this.serviceClient.getNullWithResponse(updatedOptions));
     }
 
@@ -100,7 +100,7 @@ public final class StringOperationClient {
      */
     @Metadata(generated = true)
     public Response<Void> patchNonNullWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Nullable.String.patchNonNull", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.Nullable.String.patchNonNull", requestOptions,
             updatedOptions -> this.serviceClient.patchNonNullWithResponse(body, updatedOptions));
     }
 
@@ -124,7 +124,7 @@ public final class StringOperationClient {
      */
     @Metadata(generated = true)
     public Response<Void> patchNullWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Nullable.String.patchNull", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.Nullable.String.patchNull", requestOptions,
             updatedOptions -> this.serviceClient.patchNullWithResponse(body, updatedOptions));
     }
 

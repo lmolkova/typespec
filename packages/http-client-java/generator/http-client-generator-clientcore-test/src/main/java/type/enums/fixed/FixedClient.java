@@ -49,7 +49,7 @@ public final class FixedClient {
      */
     @Metadata(generated = true)
     public Response<DaysOfWeekEnum> getKnownValueWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Enum.Fixed.String.getKnownValue", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Enum.Fixed.String.getKnownValue", requestOptions,
             updatedOptions -> this.serviceClient.getKnownValueWithResponse(updatedOptions));
     }
 
@@ -70,7 +70,7 @@ public final class FixedClient {
      */
     @Metadata(generated = true)
     public Response<Void> putKnownValueWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Enum.Fixed.String.putKnownValue", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Enum.Fixed.String.putKnownValue", requestOptions,
             updatedOptions -> this.serviceClient.putKnownValueWithResponse(body, updatedOptions));
     }
 
@@ -91,7 +91,7 @@ public final class FixedClient {
      */
     @Metadata(generated = true)
     public Response<Void> putUnknownValueWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Enum.Fixed.String.putUnknownValue", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Enum.Fixed.String.putUnknownValue", requestOptions,
             updatedOptions -> this.serviceClient.putUnknownValueWithResponse(body, updatedOptions));
     }
 

@@ -15,6 +15,7 @@ import io.clientcore.core.http.pipeline.HttpRedirectOptions;
 import io.clientcore.core.http.pipeline.HttpRedirectPolicy;
 import io.clientcore.core.http.pipeline.HttpRetryOptions;
 import io.clientcore.core.http.pipeline.HttpRetryPolicy;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.instrumentation.LibraryInstrumentationOptions;
 import io.clientcore.core.instrumentation.logging.ClientLogger;
 import io.clientcore.core.traits.ConfigurationTrait;
@@ -240,7 +241,12 @@ public final class PageableClientBuilder implements HttpTrait<PageableClientBuil
      */
     @Metadata(generated = true)
     public PageableClient buildPageableClient() {
-        return new PageableClient(buildInnerClient().getServerDrivenPaginations());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new PageableClient(buildInnerClient().getServerDrivenPaginations(), instrumentation);
     }
 
     private static final ClientLogger LOGGER = new ClientLogger(PageableClientBuilder.class);

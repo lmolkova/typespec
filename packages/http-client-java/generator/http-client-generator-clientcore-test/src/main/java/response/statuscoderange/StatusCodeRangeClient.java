@@ -48,7 +48,7 @@ public final class StatusCodeRangeClient {
      */
     @Metadata(generated = true)
     public Response<Integer> errorResponseStatusCodeInRangeWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Response.StatusCodeRange.errorResponseStatusCodeInRange",
+        return this.instrumentation.instrumentWithResponse("Response.StatusCodeRange.errorResponseStatusCodeInRange",
             requestOptions,
             updatedOptions -> this.serviceClient.errorResponseStatusCodeInRangeWithResponse(updatedOptions));
     }
@@ -69,7 +69,8 @@ public final class StatusCodeRangeClient {
      */
     @Metadata(generated = true)
     public Response<Integer> errorResponseStatusCode404WithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Response.StatusCodeRange.errorResponseStatusCode404", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Response.StatusCodeRange.errorResponseStatusCode404",
+            requestOptions,
             updatedOptions -> this.serviceClient.errorResponseStatusCode404WithResponse(updatedOptions));
     }
 

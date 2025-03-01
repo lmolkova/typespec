@@ -41,7 +41,7 @@ public final class InInterfaceClient {
      */
     @Metadata(generated = true)
     public Response<Void> fixedWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Routes.InInterface.fixed", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Routes.InInterface.fixed", requestOptions,
             updatedOptions -> this.serviceClient.fixedWithResponse(updatedOptions));
     }
 

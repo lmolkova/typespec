@@ -16,6 +16,7 @@ import io.clientcore.core.http.pipeline.HttpRedirectOptions;
 import io.clientcore.core.http.pipeline.HttpRedirectPolicy;
 import io.clientcore.core.http.pipeline.HttpRetryOptions;
 import io.clientcore.core.http.pipeline.HttpRetryPolicy;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.instrumentation.LibraryInstrumentationOptions;
 import io.clientcore.core.instrumentation.logging.ClientLogger;
 import io.clientcore.core.traits.ConfigurationTrait;
@@ -240,7 +241,12 @@ public final class NumericClientBuilder implements HttpTrait<NumericClientBuilde
      */
     @Metadata(generated = true)
     public NumericClient buildNumericClient() {
-        return new NumericClient(buildInnerClient().getProperties());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new NumericClient(buildInnerClient().getProperties(), instrumentation);
     }
 
     private static final ClientLogger LOGGER = new ClientLogger(NumericClientBuilder.class);

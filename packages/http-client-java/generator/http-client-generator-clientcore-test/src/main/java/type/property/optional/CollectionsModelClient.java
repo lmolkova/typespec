@@ -55,8 +55,8 @@ public final class CollectionsModelClient {
      */
     @Metadata(generated = true)
     public Response<CollectionsModelProperty> getAllWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Optional.CollectionsModel.getAll", requestOptions,
-            updatedOptions -> this.serviceClient.getAllWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Property.Optional.CollectionsModel.getAll",
+            requestOptions, updatedOptions -> this.serviceClient.getAllWithResponse(updatedOptions));
     }
 
     /**
@@ -81,8 +81,8 @@ public final class CollectionsModelClient {
      */
     @Metadata(generated = true)
     public Response<CollectionsModelProperty> getDefaultWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Optional.CollectionsModel.getDefault", requestOptions,
-            updatedOptions -> this.serviceClient.getDefaultWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Property.Optional.CollectionsModel.getDefault",
+            requestOptions, updatedOptions -> this.serviceClient.getDefaultWithResponse(updatedOptions));
     }
 
     /**
@@ -108,8 +108,8 @@ public final class CollectionsModelClient {
      */
     @Metadata(generated = true)
     public Response<Void> putAllWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Optional.CollectionsModel.putAll", requestOptions,
-            updatedOptions -> this.serviceClient.putAllWithResponse(body, updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Property.Optional.CollectionsModel.putAll",
+            requestOptions, updatedOptions -> this.serviceClient.putAllWithResponse(body, updatedOptions));
     }
 
     /**
@@ -135,8 +135,8 @@ public final class CollectionsModelClient {
      */
     @Metadata(generated = true)
     public Response<Void> putDefaultWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Optional.CollectionsModel.putDefault", requestOptions,
-            updatedOptions -> this.serviceClient.putDefaultWithResponse(body, updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Property.Optional.CollectionsModel.putDefault",
+            requestOptions, updatedOptions -> this.serviceClient.putDefaultWithResponse(body, updatedOptions));
     }
 
     /**

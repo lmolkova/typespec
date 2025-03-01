@@ -60,7 +60,7 @@ public final class SpreadModelArrayClient {
      */
     @Metadata(generated = true)
     public Response<SpreadModelArrayRecord> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.AdditionalProperties.SpreadModelArray.get",
+        return this.instrumentation.instrumentWithResponse("Type.Property.AdditionalProperties.SpreadModelArray.get",
             requestOptions, updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
@@ -92,7 +92,7 @@ public final class SpreadModelArrayClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.AdditionalProperties.SpreadModelArray.put",
+        return this.instrumentation.instrumentWithResponse("Type.Property.AdditionalProperties.SpreadModelArray.put",
             requestOptions, updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 

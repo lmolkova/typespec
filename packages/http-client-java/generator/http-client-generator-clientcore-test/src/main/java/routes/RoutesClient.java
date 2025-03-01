@@ -41,7 +41,7 @@ public final class RoutesClient {
      */
     @Metadata(generated = true)
     public Response<Void> fixedWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Routes.fixed", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Routes.fixed", requestOptions,
             updatedOptions -> this.serviceClient.fixedWithResponse(updatedOptions));
     }
 

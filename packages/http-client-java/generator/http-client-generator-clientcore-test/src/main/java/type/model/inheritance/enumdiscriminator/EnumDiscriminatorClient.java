@@ -52,8 +52,9 @@ public final class EnumDiscriminatorClient {
      */
     @Metadata(generated = true)
     public Response<Dog> getExtensibleModelWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Model.Inheritance.EnumDiscriminator.getExtensibleModel",
-            requestOptions, updatedOptions -> this.serviceClient.getExtensibleModelWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse(
+            "Type.Model.Inheritance.EnumDiscriminator.getExtensibleModel", requestOptions,
+            updatedOptions -> this.serviceClient.getExtensibleModelWithResponse(updatedOptions));
     }
 
     /**
@@ -76,8 +77,9 @@ public final class EnumDiscriminatorClient {
      */
     @Metadata(generated = true)
     public Response<Void> putExtensibleModelWithResponse(BinaryData input, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Model.Inheritance.EnumDiscriminator.putExtensibleModel",
-            requestOptions, updatedOptions -> this.serviceClient.putExtensibleModelWithResponse(input, updatedOptions));
+        return this.instrumentation.instrumentWithResponse(
+            "Type.Model.Inheritance.EnumDiscriminator.putExtensibleModel", requestOptions,
+            updatedOptions -> this.serviceClient.putExtensibleModelWithResponse(input, updatedOptions));
     }
 
     /**
@@ -99,7 +101,7 @@ public final class EnumDiscriminatorClient {
      */
     @Metadata(generated = true)
     public Response<Dog> getExtensibleModelMissingDiscriminatorWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument(
+        return this.instrumentation.instrumentWithResponse(
             "Type.Model.Inheritance.EnumDiscriminator.getExtensibleModelMissingDiscriminator", requestOptions,
             updatedOptions -> this.serviceClient.getExtensibleModelMissingDiscriminatorWithResponse(updatedOptions));
     }
@@ -123,7 +125,7 @@ public final class EnumDiscriminatorClient {
      */
     @Metadata(generated = true)
     public Response<Dog> getExtensibleModelWrongDiscriminatorWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument(
+        return this.instrumentation.instrumentWithResponse(
             "Type.Model.Inheritance.EnumDiscriminator.getExtensibleModelWrongDiscriminator", requestOptions,
             updatedOptions -> this.serviceClient.getExtensibleModelWrongDiscriminatorWithResponse(updatedOptions));
     }
@@ -147,8 +149,8 @@ public final class EnumDiscriminatorClient {
      */
     @Metadata(generated = true)
     public Response<Snake> getFixedModelWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Model.Inheritance.EnumDiscriminator.getFixedModel", requestOptions,
-            updatedOptions -> this.serviceClient.getFixedModelWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Model.Inheritance.EnumDiscriminator.getFixedModel",
+            requestOptions, updatedOptions -> this.serviceClient.getFixedModelWithResponse(updatedOptions));
     }
 
     /**
@@ -171,8 +173,8 @@ public final class EnumDiscriminatorClient {
      */
     @Metadata(generated = true)
     public Response<Void> putFixedModelWithResponse(BinaryData input, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Model.Inheritance.EnumDiscriminator.putFixedModel", requestOptions,
-            updatedOptions -> this.serviceClient.putFixedModelWithResponse(input, updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Model.Inheritance.EnumDiscriminator.putFixedModel",
+            requestOptions, updatedOptions -> this.serviceClient.putFixedModelWithResponse(input, updatedOptions));
     }
 
     /**
@@ -194,7 +196,7 @@ public final class EnumDiscriminatorClient {
      */
     @Metadata(generated = true)
     public Response<Snake> getFixedModelMissingDiscriminatorWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument(
+        return this.instrumentation.instrumentWithResponse(
             "Type.Model.Inheritance.EnumDiscriminator.getFixedModelMissingDiscriminator", requestOptions,
             updatedOptions -> this.serviceClient.getFixedModelMissingDiscriminatorWithResponse(updatedOptions));
     }
@@ -218,7 +220,7 @@ public final class EnumDiscriminatorClient {
      */
     @Metadata(generated = true)
     public Response<Snake> getFixedModelWrongDiscriminatorWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument(
+        return this.instrumentation.instrumentWithResponse(
             "Type.Model.Inheritance.EnumDiscriminator.getFixedModelWrongDiscriminator", requestOptions,
             updatedOptions -> this.serviceClient.getFixedModelWrongDiscriminatorWithResponse(updatedOptions));
     }

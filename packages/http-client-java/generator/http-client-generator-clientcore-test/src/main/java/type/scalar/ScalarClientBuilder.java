@@ -15,6 +15,7 @@ import io.clientcore.core.http.pipeline.HttpRedirectOptions;
 import io.clientcore.core.http.pipeline.HttpRedirectPolicy;
 import io.clientcore.core.http.pipeline.HttpRetryOptions;
 import io.clientcore.core.http.pipeline.HttpRetryPolicy;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.instrumentation.LibraryInstrumentationOptions;
 import io.clientcore.core.instrumentation.logging.ClientLogger;
 import io.clientcore.core.traits.ConfigurationTrait;
@@ -248,7 +249,12 @@ public final class ScalarClientBuilder implements HttpTrait<ScalarClientBuilder>
      */
     @Metadata(generated = true)
     public StringOperationClient buildStringOperationClient() {
-        return new StringOperationClient(buildInnerClient().getStringOperations());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new StringOperationClient(buildInnerClient().getStringOperations(), instrumentation);
     }
 
     /**
@@ -258,7 +264,12 @@ public final class ScalarClientBuilder implements HttpTrait<ScalarClientBuilder>
      */
     @Metadata(generated = true)
     public BooleanOperationClient buildBooleanOperationClient() {
-        return new BooleanOperationClient(buildInnerClient().getBooleanOperations());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new BooleanOperationClient(buildInnerClient().getBooleanOperations(), instrumentation);
     }
 
     /**
@@ -268,7 +279,12 @@ public final class ScalarClientBuilder implements HttpTrait<ScalarClientBuilder>
      */
     @Metadata(generated = true)
     public UnknownClient buildUnknownClient() {
-        return new UnknownClient(buildInnerClient().getUnknowns());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new UnknownClient(buildInnerClient().getUnknowns(), instrumentation);
     }
 
     /**
@@ -278,7 +294,12 @@ public final class ScalarClientBuilder implements HttpTrait<ScalarClientBuilder>
      */
     @Metadata(generated = true)
     public DecimalTypeClient buildDecimalTypeClient() {
-        return new DecimalTypeClient(buildInnerClient().getDecimalTypes());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new DecimalTypeClient(buildInnerClient().getDecimalTypes(), instrumentation);
     }
 
     /**
@@ -288,7 +309,12 @@ public final class ScalarClientBuilder implements HttpTrait<ScalarClientBuilder>
      */
     @Metadata(generated = true)
     public Decimal128TypeClient buildDecimal128TypeClient() {
-        return new Decimal128TypeClient(buildInnerClient().getDecimal128Types());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new Decimal128TypeClient(buildInnerClient().getDecimal128Types(), instrumentation);
     }
 
     /**
@@ -298,7 +324,12 @@ public final class ScalarClientBuilder implements HttpTrait<ScalarClientBuilder>
      */
     @Metadata(generated = true)
     public DecimalVerifyClient buildDecimalVerifyClient() {
-        return new DecimalVerifyClient(buildInnerClient().getDecimalVerifies());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new DecimalVerifyClient(buildInnerClient().getDecimalVerifies(), instrumentation);
     }
 
     /**
@@ -308,7 +339,12 @@ public final class ScalarClientBuilder implements HttpTrait<ScalarClientBuilder>
      */
     @Metadata(generated = true)
     public Decimal128VerifyClient buildDecimal128VerifyClient() {
-        return new Decimal128VerifyClient(buildInnerClient().getDecimal128Verifies());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new Decimal128VerifyClient(buildInnerClient().getDecimal128Verifies(), instrumentation);
     }
 
     private static final ClientLogger LOGGER = new ClientLogger(ScalarClientBuilder.class);

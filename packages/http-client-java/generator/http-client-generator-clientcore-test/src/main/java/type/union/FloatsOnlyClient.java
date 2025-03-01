@@ -52,7 +52,7 @@ public final class FloatsOnlyClient {
      */
     @Metadata(generated = true)
     public Response<GetResponse5> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Union.FloatsOnly.get", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Union.FloatsOnly.get", requestOptions,
             updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
@@ -75,7 +75,7 @@ public final class FloatsOnlyClient {
      */
     @Metadata(generated = true)
     public Response<Void> sendWithResponse(BinaryData sendRequest5, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Union.FloatsOnly.send", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Union.FloatsOnly.send", requestOptions,
             updatedOptions -> this.serviceClient.sendWithResponse(sendRequest5, updatedOptions));
     }
 

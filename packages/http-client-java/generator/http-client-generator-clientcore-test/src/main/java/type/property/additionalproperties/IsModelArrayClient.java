@@ -60,8 +60,8 @@ public final class IsModelArrayClient {
      */
     @Metadata(generated = true)
     public Response<IsModelArrayAdditionalProperties> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.AdditionalProperties.IsModelArray.get", requestOptions,
-            updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Property.AdditionalProperties.IsModelArray.get",
+            requestOptions, updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
     /**
@@ -92,8 +92,8 @@ public final class IsModelArrayClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.AdditionalProperties.IsModelArray.put", requestOptions,
-            updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Property.AdditionalProperties.IsModelArray.put",
+            requestOptions, updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 
     /**

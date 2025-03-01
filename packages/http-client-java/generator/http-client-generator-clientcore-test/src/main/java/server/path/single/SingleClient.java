@@ -41,7 +41,7 @@ public final class SingleClient {
      */
     @Metadata(generated = true)
     public Response<Void> myOpWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Server.Path.Single.myOp", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Server.Path.Single.myOp", requestOptions,
             updatedOptions -> this.serviceClient.myOpWithResponse(updatedOptions));
     }
 

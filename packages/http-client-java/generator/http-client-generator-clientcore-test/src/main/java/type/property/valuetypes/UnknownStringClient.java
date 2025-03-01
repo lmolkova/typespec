@@ -51,7 +51,7 @@ public final class UnknownStringClient {
      */
     @Metadata(generated = true)
     public Response<UnknownStringProperty> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.ValueTypes.UnknownString.get", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.ValueTypes.UnknownString.get", requestOptions,
             updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
@@ -74,7 +74,7 @@ public final class UnknownStringClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.ValueTypes.UnknownString.put", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.ValueTypes.UnknownString.put", requestOptions,
             updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 

@@ -50,7 +50,7 @@ public final class MediaTypeClient {
      */
     @Metadata(generated = true)
     public Response<Void> sendAsTextWithResponse(BinaryData text, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Payload.MediaType.StringBody.sendAsText", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Payload.MediaType.StringBody.sendAsText", requestOptions,
             updatedOptions -> this.serviceClient.sendAsTextWithResponse(text, updatedOptions));
     }
 
@@ -70,7 +70,7 @@ public final class MediaTypeClient {
      */
     @Metadata(generated = true)
     public Response<String> getAsTextWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Payload.MediaType.StringBody.getAsText", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Payload.MediaType.StringBody.getAsText", requestOptions,
             updatedOptions -> this.serviceClient.getAsTextWithResponse(updatedOptions));
     }
 
@@ -91,7 +91,7 @@ public final class MediaTypeClient {
      */
     @Metadata(generated = true)
     public Response<Void> sendAsJsonWithResponse(BinaryData text, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Payload.MediaType.StringBody.sendAsJson", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Payload.MediaType.StringBody.sendAsJson", requestOptions,
             updatedOptions -> this.serviceClient.sendAsJsonWithResponse(text, updatedOptions));
     }
 
@@ -111,7 +111,7 @@ public final class MediaTypeClient {
      */
     @Metadata(generated = true)
     public Response<String> getAsJsonWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Payload.MediaType.StringBody.getAsJson", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Payload.MediaType.StringBody.getAsJson", requestOptions,
             updatedOptions -> this.serviceClient.getAsJsonWithResponse(updatedOptions));
     }
 

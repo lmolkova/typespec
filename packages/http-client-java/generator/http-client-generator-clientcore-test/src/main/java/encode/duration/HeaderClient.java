@@ -44,7 +44,7 @@ public final class HeaderClient {
      */
     @Metadata(generated = true)
     public Response<Void> defaultMethodWithResponse(Duration duration, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Duration.Header.default", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Duration.Header.default", requestOptions,
             updatedOptions -> this.serviceClient.defaultMethodWithResponse(duration, updatedOptions));
     }
 
@@ -58,7 +58,7 @@ public final class HeaderClient {
      */
     @Metadata(generated = true)
     public Response<Void> iso8601WithResponse(Duration duration, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Duration.Header.iso8601", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Duration.Header.iso8601", requestOptions,
             updatedOptions -> this.serviceClient.iso8601WithResponse(duration, updatedOptions));
     }
 
@@ -72,7 +72,7 @@ public final class HeaderClient {
      */
     @Metadata(generated = true)
     public Response<Void> iso8601ArrayWithResponse(List<Duration> duration, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Duration.Header.iso8601Array", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Duration.Header.iso8601Array", requestOptions,
             updatedOptions -> this.serviceClient.iso8601ArrayWithResponse(duration, updatedOptions));
     }
 
@@ -86,7 +86,7 @@ public final class HeaderClient {
      */
     @Metadata(generated = true)
     public Response<Void> int32SecondsWithResponse(Duration duration, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Duration.Header.int32Seconds", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Duration.Header.int32Seconds", requestOptions,
             updatedOptions -> this.serviceClient.int32SecondsWithResponse(duration, updatedOptions));
     }
 
@@ -100,7 +100,7 @@ public final class HeaderClient {
      */
     @Metadata(generated = true)
     public Response<Void> floatSecondsWithResponse(Duration duration, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Duration.Header.floatSeconds", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Duration.Header.floatSeconds", requestOptions,
             updatedOptions -> this.serviceClient.floatSecondsWithResponse(duration, updatedOptions));
     }
 
@@ -114,7 +114,7 @@ public final class HeaderClient {
      */
     @Metadata(generated = true)
     public Response<Void> float64SecondsWithResponse(Duration duration, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Duration.Header.float64Seconds", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Duration.Header.float64Seconds", requestOptions,
             updatedOptions -> this.serviceClient.float64SecondsWithResponse(duration, updatedOptions));
     }
 

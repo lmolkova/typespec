@@ -245,7 +245,7 @@ public final class SingleClientBuilder implements HttpTrait<SingleClientBuilder>
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, this.endpoint);
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
         return new SingleClient(buildInnerClient(), instrumentation);
     }
 

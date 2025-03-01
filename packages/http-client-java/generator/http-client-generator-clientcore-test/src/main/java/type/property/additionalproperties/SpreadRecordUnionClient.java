@@ -54,7 +54,7 @@ public final class SpreadRecordUnionClient {
      */
     @Metadata(generated = true)
     public Response<SpreadRecordForUnion> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.AdditionalProperties.SpreadRecordUnion.get",
+        return this.instrumentation.instrumentWithResponse("Type.Property.AdditionalProperties.SpreadRecordUnion.get",
             requestOptions, updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
@@ -80,7 +80,7 @@ public final class SpreadRecordUnionClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.AdditionalProperties.SpreadRecordUnion.put",
+        return this.instrumentation.instrumentWithResponse("Type.Property.AdditionalProperties.SpreadRecordUnion.put",
             requestOptions, updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 

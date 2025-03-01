@@ -47,8 +47,8 @@ public final class FormDataHttpPartsNonStringClient {
     Response<Void> floatMethodWithResponse(BinaryData body, RequestOptions requestOptions) {
         // Operation 'float' is of content-type 'multipart/form-data'. Protocol API is not usable and hence not
         // generated.
-        return this.instrumentation.instrument("Payload.MultiPart.FormData.HttpParts.NonString.float", requestOptions,
-            updatedOptions -> this.serviceClient.floatMethodWithResponse(body, updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Payload.MultiPart.FormData.HttpParts.NonString.float",
+            requestOptions, updatedOptions -> this.serviceClient.floatMethodWithResponse(body, updatedOptions));
     }
 
     /**

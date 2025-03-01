@@ -55,7 +55,7 @@ public final class RecursiveClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData input, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Model.Inheritance.Recursive.put", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Model.Inheritance.Recursive.put", requestOptions,
             updatedOptions -> this.serviceClient.putWithResponse(input, updatedOptions));
     }
 
@@ -80,7 +80,7 @@ public final class RecursiveClient {
      */
     @Metadata(generated = true)
     public Response<Extension> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Model.Inheritance.Recursive.get", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Model.Inheritance.Recursive.get", requestOptions,
             updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 

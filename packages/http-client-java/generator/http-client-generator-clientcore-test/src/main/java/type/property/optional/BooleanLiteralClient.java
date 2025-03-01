@@ -51,8 +51,8 @@ public final class BooleanLiteralClient {
      */
     @Metadata(generated = true)
     public Response<BooleanLiteralProperty> getAllWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Optional.BooleanLiteral.getAll", requestOptions,
-            updatedOptions -> this.serviceClient.getAllWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Property.Optional.BooleanLiteral.getAll",
+            requestOptions, updatedOptions -> this.serviceClient.getAllWithResponse(updatedOptions));
     }
 
     /**
@@ -73,8 +73,8 @@ public final class BooleanLiteralClient {
      */
     @Metadata(generated = true)
     public Response<BooleanLiteralProperty> getDefaultWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Optional.BooleanLiteral.getDefault", requestOptions,
-            updatedOptions -> this.serviceClient.getDefaultWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Property.Optional.BooleanLiteral.getDefault",
+            requestOptions, updatedOptions -> this.serviceClient.getDefaultWithResponse(updatedOptions));
     }
 
     /**
@@ -96,8 +96,8 @@ public final class BooleanLiteralClient {
      */
     @Metadata(generated = true)
     public Response<Void> putAllWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Optional.BooleanLiteral.putAll", requestOptions,
-            updatedOptions -> this.serviceClient.putAllWithResponse(body, updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Property.Optional.BooleanLiteral.putAll",
+            requestOptions, updatedOptions -> this.serviceClient.putAllWithResponse(body, updatedOptions));
     }
 
     /**
@@ -119,8 +119,8 @@ public final class BooleanLiteralClient {
      */
     @Metadata(generated = true)
     public Response<Void> putDefaultWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Optional.BooleanLiteral.putDefault", requestOptions,
-            updatedOptions -> this.serviceClient.putDefaultWithResponse(body, updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Property.Optional.BooleanLiteral.putDefault",
+            requestOptions, updatedOptions -> this.serviceClient.putDefaultWithResponse(body, updatedOptions));
     }
 
     /**

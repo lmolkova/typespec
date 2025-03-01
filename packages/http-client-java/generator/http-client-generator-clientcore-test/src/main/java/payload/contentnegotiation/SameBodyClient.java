@@ -49,8 +49,8 @@ public final class SameBodyClient {
      */
     @Metadata(generated = true)
     public Response<BinaryData> getAvatarAsPngWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Payload.ContentNegotiation.SameBody.getAvatarAsPng", requestOptions,
-            updatedOptions -> this.serviceClient.getAvatarAsPngWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Payload.ContentNegotiation.SameBody.getAvatarAsPng",
+            requestOptions, updatedOptions -> this.serviceClient.getAvatarAsPngWithResponse(updatedOptions));
     }
 
     /**
@@ -69,8 +69,8 @@ public final class SameBodyClient {
      */
     @Metadata(generated = true)
     public Response<BinaryData> getAvatarAsJpegWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Payload.ContentNegotiation.SameBody.getAvatarAsJpeg", requestOptions,
-            updatedOptions -> this.serviceClient.getAvatarAsJpegWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Payload.ContentNegotiation.SameBody.getAvatarAsJpeg",
+            requestOptions, updatedOptions -> this.serviceClient.getAvatarAsJpegWithResponse(updatedOptions));
     }
 
     /**

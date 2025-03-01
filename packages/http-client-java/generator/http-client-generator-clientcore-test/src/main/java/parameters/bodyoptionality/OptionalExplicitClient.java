@@ -59,8 +59,8 @@ public final class OptionalExplicitClient {
      */
     @Metadata(generated = true)
     public Response<Void> setWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Parameters.BodyOptionality.OptionalExplicit.set", requestOptions,
-            updatedOptions -> this.serviceClient.setWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Parameters.BodyOptionality.OptionalExplicit.set",
+            requestOptions, updatedOptions -> this.serviceClient.setWithResponse(updatedOptions));
     }
 
     /**
@@ -89,8 +89,8 @@ public final class OptionalExplicitClient {
      */
     @Metadata(generated = true)
     public Response<Void> omitWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Parameters.BodyOptionality.OptionalExplicit.omit", requestOptions,
-            updatedOptions -> this.serviceClient.omitWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Parameters.BodyOptionality.OptionalExplicit.omit",
+            requestOptions, updatedOptions -> this.serviceClient.omitWithResponse(updatedOptions));
     }
 
     /**

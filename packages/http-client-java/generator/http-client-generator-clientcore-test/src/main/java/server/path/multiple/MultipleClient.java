@@ -41,7 +41,7 @@ public final class MultipleClient {
      */
     @Metadata(generated = true)
     public Response<Void> noOperationParamsWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Server.Path.Multiple.noOperationParams", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Server.Path.Multiple.noOperationParams", requestOptions,
             updatedOptions -> this.serviceClient.noOperationParamsWithResponse(updatedOptions));
     }
 
@@ -55,7 +55,8 @@ public final class MultipleClient {
      */
     @Metadata(generated = true)
     public Response<Void> withOperationPathParamWithResponse(String keyword, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Server.Path.Multiple.withOperationPathParam", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Server.Path.Multiple.withOperationPathParam",
+            requestOptions,
             updatedOptions -> this.serviceClient.withOperationPathParamWithResponse(keyword, updatedOptions));
     }
 

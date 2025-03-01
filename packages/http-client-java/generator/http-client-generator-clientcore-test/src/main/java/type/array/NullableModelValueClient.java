@@ -57,7 +57,7 @@ public final class NullableModelValueClient {
      */
     @Metadata(generated = true)
     public Response<List<InnerModel>> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Array.NullableModelValue.get", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Array.NullableModelValue.get", requestOptions,
             updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
@@ -85,7 +85,7 @@ public final class NullableModelValueClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Array.NullableModelValue.put", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Array.NullableModelValue.put", requestOptions,
             updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 

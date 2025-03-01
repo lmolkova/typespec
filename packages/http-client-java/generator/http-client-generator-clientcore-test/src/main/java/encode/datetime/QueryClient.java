@@ -44,7 +44,7 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> defaultMethodWithResponse(OffsetDateTime value, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Datetime.Query.default", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Datetime.Query.default", requestOptions,
             updatedOptions -> this.serviceClient.defaultMethodWithResponse(value, updatedOptions));
     }
 
@@ -58,7 +58,7 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> rfc3339WithResponse(OffsetDateTime value, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Datetime.Query.rfc3339", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Datetime.Query.rfc3339", requestOptions,
             updatedOptions -> this.serviceClient.rfc3339WithResponse(value, updatedOptions));
     }
 
@@ -72,7 +72,7 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> rfc7231WithResponse(OffsetDateTime value, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Datetime.Query.rfc7231", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Datetime.Query.rfc7231", requestOptions,
             updatedOptions -> this.serviceClient.rfc7231WithResponse(value, updatedOptions));
     }
 
@@ -86,7 +86,7 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> unixTimestampWithResponse(OffsetDateTime value, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Datetime.Query.unixTimestamp", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Datetime.Query.unixTimestamp", requestOptions,
             updatedOptions -> this.serviceClient.unixTimestampWithResponse(value, updatedOptions));
     }
 
@@ -100,7 +100,7 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> unixTimestampArrayWithResponse(List<OffsetDateTime> value, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Datetime.Query.unixTimestampArray", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Datetime.Query.unixTimestampArray", requestOptions,
             updatedOptions -> this.serviceClient.unixTimestampArrayWithResponse(value, updatedOptions));
     }
 

@@ -41,8 +41,8 @@ public final class NotVersionedClient {
      */
     @Metadata(generated = true)
     public Response<Void> withoutApiVersionWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Server.Versions.NotVersioned.withoutApiVersion", requestOptions,
-            updatedOptions -> this.serviceClient.withoutApiVersionWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Server.Versions.NotVersioned.withoutApiVersion",
+            requestOptions, updatedOptions -> this.serviceClient.withoutApiVersionWithResponse(updatedOptions));
     }
 
     /**
@@ -55,7 +55,8 @@ public final class NotVersionedClient {
      */
     @Metadata(generated = true)
     public Response<Void> withQueryApiVersionWithResponse(String apiVersion, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Server.Versions.NotVersioned.withQueryApiVersion", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Server.Versions.NotVersioned.withQueryApiVersion",
+            requestOptions,
             updatedOptions -> this.serviceClient.withQueryApiVersionWithResponse(apiVersion, updatedOptions));
     }
 
@@ -69,7 +70,8 @@ public final class NotVersionedClient {
      */
     @Metadata(generated = true)
     public Response<Void> withPathApiVersionWithResponse(String apiVersion, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Server.Versions.NotVersioned.withPathApiVersion", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Server.Versions.NotVersioned.withPathApiVersion",
+            requestOptions,
             updatedOptions -> this.serviceClient.withPathApiVersionWithResponse(apiVersion, updatedOptions));
     }
 

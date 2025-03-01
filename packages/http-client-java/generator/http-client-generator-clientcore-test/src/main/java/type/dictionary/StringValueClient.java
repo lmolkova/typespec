@@ -52,7 +52,7 @@ public final class StringValueClient {
      */
     @Metadata(generated = true)
     public Response<Map<String, String>> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Dictionary.StringValue.get", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Dictionary.StringValue.get", requestOptions,
             updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
@@ -75,7 +75,7 @@ public final class StringValueClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Dictionary.StringValue.put", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Dictionary.StringValue.put", requestOptions,
             updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 

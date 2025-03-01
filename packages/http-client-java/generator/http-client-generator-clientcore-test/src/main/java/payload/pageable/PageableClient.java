@@ -59,8 +59,8 @@ public final class PageableClient {
     @Metadata(generated = true)
     @ServiceMethod(returns = ReturnType.COLLECTION)
     public PagedIterable<Pet> link(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Payload.Pageable.ServerDrivenPagination.link", requestOptions,
-            updatedOptions -> this.serviceClient.link(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Payload.Pageable.ServerDrivenPagination.link",
+            requestOptions, updatedOptions -> this.serviceClient.link(updatedOptions));
     }
 
     /**

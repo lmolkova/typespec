@@ -42,7 +42,7 @@ public final class QueryParametersClient {
      */
     @Metadata(generated = true)
     public Response<Void> templateOnlyWithResponse(String param, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Routes.QueryParameters.templateOnly", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Routes.QueryParameters.templateOnly", requestOptions,
             updatedOptions -> this.serviceClient.templateOnlyWithResponse(param, updatedOptions));
     }
 
@@ -56,7 +56,7 @@ public final class QueryParametersClient {
      */
     @Metadata(generated = true)
     public Response<Void> explicitWithResponse(String param, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Routes.QueryParameters.explicit", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Routes.QueryParameters.explicit", requestOptions,
             updatedOptions -> this.serviceClient.explicitWithResponse(param, updatedOptions));
     }
 
@@ -70,7 +70,7 @@ public final class QueryParametersClient {
      */
     @Metadata(generated = true)
     public Response<Void> annotationOnlyWithResponse(String param, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Routes.QueryParameters.annotationOnly", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Routes.QueryParameters.annotationOnly", requestOptions,
             updatedOptions -> this.serviceClient.annotationOnlyWithResponse(param, updatedOptions));
     }
 

@@ -268,7 +268,7 @@ public final class ApiKeyClientBuilder
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, this.endpoint);
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
         return new ApiKeyClient(buildInnerClient(), instrumentation);
     }
 

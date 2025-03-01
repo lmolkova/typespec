@@ -56,7 +56,7 @@ public final class IsUnknownDerivedClient {
      */
     @Metadata(generated = true)
     public Response<IsUnknownAdditionalPropertiesDerived> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.AdditionalProperties.IsUnknownDerived.get",
+        return this.instrumentation.instrumentWithResponse("Type.Property.AdditionalProperties.IsUnknownDerived.get",
             requestOptions, updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
@@ -84,7 +84,7 @@ public final class IsUnknownDerivedClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.AdditionalProperties.IsUnknownDerived.put",
+        return this.instrumentation.instrumentWithResponse("Type.Property.AdditionalProperties.IsUnknownDerived.put",
             requestOptions, updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 

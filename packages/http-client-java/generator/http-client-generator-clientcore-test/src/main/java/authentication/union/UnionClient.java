@@ -41,7 +41,7 @@ public final class UnionClient {
      */
     @Metadata(generated = true)
     public Response<Void> validKeyWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Authentication.Union.validKey", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Authentication.Union.validKey", requestOptions,
             updatedOptions -> this.serviceClient.validKeyWithResponse(updatedOptions));
     }
 
@@ -54,7 +54,7 @@ public final class UnionClient {
      */
     @Metadata(generated = true)
     public Response<Void> validTokenWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Authentication.Union.validToken", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Authentication.Union.validToken", requestOptions,
             updatedOptions -> this.serviceClient.validTokenWithResponse(updatedOptions));
     }
 

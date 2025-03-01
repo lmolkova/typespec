@@ -62,7 +62,7 @@ public final class PropertyClient {
      */
     @Metadata(generated = true)
     public Response<DefaultDatetimeProperty> defaultMethodWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Datetime.Property.default", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Datetime.Property.default", requestOptions,
             updatedOptions -> this.serviceClient.defaultMethodWithResponse(body, updatedOptions));
     }
 
@@ -95,7 +95,7 @@ public final class PropertyClient {
      */
     @Metadata(generated = true)
     public Response<Rfc3339DatetimeProperty> rfc3339WithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Datetime.Property.rfc3339", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Datetime.Property.rfc3339", requestOptions,
             updatedOptions -> this.serviceClient.rfc3339WithResponse(body, updatedOptions));
     }
 
@@ -128,7 +128,7 @@ public final class PropertyClient {
      */
     @Metadata(generated = true)
     public Response<Rfc7231DatetimeProperty> rfc7231WithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Datetime.Property.rfc7231", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Datetime.Property.rfc7231", requestOptions,
             updatedOptions -> this.serviceClient.rfc7231WithResponse(body, updatedOptions));
     }
 
@@ -162,7 +162,7 @@ public final class PropertyClient {
     @Metadata(generated = true)
     public Response<UnixTimestampDatetimeProperty> unixTimestampWithResponse(BinaryData body,
         RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Datetime.Property.unixTimestamp", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Datetime.Property.unixTimestamp", requestOptions,
             updatedOptions -> this.serviceClient.unixTimestampWithResponse(body, updatedOptions));
     }
 
@@ -200,8 +200,8 @@ public final class PropertyClient {
     @Metadata(generated = true)
     public Response<UnixTimestampArrayDatetimeProperty> unixTimestampArrayWithResponse(BinaryData body,
         RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Datetime.Property.unixTimestampArray", requestOptions,
-            updatedOptions -> this.serviceClient.unixTimestampArrayWithResponse(body, updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Encode.Datetime.Property.unixTimestampArray",
+            requestOptions, updatedOptions -> this.serviceClient.unixTimestampArrayWithResponse(body, updatedOptions));
     }
 
     /**

@@ -60,7 +60,7 @@ public final class ExtendsModelArrayClient {
      */
     @Metadata(generated = true)
     public Response<ExtendsModelArrayAdditionalProperties> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.AdditionalProperties.ExtendsModelArray.get",
+        return this.instrumentation.instrumentWithResponse("Type.Property.AdditionalProperties.ExtendsModelArray.get",
             requestOptions, updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
@@ -92,7 +92,7 @@ public final class ExtendsModelArrayClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.AdditionalProperties.ExtendsModelArray.put",
+        return this.instrumentation.instrumentWithResponse("Type.Property.AdditionalProperties.ExtendsModelArray.put",
             requestOptions, updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 

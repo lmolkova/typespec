@@ -56,8 +56,9 @@ public final class ExtendsUnknownDerivedClient {
      */
     @Metadata(generated = true)
     public Response<ExtendsUnknownAdditionalPropertiesDerived> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.AdditionalProperties.ExtendsUnknownDerived.get",
-            requestOptions, updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse(
+            "Type.Property.AdditionalProperties.ExtendsUnknownDerived.get", requestOptions,
+            updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
     /**
@@ -84,8 +85,9 @@ public final class ExtendsUnknownDerivedClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.AdditionalProperties.ExtendsUnknownDerived.put",
-            requestOptions, updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
+        return this.instrumentation.instrumentWithResponse(
+            "Type.Property.AdditionalProperties.ExtendsUnknownDerived.put", requestOptions,
+            updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 
     /**

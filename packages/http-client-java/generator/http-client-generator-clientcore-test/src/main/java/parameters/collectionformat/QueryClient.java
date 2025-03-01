@@ -43,7 +43,7 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> multiWithResponse(List<String> colors, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Parameters.CollectionFormat.Query.multi", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Parameters.CollectionFormat.Query.multi", requestOptions,
             updatedOptions -> this.serviceClient.multiWithResponse(colors, updatedOptions));
     }
 
@@ -57,7 +57,7 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> ssvWithResponse(List<String> colors, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Parameters.CollectionFormat.Query.ssv", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Parameters.CollectionFormat.Query.ssv", requestOptions,
             updatedOptions -> this.serviceClient.ssvWithResponse(colors, updatedOptions));
     }
 
@@ -71,7 +71,7 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> tsvWithResponse(List<String> colors, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Parameters.CollectionFormat.Query.tsv", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Parameters.CollectionFormat.Query.tsv", requestOptions,
             updatedOptions -> this.serviceClient.tsvWithResponse(colors, updatedOptions));
     }
 
@@ -85,7 +85,7 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> pipesWithResponse(List<String> colors, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Parameters.CollectionFormat.Query.pipes", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Parameters.CollectionFormat.Query.pipes", requestOptions,
             updatedOptions -> this.serviceClient.pipesWithResponse(colors, updatedOptions));
     }
 
@@ -99,7 +99,7 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> csvWithResponse(List<String> colors, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Parameters.CollectionFormat.Query.csv", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Parameters.CollectionFormat.Query.csv", requestOptions,
             updatedOptions -> this.serviceClient.csvWithResponse(colors, updatedOptions));
     }
 

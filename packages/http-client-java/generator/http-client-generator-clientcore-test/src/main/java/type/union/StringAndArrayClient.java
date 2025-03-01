@@ -55,7 +55,7 @@ public final class StringAndArrayClient {
      */
     @Metadata(generated = true)
     public Response<GetResponse2> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Union.StringAndArray.get", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Union.StringAndArray.get", requestOptions,
             updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
@@ -81,7 +81,7 @@ public final class StringAndArrayClient {
      */
     @Metadata(generated = true)
     public Response<Void> sendWithResponse(BinaryData sendRequest2, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Union.StringAndArray.send", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Union.StringAndArray.send", requestOptions,
             updatedOptions -> this.serviceClient.sendWithResponse(sendRequest2, updatedOptions));
     }
 

@@ -53,7 +53,7 @@ public final class DatetimeValueClient {
      */
     @Metadata(generated = true)
     public Response<List<OffsetDateTime>> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Array.DatetimeValue.get", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Array.DatetimeValue.get", requestOptions,
             updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
@@ -76,7 +76,7 @@ public final class DatetimeValueClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Array.DatetimeValue.put", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Array.DatetimeValue.put", requestOptions,
             updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 

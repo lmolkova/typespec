@@ -43,7 +43,7 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> defaultMethodWithResponse(byte[] value, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Bytes.Query.default", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Bytes.Query.default", requestOptions,
             updatedOptions -> this.serviceClient.defaultMethodWithResponse(value, updatedOptions));
     }
 
@@ -57,7 +57,7 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> base64WithResponse(byte[] value, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Bytes.Query.base64", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Bytes.Query.base64", requestOptions,
             updatedOptions -> this.serviceClient.base64WithResponse(value, updatedOptions));
     }
 
@@ -71,7 +71,7 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> base64urlWithResponse(byte[] value, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Bytes.Query.base64url", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Bytes.Query.base64url", requestOptions,
             updatedOptions -> this.serviceClient.base64urlWithResponse(value, updatedOptions));
     }
 
@@ -85,7 +85,7 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> base64urlArrayWithResponse(List<byte[]> value, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Bytes.Query.base64urlArray", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Bytes.Query.base64urlArray", requestOptions,
             updatedOptions -> this.serviceClient.base64urlArrayWithResponse(value, updatedOptions));
     }
 

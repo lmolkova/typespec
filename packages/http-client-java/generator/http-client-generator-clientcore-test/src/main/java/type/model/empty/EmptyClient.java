@@ -51,7 +51,7 @@ public final class EmptyClient {
      */
     @Metadata(generated = true)
     public Response<Void> putEmptyWithResponse(BinaryData input, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Model.Empty.putEmpty", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Model.Empty.putEmpty", requestOptions,
             updatedOptions -> this.serviceClient.putEmptyWithResponse(input, updatedOptions));
     }
 
@@ -72,7 +72,7 @@ public final class EmptyClient {
      */
     @Metadata(generated = true)
     public Response<EmptyOutput> getEmptyWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Model.Empty.getEmpty", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Model.Empty.getEmpty", requestOptions,
             updatedOptions -> this.serviceClient.getEmptyWithResponse(updatedOptions));
     }
 
@@ -103,7 +103,7 @@ public final class EmptyClient {
      */
     @Metadata(generated = true)
     public Response<EmptyInputOutput> postRoundTripEmptyWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Model.Empty.postRoundTripEmpty", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Model.Empty.postRoundTripEmpty", requestOptions,
             updatedOptions -> this.serviceClient.postRoundTripEmptyWithResponse(body, updatedOptions));
     }
 

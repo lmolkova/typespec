@@ -247,7 +247,7 @@ public final class BodyOptionalityClientBuilder
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, this.endpoint);
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
         return new BodyOptionalityClient(buildInnerClient(), instrumentation);
     }
 
@@ -258,7 +258,12 @@ public final class BodyOptionalityClientBuilder
      */
     @Metadata(generated = true)
     public OptionalExplicitClient buildOptionalExplicitClient() {
-        return new OptionalExplicitClient(buildInnerClient().getOptionalExplicits());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new OptionalExplicitClient(buildInnerClient().getOptionalExplicits(), instrumentation);
     }
 
     private static final ClientLogger LOGGER = new ClientLogger(BodyOptionalityClientBuilder.class);

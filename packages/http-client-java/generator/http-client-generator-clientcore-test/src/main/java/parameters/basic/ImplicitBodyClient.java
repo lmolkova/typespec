@@ -53,7 +53,7 @@ public final class ImplicitBodyClient {
      */
     @Metadata(generated = true)
     public Response<Void> simpleWithResponse(BinaryData simpleRequest, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Parameters.Basic.ImplicitBody.simple", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Parameters.Basic.ImplicitBody.simple", requestOptions,
             updatedOptions -> this.serviceClient.simpleWithResponse(simpleRequest, updatedOptions));
     }
 

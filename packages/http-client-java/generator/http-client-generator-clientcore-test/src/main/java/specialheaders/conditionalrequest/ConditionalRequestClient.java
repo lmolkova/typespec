@@ -52,8 +52,8 @@ public final class ConditionalRequestClient {
      */
     @Metadata(generated = true)
     public Response<Void> postIfMatchWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("SpecialHeaders.ConditionalRequest.postIfMatch", requestOptions,
-            updatedOptions -> this.serviceClient.postIfMatchWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("SpecialHeaders.ConditionalRequest.postIfMatch",
+            requestOptions, updatedOptions -> this.serviceClient.postIfMatchWithResponse(updatedOptions));
     }
 
     /**
@@ -73,8 +73,8 @@ public final class ConditionalRequestClient {
      */
     @Metadata(generated = true)
     public Response<Void> postIfNoneMatchWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("SpecialHeaders.ConditionalRequest.postIfNoneMatch", requestOptions,
-            updatedOptions -> this.serviceClient.postIfNoneMatchWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("SpecialHeaders.ConditionalRequest.postIfNoneMatch",
+            requestOptions, updatedOptions -> this.serviceClient.postIfNoneMatchWithResponse(updatedOptions));
     }
 
     /**
@@ -96,8 +96,8 @@ public final class ConditionalRequestClient {
      */
     @Metadata(generated = true)
     public Response<Void> headIfModifiedSinceWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("SpecialHeaders.ConditionalRequest.headIfModifiedSince", requestOptions,
-            updatedOptions -> this.serviceClient.headIfModifiedSinceWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("SpecialHeaders.ConditionalRequest.headIfModifiedSince",
+            requestOptions, updatedOptions -> this.serviceClient.headIfModifiedSinceWithResponse(updatedOptions));
     }
 
     /**
@@ -119,7 +119,7 @@ public final class ConditionalRequestClient {
      */
     @Metadata(generated = true)
     public Response<Void> postIfUnmodifiedSinceWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("SpecialHeaders.ConditionalRequest.postIfUnmodifiedSince",
+        return this.instrumentation.instrumentWithResponse("SpecialHeaders.ConditionalRequest.postIfUnmodifiedSince",
             requestOptions, updatedOptions -> this.serviceClient.postIfUnmodifiedSinceWithResponse(updatedOptions));
     }
 

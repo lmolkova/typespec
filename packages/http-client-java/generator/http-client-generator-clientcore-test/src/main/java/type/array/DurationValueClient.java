@@ -53,7 +53,7 @@ public final class DurationValueClient {
      */
     @Metadata(generated = true)
     public Response<List<Duration>> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Array.DurationValue.get", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Array.DurationValue.get", requestOptions,
             updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
@@ -76,7 +76,7 @@ public final class DurationValueClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Array.DurationValue.put", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Array.DurationValue.put", requestOptions,
             updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 

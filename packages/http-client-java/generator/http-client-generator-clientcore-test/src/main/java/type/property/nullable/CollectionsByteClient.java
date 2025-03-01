@@ -55,8 +55,8 @@ public final class CollectionsByteClient {
      */
     @Metadata(generated = true)
     public Response<CollectionsByteProperty> getNonNullWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Nullable.CollectionsByte.getNonNull", requestOptions,
-            updatedOptions -> this.serviceClient.getNonNullWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Property.Nullable.CollectionsByte.getNonNull",
+            requestOptions, updatedOptions -> this.serviceClient.getNonNullWithResponse(updatedOptions));
     }
 
     /**
@@ -80,8 +80,8 @@ public final class CollectionsByteClient {
      */
     @Metadata(generated = true)
     public Response<CollectionsByteProperty> getNullWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Nullable.CollectionsByte.getNull", requestOptions,
-            updatedOptions -> this.serviceClient.getNullWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Property.Nullable.CollectionsByte.getNull",
+            requestOptions, updatedOptions -> this.serviceClient.getNullWithResponse(updatedOptions));
     }
 
     /**
@@ -106,8 +106,8 @@ public final class CollectionsByteClient {
      */
     @Metadata(generated = true)
     public Response<Void> patchNonNullWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Nullable.CollectionsByte.patchNonNull", requestOptions,
-            updatedOptions -> this.serviceClient.patchNonNullWithResponse(body, updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Property.Nullable.CollectionsByte.patchNonNull",
+            requestOptions, updatedOptions -> this.serviceClient.patchNonNullWithResponse(body, updatedOptions));
     }
 
     /**
@@ -132,8 +132,8 @@ public final class CollectionsByteClient {
      */
     @Metadata(generated = true)
     public Response<Void> patchNullWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Nullable.CollectionsByte.patchNull", requestOptions,
-            updatedOptions -> this.serviceClient.patchNullWithResponse(body, updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Property.Nullable.CollectionsByte.patchNull",
+            requestOptions, updatedOptions -> this.serviceClient.patchNullWithResponse(body, updatedOptions));
     }
 
     /**

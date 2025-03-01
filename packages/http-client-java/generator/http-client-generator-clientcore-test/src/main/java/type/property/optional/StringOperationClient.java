@@ -51,7 +51,7 @@ public final class StringOperationClient {
      */
     @Metadata(generated = true)
     public Response<StringProperty> getAllWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Optional.String.getAll", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.Optional.String.getAll", requestOptions,
             updatedOptions -> this.serviceClient.getAllWithResponse(updatedOptions));
     }
 
@@ -73,7 +73,7 @@ public final class StringOperationClient {
      */
     @Metadata(generated = true)
     public Response<StringProperty> getDefaultWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Optional.String.getDefault", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.Optional.String.getDefault", requestOptions,
             updatedOptions -> this.serviceClient.getDefaultWithResponse(updatedOptions));
     }
 
@@ -96,7 +96,7 @@ public final class StringOperationClient {
      */
     @Metadata(generated = true)
     public Response<Void> putAllWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Optional.String.putAll", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.Optional.String.putAll", requestOptions,
             updatedOptions -> this.serviceClient.putAllWithResponse(body, updatedOptions));
     }
 
@@ -119,7 +119,7 @@ public final class StringOperationClient {
      */
     @Metadata(generated = true)
     public Response<Void> putDefaultWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Optional.String.putDefault", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.Optional.String.putDefault", requestOptions,
             updatedOptions -> this.serviceClient.putDefaultWithResponse(body, updatedOptions));
     }
 

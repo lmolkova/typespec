@@ -50,7 +50,7 @@ public final class DifferentBodyClient {
      */
     @Metadata(generated = true)
     public Response<BinaryData> getAvatarAsPngWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Payload.ContentNegotiation.DifferentBody.getAvatarAsPng",
+        return this.instrumentation.instrumentWithResponse("Payload.ContentNegotiation.DifferentBody.getAvatarAsPng",
             requestOptions, updatedOptions -> this.serviceClient.getAvatarAsPngWithResponse(updatedOptions));
     }
 
@@ -72,7 +72,7 @@ public final class DifferentBodyClient {
      */
     @Metadata(generated = true)
     public Response<PngImageAsJson> getAvatarAsJsonWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Payload.ContentNegotiation.DifferentBody.getAvatarAsJson",
+        return this.instrumentation.instrumentWithResponse("Payload.ContentNegotiation.DifferentBody.getAvatarAsJson",
             requestOptions, updatedOptions -> this.serviceClient.getAvatarAsJsonWithResponse(updatedOptions));
     }
 

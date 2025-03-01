@@ -51,7 +51,7 @@ public final class DatetimeOperationClient {
      */
     @Metadata(generated = true)
     public Response<DatetimeProperty> getAllWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Optional.Datetime.getAll", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.Optional.Datetime.getAll", requestOptions,
             updatedOptions -> this.serviceClient.getAllWithResponse(updatedOptions));
     }
 
@@ -73,7 +73,7 @@ public final class DatetimeOperationClient {
      */
     @Metadata(generated = true)
     public Response<DatetimeProperty> getDefaultWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Optional.Datetime.getDefault", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.Optional.Datetime.getDefault", requestOptions,
             updatedOptions -> this.serviceClient.getDefaultWithResponse(updatedOptions));
     }
 
@@ -96,7 +96,7 @@ public final class DatetimeOperationClient {
      */
     @Metadata(generated = true)
     public Response<Void> putAllWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Optional.Datetime.putAll", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.Optional.Datetime.putAll", requestOptions,
             updatedOptions -> this.serviceClient.putAllWithResponse(body, updatedOptions));
     }
 
@@ -119,7 +119,7 @@ public final class DatetimeOperationClient {
      */
     @Metadata(generated = true)
     public Response<Void> putDefaultWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Optional.Datetime.putDefault", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.Optional.Datetime.putDefault", requestOptions,
             updatedOptions -> this.serviceClient.putDefaultWithResponse(body, updatedOptions));
     }
 

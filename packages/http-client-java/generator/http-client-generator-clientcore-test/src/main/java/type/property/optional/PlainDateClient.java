@@ -51,7 +51,7 @@ public final class PlainDateClient {
      */
     @Metadata(generated = true)
     public Response<PlainDateProperty> getAllWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Optional.PlainDate.getAll", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.Optional.PlainDate.getAll", requestOptions,
             updatedOptions -> this.serviceClient.getAllWithResponse(updatedOptions));
     }
 
@@ -73,8 +73,8 @@ public final class PlainDateClient {
      */
     @Metadata(generated = true)
     public Response<PlainDateProperty> getDefaultWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Optional.PlainDate.getDefault", requestOptions,
-            updatedOptions -> this.serviceClient.getDefaultWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Property.Optional.PlainDate.getDefault",
+            requestOptions, updatedOptions -> this.serviceClient.getDefaultWithResponse(updatedOptions));
     }
 
     /**
@@ -96,7 +96,7 @@ public final class PlainDateClient {
      */
     @Metadata(generated = true)
     public Response<Void> putAllWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Optional.PlainDate.putAll", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.Optional.PlainDate.putAll", requestOptions,
             updatedOptions -> this.serviceClient.putAllWithResponse(body, updatedOptions));
     }
 
@@ -119,8 +119,8 @@ public final class PlainDateClient {
      */
     @Metadata(generated = true)
     public Response<Void> putDefaultWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Optional.PlainDate.putDefault", requestOptions,
-            updatedOptions -> this.serviceClient.putDefaultWithResponse(body, updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Property.Optional.PlainDate.putDefault",
+            requestOptions, updatedOptions -> this.serviceClient.putDefaultWithResponse(body, updatedOptions));
     }
 
     /**

@@ -51,7 +51,7 @@ public final class Decimal128Client {
      */
     @Metadata(generated = true)
     public Response<Decimal128Property> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.ValueTypes.Decimal128.get", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.ValueTypes.Decimal128.get", requestOptions,
             updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
@@ -74,7 +74,7 @@ public final class Decimal128Client {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.ValueTypes.Decimal128.put", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.ValueTypes.Decimal128.put", requestOptions,
             updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 

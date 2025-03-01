@@ -51,7 +51,7 @@ public final class FloatOperationClient {
      */
     @Metadata(generated = true)
     public Response<FloatProperty> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.ValueTypes.Float.get", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.ValueTypes.Float.get", requestOptions,
             updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
@@ -74,7 +74,7 @@ public final class FloatOperationClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.ValueTypes.Float.put", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.ValueTypes.Float.put", requestOptions,
             updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 

@@ -52,7 +52,7 @@ public final class ModelsOnlyClient {
      */
     @Metadata(generated = true)
     public Response<GetResponse4> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Union.ModelsOnly.get", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Union.ModelsOnly.get", requestOptions,
             updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
@@ -75,7 +75,7 @@ public final class ModelsOnlyClient {
      */
     @Metadata(generated = true)
     public Response<Void> sendWithResponse(BinaryData sendRequest4, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Union.ModelsOnly.send", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Union.ModelsOnly.send", requestOptions,
             updatedOptions -> this.serviceClient.sendWithResponse(sendRequest4, updatedOptions));
     }
 

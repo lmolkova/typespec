@@ -60,7 +60,7 @@ public final class MixedTypesClient {
      */
     @Metadata(generated = true)
     public Response<GetResponse> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Union.MixedTypes.get", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Union.MixedTypes.get", requestOptions,
             updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
@@ -91,7 +91,7 @@ public final class MixedTypesClient {
      */
     @Metadata(generated = true)
     public Response<Void> sendWithResponse(BinaryData sendRequest, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Union.MixedTypes.send", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Union.MixedTypes.send", requestOptions,
             updatedOptions -> this.serviceClient.sendWithResponse(sendRequest, updatedOptions));
     }
 

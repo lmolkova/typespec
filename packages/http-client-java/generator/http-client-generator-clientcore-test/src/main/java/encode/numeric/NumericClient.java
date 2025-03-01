@@ -66,7 +66,7 @@ public final class NumericClient {
     @Metadata(generated = true)
     public Response<SafeintAsStringProperty> safeintAsStringWithResponse(BinaryData value,
         RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Numeric.Property.safeintAsString", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Numeric.Property.safeintAsString", requestOptions,
             updatedOptions -> this.serviceClient.safeintAsStringWithResponse(value, updatedOptions));
     }
 
@@ -100,7 +100,8 @@ public final class NumericClient {
     @Metadata(generated = true)
     public Response<Uint32AsStringProperty> uint32AsStringOptionalWithResponse(BinaryData value,
         RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Numeric.Property.uint32AsStringOptional", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Numeric.Property.uint32AsStringOptional",
+            requestOptions,
             updatedOptions -> this.serviceClient.uint32AsStringOptionalWithResponse(value, updatedOptions));
     }
 
@@ -133,7 +134,7 @@ public final class NumericClient {
      */
     @Metadata(generated = true)
     public Response<Uint8AsStringProperty> uint8AsStringWithResponse(BinaryData value, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Numeric.Property.uint8AsString", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Numeric.Property.uint8AsString", requestOptions,
             updatedOptions -> this.serviceClient.uint8AsStringWithResponse(value, updatedOptions));
     }
 

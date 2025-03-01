@@ -57,8 +57,8 @@ public final class CollectionsModelClient {
      */
     @Metadata(generated = true)
     public Response<CollectionsModelProperty> getNonNullWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Nullable.CollectionsModel.getNonNull", requestOptions,
-            updatedOptions -> this.serviceClient.getNonNullWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Property.Nullable.CollectionsModel.getNonNull",
+            requestOptions, updatedOptions -> this.serviceClient.getNonNullWithResponse(updatedOptions));
     }
 
     /**
@@ -84,8 +84,8 @@ public final class CollectionsModelClient {
      */
     @Metadata(generated = true)
     public Response<CollectionsModelProperty> getNullWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Nullable.CollectionsModel.getNull", requestOptions,
-            updatedOptions -> this.serviceClient.getNullWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Property.Nullable.CollectionsModel.getNull",
+            requestOptions, updatedOptions -> this.serviceClient.getNullWithResponse(updatedOptions));
     }
 
     /**
@@ -112,8 +112,8 @@ public final class CollectionsModelClient {
      */
     @Metadata(generated = true)
     public Response<Void> patchNonNullWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Nullable.CollectionsModel.patchNonNull", requestOptions,
-            updatedOptions -> this.serviceClient.patchNonNullWithResponse(body, updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Property.Nullable.CollectionsModel.patchNonNull",
+            requestOptions, updatedOptions -> this.serviceClient.patchNonNullWithResponse(body, updatedOptions));
     }
 
     /**
@@ -140,8 +140,8 @@ public final class CollectionsModelClient {
      */
     @Metadata(generated = true)
     public Response<Void> patchNullWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Nullable.CollectionsModel.patchNull", requestOptions,
-            updatedOptions -> this.serviceClient.patchNullWithResponse(body, updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Property.Nullable.CollectionsModel.patchNull",
+            requestOptions, updatedOptions -> this.serviceClient.patchNullWithResponse(body, updatedOptions));
     }
 
     /**

@@ -55,7 +55,7 @@ public final class SpreadRecordNonDiscriminatedUnionClient {
      */
     @Metadata(generated = true)
     public Response<SpreadRecordForNonDiscriminatedUnion> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument(
+        return this.instrumentation.instrumentWithResponse(
             "Type.Property.AdditionalProperties.SpreadRecordNonDiscriminatedUnion.get", requestOptions,
             updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
@@ -82,7 +82,7 @@ public final class SpreadRecordNonDiscriminatedUnionClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument(
+        return this.instrumentation.instrumentWithResponse(
             "Type.Property.AdditionalProperties.SpreadRecordNonDiscriminatedUnion.put", requestOptions,
             updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }

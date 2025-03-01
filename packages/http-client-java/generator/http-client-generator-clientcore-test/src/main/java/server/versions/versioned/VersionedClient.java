@@ -41,8 +41,8 @@ public final class VersionedClient {
      */
     @Metadata(generated = true)
     public Response<Void> withoutApiVersionWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Server.Versions.Versioned.withoutApiVersion", requestOptions,
-            updatedOptions -> this.serviceClient.withoutApiVersionWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Server.Versions.Versioned.withoutApiVersion",
+            requestOptions, updatedOptions -> this.serviceClient.withoutApiVersionWithResponse(updatedOptions));
     }
 
     /**
@@ -54,8 +54,8 @@ public final class VersionedClient {
      */
     @Metadata(generated = true)
     public Response<Void> withQueryApiVersionWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Server.Versions.Versioned.withQueryApiVersion", requestOptions,
-            updatedOptions -> this.serviceClient.withQueryApiVersionWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Server.Versions.Versioned.withQueryApiVersion",
+            requestOptions, updatedOptions -> this.serviceClient.withQueryApiVersionWithResponse(updatedOptions));
     }
 
     /**
@@ -67,8 +67,8 @@ public final class VersionedClient {
      */
     @Metadata(generated = true)
     public Response<Void> withPathApiVersionWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Server.Versions.Versioned.withPathApiVersion", requestOptions,
-            updatedOptions -> this.serviceClient.withPathApiVersionWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Server.Versions.Versioned.withPathApiVersion",
+            requestOptions, updatedOptions -> this.serviceClient.withPathApiVersionWithResponse(updatedOptions));
     }
 
     /**
@@ -80,8 +80,8 @@ public final class VersionedClient {
      */
     @Metadata(generated = true)
     public Response<Void> withQueryOldApiVersionWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Server.Versions.Versioned.withQueryOldApiVersion", requestOptions,
-            updatedOptions -> this.serviceClient.withQueryOldApiVersionWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Server.Versions.Versioned.withQueryOldApiVersion",
+            requestOptions, updatedOptions -> this.serviceClient.withQueryOldApiVersionWithResponse(updatedOptions));
     }
 
     /**

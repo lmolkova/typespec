@@ -41,7 +41,7 @@ public final class OAuth2Client {
      */
     @Metadata(generated = true)
     public Response<Void> validWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Authentication.OAuth2.valid", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Authentication.OAuth2.valid", requestOptions,
             updatedOptions -> this.serviceClient.validWithResponse(updatedOptions));
     }
 
@@ -54,7 +54,7 @@ public final class OAuth2Client {
      */
     @Metadata(generated = true)
     public Response<Void> invalidWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Authentication.OAuth2.invalid", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Authentication.OAuth2.invalid", requestOptions,
             updatedOptions -> this.serviceClient.invalidWithResponse(updatedOptions));
     }
 

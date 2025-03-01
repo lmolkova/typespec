@@ -53,8 +53,8 @@ public final class JsonClient {
      */
     @Metadata(generated = true)
     public Response<Void> sendWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Serialization.EncodedName.Json.Property.send", requestOptions,
-            updatedOptions -> this.serviceClient.sendWithResponse(body, updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Serialization.EncodedName.Json.Property.send",
+            requestOptions, updatedOptions -> this.serviceClient.sendWithResponse(body, updatedOptions));
     }
 
     /**
@@ -75,8 +75,8 @@ public final class JsonClient {
      */
     @Metadata(generated = true)
     public Response<JsonEncodedNameModel> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Serialization.EncodedName.Json.Property.get", requestOptions,
-            updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Serialization.EncodedName.Json.Property.get",
+            requestOptions, updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
     /**

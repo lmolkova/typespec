@@ -95,7 +95,7 @@ public final class JsonMergePatchClient {
      */
     @Metadata(generated = true)
     public Response<Resource> createResourceWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Payload.JsonMergePatch.createResource", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Payload.JsonMergePatch.createResource", requestOptions,
             updatedOptions -> this.serviceClient.createResourceWithResponse(body, updatedOptions));
     }
 
@@ -159,7 +159,7 @@ public final class JsonMergePatchClient {
      */
     @Metadata(generated = true)
     public Response<Resource> updateResourceWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Payload.JsonMergePatch.updateResource", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Payload.JsonMergePatch.updateResource", requestOptions,
             updatedOptions -> this.serviceClient.updateResourceWithResponse(body, updatedOptions));
     }
 
@@ -230,8 +230,8 @@ public final class JsonMergePatchClient {
      */
     @Metadata(generated = true)
     public Response<Resource> updateOptionalResourceWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Payload.JsonMergePatch.updateOptionalResource", requestOptions,
-            updatedOptions -> this.serviceClient.updateOptionalResourceWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Payload.JsonMergePatch.updateOptionalResource",
+            requestOptions, updatedOptions -> this.serviceClient.updateOptionalResourceWithResponse(updatedOptions));
     }
 
     /**

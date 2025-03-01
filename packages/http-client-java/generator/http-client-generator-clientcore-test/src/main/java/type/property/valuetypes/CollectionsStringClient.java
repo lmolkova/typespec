@@ -53,8 +53,8 @@ public final class CollectionsStringClient {
      */
     @Metadata(generated = true)
     public Response<CollectionsStringProperty> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.ValueTypes.CollectionsString.get", requestOptions,
-            updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Property.ValueTypes.CollectionsString.get",
+            requestOptions, updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
     /**
@@ -78,8 +78,8 @@ public final class CollectionsStringClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.ValueTypes.CollectionsString.put", requestOptions,
-            updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Property.ValueTypes.CollectionsString.put",
+            requestOptions, updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 
     /**

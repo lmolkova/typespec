@@ -52,8 +52,8 @@ public final class BodyOptionalityClient {
      */
     @Metadata(generated = true)
     public Response<Void> requiredExplicitWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Parameters.BodyOptionality.requiredExplicit", requestOptions,
-            updatedOptions -> this.serviceClient.requiredExplicitWithResponse(body, updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Parameters.BodyOptionality.requiredExplicit",
+            requestOptions, updatedOptions -> this.serviceClient.requiredExplicitWithResponse(body, updatedOptions));
     }
 
     /**
@@ -75,7 +75,8 @@ public final class BodyOptionalityClient {
      */
     @Metadata(generated = true)
     public Response<Void> requiredImplicitWithResponse(BinaryData bodyModel, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Parameters.BodyOptionality.requiredImplicit", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Parameters.BodyOptionality.requiredImplicit",
+            requestOptions,
             updatedOptions -> this.serviceClient.requiredImplicitWithResponse(bodyModel, updatedOptions));
     }
 

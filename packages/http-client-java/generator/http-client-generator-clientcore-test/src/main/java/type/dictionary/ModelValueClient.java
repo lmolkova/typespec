@@ -57,7 +57,7 @@ public final class ModelValueClient {
      */
     @Metadata(generated = true)
     public Response<Map<String, InnerModel>> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Dictionary.ModelValue.get", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Dictionary.ModelValue.get", requestOptions,
             updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
@@ -85,7 +85,7 @@ public final class ModelValueClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Dictionary.ModelValue.put", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Dictionary.ModelValue.put", requestOptions,
             updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 

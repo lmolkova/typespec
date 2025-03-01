@@ -53,7 +53,7 @@ public final class Decimal128VerifyClient {
      */
     @Metadata(generated = true)
     public Response<List<BigDecimal>> prepareVerifyWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Scalar.Decimal128Verify.prepareVerify", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Scalar.Decimal128Verify.prepareVerify", requestOptions,
             updatedOptions -> this.serviceClient.prepareVerifyWithResponse(updatedOptions));
     }
 
@@ -74,7 +74,7 @@ public final class Decimal128VerifyClient {
      */
     @Metadata(generated = true)
     public Response<Void> verifyWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Scalar.Decimal128Verify.verify", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Scalar.Decimal128Verify.verify", requestOptions,
             updatedOptions -> this.serviceClient.verifyWithResponse(body, updatedOptions));
     }
 

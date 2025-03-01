@@ -54,8 +54,9 @@ public final class SpreadDifferentStringClient {
      */
     @Metadata(generated = true)
     public Response<DifferentSpreadStringRecord> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.AdditionalProperties.SpreadDifferentString.get",
-            requestOptions, updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse(
+            "Type.Property.AdditionalProperties.SpreadDifferentString.get", requestOptions,
+            updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
     /**
@@ -80,8 +81,9 @@ public final class SpreadDifferentStringClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.AdditionalProperties.SpreadDifferentString.put",
-            requestOptions, updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
+        return this.instrumentation.instrumentWithResponse(
+            "Type.Property.AdditionalProperties.SpreadDifferentString.put", requestOptions,
+            updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 
     /**

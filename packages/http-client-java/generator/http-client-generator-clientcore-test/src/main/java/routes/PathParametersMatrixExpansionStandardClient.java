@@ -45,7 +45,7 @@ public final class PathParametersMatrixExpansionStandardClient {
      */
     @Metadata(generated = true)
     public Response<Void> primitiveWithResponse(String param, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Routes.PathParameters.MatrixExpansion.Standard.primitive",
+        return this.instrumentation.instrumentWithResponse("Routes.PathParameters.MatrixExpansion.Standard.primitive",
             requestOptions, updatedOptions -> this.serviceClient.primitiveWithResponse(param, updatedOptions));
     }
 
@@ -59,8 +59,8 @@ public final class PathParametersMatrixExpansionStandardClient {
      */
     @Metadata(generated = true)
     public Response<Void> arrayWithResponse(List<String> param, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Routes.PathParameters.MatrixExpansion.Standard.array", requestOptions,
-            updatedOptions -> this.serviceClient.arrayWithResponse(param, updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Routes.PathParameters.MatrixExpansion.Standard.array",
+            requestOptions, updatedOptions -> this.serviceClient.arrayWithResponse(param, updatedOptions));
     }
 
     /**
@@ -73,8 +73,8 @@ public final class PathParametersMatrixExpansionStandardClient {
      */
     @Metadata(generated = true)
     public Response<Void> recordWithResponse(Map<String, Integer> param, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Routes.PathParameters.MatrixExpansion.Standard.record", requestOptions,
-            updatedOptions -> this.serviceClient.recordWithResponse(param, updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Routes.PathParameters.MatrixExpansion.Standard.record",
+            requestOptions, updatedOptions -> this.serviceClient.recordWithResponse(param, updatedOptions));
     }
 
     /**

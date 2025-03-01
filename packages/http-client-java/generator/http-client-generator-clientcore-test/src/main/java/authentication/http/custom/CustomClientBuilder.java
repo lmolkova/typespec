@@ -268,7 +268,7 @@ public final class CustomClientBuilder
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, this.endpoint);
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
         return new CustomClient(buildInnerClient(), instrumentation);
     }
 

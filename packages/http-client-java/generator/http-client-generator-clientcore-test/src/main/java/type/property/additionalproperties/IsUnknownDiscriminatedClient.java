@@ -55,8 +55,9 @@ public final class IsUnknownDiscriminatedClient {
      */
     @Metadata(generated = true)
     public Response<IsUnknownAdditionalPropertiesDiscriminated> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.AdditionalProperties.IsUnknownDiscriminated.get",
-            requestOptions, updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse(
+            "Type.Property.AdditionalProperties.IsUnknownDiscriminated.get", requestOptions,
+            updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
     /**
@@ -82,8 +83,9 @@ public final class IsUnknownDiscriminatedClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.AdditionalProperties.IsUnknownDiscriminated.put",
-            requestOptions, updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
+        return this.instrumentation.instrumentWithResponse(
+            "Type.Property.AdditionalProperties.IsUnknownDiscriminated.put", requestOptions,
+            updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 
     /**

@@ -50,7 +50,7 @@ public final class DecimalTypeClient {
      */
     @Metadata(generated = true)
     public Response<BigDecimal> responseBodyWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Scalar.DecimalType.responseBody", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Scalar.DecimalType.responseBody", requestOptions,
             updatedOptions -> this.serviceClient.responseBodyWithResponse(updatedOptions));
     }
 
@@ -71,7 +71,7 @@ public final class DecimalTypeClient {
      */
     @Metadata(generated = true)
     public Response<Void> requestBodyWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Scalar.DecimalType.requestBody", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Scalar.DecimalType.requestBody", requestOptions,
             updatedOptions -> this.serviceClient.requestBodyWithResponse(body, updatedOptions));
     }
 
@@ -85,7 +85,7 @@ public final class DecimalTypeClient {
      */
     @Metadata(generated = true)
     public Response<Void> requestParameterWithResponse(BigDecimal value, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Scalar.DecimalType.requestParameter", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Scalar.DecimalType.requestParameter", requestOptions,
             updatedOptions -> this.serviceClient.requestParameterWithResponse(value, updatedOptions));
     }
 

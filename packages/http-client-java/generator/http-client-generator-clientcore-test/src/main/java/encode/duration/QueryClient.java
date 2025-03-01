@@ -44,7 +44,7 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> defaultMethodWithResponse(Duration input, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Duration.Query.default", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Duration.Query.default", requestOptions,
             updatedOptions -> this.serviceClient.defaultMethodWithResponse(input, updatedOptions));
     }
 
@@ -58,7 +58,7 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> iso8601WithResponse(Duration input, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Duration.Query.iso8601", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Duration.Query.iso8601", requestOptions,
             updatedOptions -> this.serviceClient.iso8601WithResponse(input, updatedOptions));
     }
 
@@ -72,7 +72,7 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> int32SecondsWithResponse(Duration input, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Duration.Query.int32Seconds", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Duration.Query.int32Seconds", requestOptions,
             updatedOptions -> this.serviceClient.int32SecondsWithResponse(input, updatedOptions));
     }
 
@@ -86,7 +86,7 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> floatSecondsWithResponse(Duration input, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Duration.Query.floatSeconds", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Duration.Query.floatSeconds", requestOptions,
             updatedOptions -> this.serviceClient.floatSecondsWithResponse(input, updatedOptions));
     }
 
@@ -100,7 +100,7 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> float64SecondsWithResponse(Duration input, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Duration.Query.float64Seconds", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Duration.Query.float64Seconds", requestOptions,
             updatedOptions -> this.serviceClient.float64SecondsWithResponse(input, updatedOptions));
     }
 
@@ -114,7 +114,7 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> int32SecondsArrayWithResponse(List<Duration> input, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Duration.Query.int32SecondsArray", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Duration.Query.int32SecondsArray", requestOptions,
             updatedOptions -> this.serviceClient.int32SecondsArrayWithResponse(input, updatedOptions));
     }
 

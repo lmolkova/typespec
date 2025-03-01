@@ -52,7 +52,7 @@ public final class NullableInt32ValueClient {
      */
     @Metadata(generated = true)
     public Response<List<Integer>> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Array.NullableInt32Value.get", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Array.NullableInt32Value.get", requestOptions,
             updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
@@ -75,7 +75,7 @@ public final class NullableInt32ValueClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Array.NullableInt32Value.put", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Array.NullableInt32Value.put", requestOptions,
             updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 

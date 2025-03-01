@@ -51,7 +51,7 @@ public final class StringOperationClient {
      */
     @Metadata(generated = true)
     public Response<StringProperty> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.ValueTypes.String.get", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.ValueTypes.String.get", requestOptions,
             updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
@@ -74,7 +74,7 @@ public final class StringOperationClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.ValueTypes.String.put", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.ValueTypes.String.put", requestOptions,
             updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 

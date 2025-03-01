@@ -68,7 +68,7 @@ public final class PropertyClient {
      */
     @Metadata(generated = true)
     public Response<DefaultDurationProperty> defaultMethodWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Duration.Property.default", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Duration.Property.default", requestOptions,
             updatedOptions -> this.serviceClient.defaultMethodWithResponse(body, updatedOptions));
     }
 
@@ -101,7 +101,7 @@ public final class PropertyClient {
      */
     @Metadata(generated = true)
     public Response<ISO8601DurationProperty> iso8601WithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Duration.Property.iso8601", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Duration.Property.iso8601", requestOptions,
             updatedOptions -> this.serviceClient.iso8601WithResponse(body, updatedOptions));
     }
 
@@ -135,7 +135,7 @@ public final class PropertyClient {
     @Metadata(generated = true)
     public Response<Int32SecondsDurationProperty> int32SecondsWithResponse(BinaryData body,
         RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Duration.Property.int32Seconds", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Duration.Property.int32Seconds", requestOptions,
             updatedOptions -> this.serviceClient.int32SecondsWithResponse(body, updatedOptions));
     }
 
@@ -169,7 +169,7 @@ public final class PropertyClient {
     @Metadata(generated = true)
     public Response<FloatSecondsDurationProperty> floatSecondsWithResponse(BinaryData body,
         RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Duration.Property.floatSeconds", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Duration.Property.floatSeconds", requestOptions,
             updatedOptions -> this.serviceClient.floatSecondsWithResponse(body, updatedOptions));
     }
 
@@ -203,7 +203,7 @@ public final class PropertyClient {
     @Metadata(generated = true)
     public Response<Float64SecondsDurationProperty> float64SecondsWithResponse(BinaryData body,
         RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Duration.Property.float64Seconds", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Duration.Property.float64Seconds", requestOptions,
             updatedOptions -> this.serviceClient.float64SecondsWithResponse(body, updatedOptions));
     }
 
@@ -241,7 +241,7 @@ public final class PropertyClient {
     @Metadata(generated = true)
     public Response<FloatSecondsDurationArrayProperty> floatSecondsArrayWithResponse(BinaryData body,
         RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Duration.Property.floatSecondsArray", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Duration.Property.floatSecondsArray", requestOptions,
             updatedOptions -> this.serviceClient.floatSecondsArrayWithResponse(body, updatedOptions));
     }
 

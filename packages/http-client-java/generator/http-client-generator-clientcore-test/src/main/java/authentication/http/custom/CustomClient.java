@@ -41,7 +41,7 @@ public final class CustomClient {
      */
     @Metadata(generated = true)
     public Response<Void> validWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Authentication.Http.Custom.valid", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Authentication.Http.Custom.valid", requestOptions,
             updatedOptions -> this.serviceClient.validWithResponse(updatedOptions));
     }
 
@@ -54,7 +54,7 @@ public final class CustomClient {
      */
     @Metadata(generated = true)
     public Response<Void> invalidWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Authentication.Http.Custom.invalid", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Authentication.Http.Custom.invalid", requestOptions,
             updatedOptions -> this.serviceClient.invalidWithResponse(updatedOptions));
     }
 

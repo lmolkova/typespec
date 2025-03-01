@@ -55,8 +55,9 @@ public final class ExtendsUnknownDiscriminatedClient {
      */
     @Metadata(generated = true)
     public Response<ExtendsUnknownAdditionalPropertiesDiscriminated> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.AdditionalProperties.ExtendsUnknownDiscriminated.get",
-            requestOptions, updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse(
+            "Type.Property.AdditionalProperties.ExtendsUnknownDiscriminated.get", requestOptions,
+            updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
     /**
@@ -82,8 +83,9 @@ public final class ExtendsUnknownDiscriminatedClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.AdditionalProperties.ExtendsUnknownDiscriminated.put",
-            requestOptions, updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
+        return this.instrumentation.instrumentWithResponse(
+            "Type.Property.AdditionalProperties.ExtendsUnknownDiscriminated.put", requestOptions,
+            updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 
     /**

@@ -59,9 +59,9 @@ public final class AliasClient {
     @Metadata(generated = true)
     public Response<Void> spreadAsRequestBodyWithResponse(BinaryData spreadAsRequestBodyRequest,
         RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Parameters.Spread.Alias.spreadAsRequestBody", requestOptions,
-            updatedOptions -> this.serviceClient.spreadAsRequestBodyWithResponse(spreadAsRequestBodyRequest,
-                updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Parameters.Spread.Alias.spreadAsRequestBody",
+            requestOptions, updatedOptions -> this.serviceClient
+                .spreadAsRequestBodyWithResponse(spreadAsRequestBodyRequest, updatedOptions));
     }
 
     /**
@@ -86,9 +86,9 @@ public final class AliasClient {
     @Metadata(generated = true)
     public Response<Void> spreadParameterWithInnerModelWithResponse(String id, String xMsTestHeader,
         BinaryData spreadParameterWithInnerModelRequest, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Parameters.Spread.Alias.spreadParameterWithInnerModel", requestOptions,
-            updatedOptions -> this.serviceClient.spreadParameterWithInnerModelWithResponse(id, xMsTestHeader,
-                spreadParameterWithInnerModelRequest, updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Parameters.Spread.Alias.spreadParameterWithInnerModel",
+            requestOptions, updatedOptions -> this.serviceClient.spreadParameterWithInnerModelWithResponse(id,
+                xMsTestHeader, spreadParameterWithInnerModelRequest, updatedOptions));
     }
 
     /**
@@ -113,8 +113,8 @@ public final class AliasClient {
     @Metadata(generated = true)
     public Response<Void> spreadAsRequestParameterWithResponse(String id, String xMsTestHeader,
         BinaryData spreadAsRequestParameterRequest, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Parameters.Spread.Alias.spreadAsRequestParameter", requestOptions,
-            updatedOptions -> this.serviceClient.spreadAsRequestParameterWithResponse(id, xMsTestHeader,
+        return this.instrumentation.instrumentWithResponse("Parameters.Spread.Alias.spreadAsRequestParameter",
+            requestOptions, updatedOptions -> this.serviceClient.spreadAsRequestParameterWithResponse(id, xMsTestHeader,
                 spreadAsRequestParameterRequest, updatedOptions));
     }
 
@@ -147,9 +147,9 @@ public final class AliasClient {
     @Metadata(generated = true)
     public Response<Void> spreadWithMultipleParametersWithResponse(String id, String xMsTestHeader,
         BinaryData spreadWithMultipleParametersRequest, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Parameters.Spread.Alias.spreadWithMultipleParameters", requestOptions,
-            updatedOptions -> this.serviceClient.spreadWithMultipleParametersWithResponse(id, xMsTestHeader,
-                spreadWithMultipleParametersRequest, updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Parameters.Spread.Alias.spreadWithMultipleParameters",
+            requestOptions, updatedOptions -> this.serviceClient.spreadWithMultipleParametersWithResponse(id,
+                xMsTestHeader, spreadWithMultipleParametersRequest, updatedOptions));
     }
 
     /**
@@ -175,9 +175,9 @@ public final class AliasClient {
     @Metadata(generated = true)
     public Response<Void> spreadParameterWithInnerAliasWithResponse(String id, String xMsTestHeader,
         BinaryData spreadParameterWithInnerAliasRequest, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Parameters.Spread.Alias.spreadParameterWithInnerAlias", requestOptions,
-            updatedOptions -> this.serviceClient.spreadParameterWithInnerAliasWithResponse(id, xMsTestHeader,
-                spreadParameterWithInnerAliasRequest, updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Parameters.Spread.Alias.spreadParameterWithInnerAlias",
+            requestOptions, updatedOptions -> this.serviceClient.spreadParameterWithInnerAliasWithResponse(id,
+                xMsTestHeader, spreadParameterWithInnerAliasRequest, updatedOptions));
     }
 
     /**

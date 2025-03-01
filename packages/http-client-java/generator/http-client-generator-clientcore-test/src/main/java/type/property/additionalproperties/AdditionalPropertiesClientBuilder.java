@@ -15,6 +15,7 @@ import io.clientcore.core.http.pipeline.HttpRedirectOptions;
 import io.clientcore.core.http.pipeline.HttpRedirectPolicy;
 import io.clientcore.core.http.pipeline.HttpRetryOptions;
 import io.clientcore.core.http.pipeline.HttpRetryPolicy;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.instrumentation.LibraryInstrumentationOptions;
 import io.clientcore.core.instrumentation.logging.ClientLogger;
 import io.clientcore.core.traits.ConfigurationTrait;
@@ -275,7 +276,12 @@ public final class AdditionalPropertiesClientBuilder
      */
     @Metadata(generated = true)
     public ExtendsUnknownClient buildExtendsUnknownClient() {
-        return new ExtendsUnknownClient(buildInnerClient().getExtendsUnknowns());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new ExtendsUnknownClient(buildInnerClient().getExtendsUnknowns(), instrumentation);
     }
 
     /**
@@ -285,7 +291,12 @@ public final class AdditionalPropertiesClientBuilder
      */
     @Metadata(generated = true)
     public ExtendsUnknownDerivedClient buildExtendsUnknownDerivedClient() {
-        return new ExtendsUnknownDerivedClient(buildInnerClient().getExtendsUnknownDeriveds());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new ExtendsUnknownDerivedClient(buildInnerClient().getExtendsUnknownDeriveds(), instrumentation);
     }
 
     /**
@@ -295,7 +306,13 @@ public final class AdditionalPropertiesClientBuilder
      */
     @Metadata(generated = true)
     public ExtendsUnknownDiscriminatedClient buildExtendsUnknownDiscriminatedClient() {
-        return new ExtendsUnknownDiscriminatedClient(buildInnerClient().getExtendsUnknownDiscriminateds());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new ExtendsUnknownDiscriminatedClient(buildInnerClient().getExtendsUnknownDiscriminateds(),
+            instrumentation);
     }
 
     /**
@@ -305,7 +322,12 @@ public final class AdditionalPropertiesClientBuilder
      */
     @Metadata(generated = true)
     public IsUnknownClient buildIsUnknownClient() {
-        return new IsUnknownClient(buildInnerClient().getIsUnknowns());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new IsUnknownClient(buildInnerClient().getIsUnknowns(), instrumentation);
     }
 
     /**
@@ -315,7 +337,12 @@ public final class AdditionalPropertiesClientBuilder
      */
     @Metadata(generated = true)
     public IsUnknownDerivedClient buildIsUnknownDerivedClient() {
-        return new IsUnknownDerivedClient(buildInnerClient().getIsUnknownDeriveds());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new IsUnknownDerivedClient(buildInnerClient().getIsUnknownDeriveds(), instrumentation);
     }
 
     /**
@@ -325,7 +352,12 @@ public final class AdditionalPropertiesClientBuilder
      */
     @Metadata(generated = true)
     public IsUnknownDiscriminatedClient buildIsUnknownDiscriminatedClient() {
-        return new IsUnknownDiscriminatedClient(buildInnerClient().getIsUnknownDiscriminateds());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new IsUnknownDiscriminatedClient(buildInnerClient().getIsUnknownDiscriminateds(), instrumentation);
     }
 
     /**
@@ -335,7 +367,12 @@ public final class AdditionalPropertiesClientBuilder
      */
     @Metadata(generated = true)
     public ExtendsStringClient buildExtendsStringClient() {
-        return new ExtendsStringClient(buildInnerClient().getExtendsStrings());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new ExtendsStringClient(buildInnerClient().getExtendsStrings(), instrumentation);
     }
 
     /**
@@ -345,7 +382,12 @@ public final class AdditionalPropertiesClientBuilder
      */
     @Metadata(generated = true)
     public IsStringClient buildIsStringClient() {
-        return new IsStringClient(buildInnerClient().getIsStrings());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new IsStringClient(buildInnerClient().getIsStrings(), instrumentation);
     }
 
     /**
@@ -355,7 +397,12 @@ public final class AdditionalPropertiesClientBuilder
      */
     @Metadata(generated = true)
     public SpreadStringClient buildSpreadStringClient() {
-        return new SpreadStringClient(buildInnerClient().getSpreadStrings());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new SpreadStringClient(buildInnerClient().getSpreadStrings(), instrumentation);
     }
 
     /**
@@ -365,7 +412,12 @@ public final class AdditionalPropertiesClientBuilder
      */
     @Metadata(generated = true)
     public ExtendsFloatClient buildExtendsFloatClient() {
-        return new ExtendsFloatClient(buildInnerClient().getExtendsFloats());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new ExtendsFloatClient(buildInnerClient().getExtendsFloats(), instrumentation);
     }
 
     /**
@@ -375,7 +427,12 @@ public final class AdditionalPropertiesClientBuilder
      */
     @Metadata(generated = true)
     public IsFloatClient buildIsFloatClient() {
-        return new IsFloatClient(buildInnerClient().getIsFloats());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new IsFloatClient(buildInnerClient().getIsFloats(), instrumentation);
     }
 
     /**
@@ -385,7 +442,12 @@ public final class AdditionalPropertiesClientBuilder
      */
     @Metadata(generated = true)
     public SpreadFloatClient buildSpreadFloatClient() {
-        return new SpreadFloatClient(buildInnerClient().getSpreadFloats());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new SpreadFloatClient(buildInnerClient().getSpreadFloats(), instrumentation);
     }
 
     /**
@@ -395,7 +457,12 @@ public final class AdditionalPropertiesClientBuilder
      */
     @Metadata(generated = true)
     public ExtendsModelClient buildExtendsModelClient() {
-        return new ExtendsModelClient(buildInnerClient().getExtendsModels());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new ExtendsModelClient(buildInnerClient().getExtendsModels(), instrumentation);
     }
 
     /**
@@ -405,7 +472,12 @@ public final class AdditionalPropertiesClientBuilder
      */
     @Metadata(generated = true)
     public IsModelClient buildIsModelClient() {
-        return new IsModelClient(buildInnerClient().getIsModels());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new IsModelClient(buildInnerClient().getIsModels(), instrumentation);
     }
 
     /**
@@ -415,7 +487,12 @@ public final class AdditionalPropertiesClientBuilder
      */
     @Metadata(generated = true)
     public SpreadModelClient buildSpreadModelClient() {
-        return new SpreadModelClient(buildInnerClient().getSpreadModels());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new SpreadModelClient(buildInnerClient().getSpreadModels(), instrumentation);
     }
 
     /**
@@ -425,7 +502,12 @@ public final class AdditionalPropertiesClientBuilder
      */
     @Metadata(generated = true)
     public ExtendsModelArrayClient buildExtendsModelArrayClient() {
-        return new ExtendsModelArrayClient(buildInnerClient().getExtendsModelArrays());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new ExtendsModelArrayClient(buildInnerClient().getExtendsModelArrays(), instrumentation);
     }
 
     /**
@@ -435,7 +517,12 @@ public final class AdditionalPropertiesClientBuilder
      */
     @Metadata(generated = true)
     public IsModelArrayClient buildIsModelArrayClient() {
-        return new IsModelArrayClient(buildInnerClient().getIsModelArrays());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new IsModelArrayClient(buildInnerClient().getIsModelArrays(), instrumentation);
     }
 
     /**
@@ -445,7 +532,12 @@ public final class AdditionalPropertiesClientBuilder
      */
     @Metadata(generated = true)
     public SpreadModelArrayClient buildSpreadModelArrayClient() {
-        return new SpreadModelArrayClient(buildInnerClient().getSpreadModelArrays());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new SpreadModelArrayClient(buildInnerClient().getSpreadModelArrays(), instrumentation);
     }
 
     /**
@@ -455,7 +547,12 @@ public final class AdditionalPropertiesClientBuilder
      */
     @Metadata(generated = true)
     public SpreadDifferentStringClient buildSpreadDifferentStringClient() {
-        return new SpreadDifferentStringClient(buildInnerClient().getSpreadDifferentStrings());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new SpreadDifferentStringClient(buildInnerClient().getSpreadDifferentStrings(), instrumentation);
     }
 
     /**
@@ -465,7 +562,12 @@ public final class AdditionalPropertiesClientBuilder
      */
     @Metadata(generated = true)
     public SpreadDifferentFloatClient buildSpreadDifferentFloatClient() {
-        return new SpreadDifferentFloatClient(buildInnerClient().getSpreadDifferentFloats());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new SpreadDifferentFloatClient(buildInnerClient().getSpreadDifferentFloats(), instrumentation);
     }
 
     /**
@@ -475,7 +577,12 @@ public final class AdditionalPropertiesClientBuilder
      */
     @Metadata(generated = true)
     public SpreadDifferentModelClient buildSpreadDifferentModelClient() {
-        return new SpreadDifferentModelClient(buildInnerClient().getSpreadDifferentModels());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new SpreadDifferentModelClient(buildInnerClient().getSpreadDifferentModels(), instrumentation);
     }
 
     /**
@@ -485,7 +592,12 @@ public final class AdditionalPropertiesClientBuilder
      */
     @Metadata(generated = true)
     public SpreadDifferentModelArrayClient buildSpreadDifferentModelArrayClient() {
-        return new SpreadDifferentModelArrayClient(buildInnerClient().getSpreadDifferentModelArrays());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new SpreadDifferentModelArrayClient(buildInnerClient().getSpreadDifferentModelArrays(), instrumentation);
     }
 
     /**
@@ -495,7 +607,13 @@ public final class AdditionalPropertiesClientBuilder
      */
     @Metadata(generated = true)
     public ExtendsDifferentSpreadStringClient buildExtendsDifferentSpreadStringClient() {
-        return new ExtendsDifferentSpreadStringClient(buildInnerClient().getExtendsDifferentSpreadStrings());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new ExtendsDifferentSpreadStringClient(buildInnerClient().getExtendsDifferentSpreadStrings(),
+            instrumentation);
     }
 
     /**
@@ -505,7 +623,13 @@ public final class AdditionalPropertiesClientBuilder
      */
     @Metadata(generated = true)
     public ExtendsDifferentSpreadFloatClient buildExtendsDifferentSpreadFloatClient() {
-        return new ExtendsDifferentSpreadFloatClient(buildInnerClient().getExtendsDifferentSpreadFloats());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new ExtendsDifferentSpreadFloatClient(buildInnerClient().getExtendsDifferentSpreadFloats(),
+            instrumentation);
     }
 
     /**
@@ -515,7 +639,13 @@ public final class AdditionalPropertiesClientBuilder
      */
     @Metadata(generated = true)
     public ExtendsDifferentSpreadModelClient buildExtendsDifferentSpreadModelClient() {
-        return new ExtendsDifferentSpreadModelClient(buildInnerClient().getExtendsDifferentSpreadModels());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new ExtendsDifferentSpreadModelClient(buildInnerClient().getExtendsDifferentSpreadModels(),
+            instrumentation);
     }
 
     /**
@@ -525,7 +655,13 @@ public final class AdditionalPropertiesClientBuilder
      */
     @Metadata(generated = true)
     public ExtendsDifferentSpreadModelArrayClient buildExtendsDifferentSpreadModelArrayClient() {
-        return new ExtendsDifferentSpreadModelArrayClient(buildInnerClient().getExtendsDifferentSpreadModelArrays());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new ExtendsDifferentSpreadModelArrayClient(buildInnerClient().getExtendsDifferentSpreadModelArrays(),
+            instrumentation);
     }
 
     /**
@@ -535,7 +671,12 @@ public final class AdditionalPropertiesClientBuilder
      */
     @Metadata(generated = true)
     public MultipleSpreadClient buildMultipleSpreadClient() {
-        return new MultipleSpreadClient(buildInnerClient().getMultipleSpreads());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new MultipleSpreadClient(buildInnerClient().getMultipleSpreads(), instrumentation);
     }
 
     /**
@@ -545,7 +686,12 @@ public final class AdditionalPropertiesClientBuilder
      */
     @Metadata(generated = true)
     public SpreadRecordUnionClient buildSpreadRecordUnionClient() {
-        return new SpreadRecordUnionClient(buildInnerClient().getSpreadRecordUnions());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new SpreadRecordUnionClient(buildInnerClient().getSpreadRecordUnions(), instrumentation);
     }
 
     /**
@@ -555,7 +701,13 @@ public final class AdditionalPropertiesClientBuilder
      */
     @Metadata(generated = true)
     public SpreadRecordDiscriminatedUnionClient buildSpreadRecordDiscriminatedUnionClient() {
-        return new SpreadRecordDiscriminatedUnionClient(buildInnerClient().getSpreadRecordDiscriminatedUnions());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new SpreadRecordDiscriminatedUnionClient(buildInnerClient().getSpreadRecordDiscriminatedUnions(),
+            instrumentation);
     }
 
     /**
@@ -565,7 +717,13 @@ public final class AdditionalPropertiesClientBuilder
      */
     @Metadata(generated = true)
     public SpreadRecordNonDiscriminatedUnionClient buildSpreadRecordNonDiscriminatedUnionClient() {
-        return new SpreadRecordNonDiscriminatedUnionClient(buildInnerClient().getSpreadRecordNonDiscriminatedUnions());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new SpreadRecordNonDiscriminatedUnionClient(buildInnerClient().getSpreadRecordNonDiscriminatedUnions(),
+            instrumentation);
     }
 
     /**
@@ -575,8 +733,13 @@ public final class AdditionalPropertiesClientBuilder
      */
     @Metadata(generated = true)
     public SpreadRecordNonDiscriminatedUnion2Client buildSpreadRecordNonDiscriminatedUnion2Client() {
-        return new SpreadRecordNonDiscriminatedUnion2Client(
-            buildInnerClient().getSpreadRecordNonDiscriminatedUnion2s());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new SpreadRecordNonDiscriminatedUnion2Client(buildInnerClient().getSpreadRecordNonDiscriminatedUnion2s(),
+            instrumentation);
     }
 
     /**
@@ -586,8 +749,13 @@ public final class AdditionalPropertiesClientBuilder
      */
     @Metadata(generated = true)
     public SpreadRecordNonDiscriminatedUnion3Client buildSpreadRecordNonDiscriminatedUnion3Client() {
-        return new SpreadRecordNonDiscriminatedUnion3Client(
-            buildInnerClient().getSpreadRecordNonDiscriminatedUnion3s());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new SpreadRecordNonDiscriminatedUnion3Client(buildInnerClient().getSpreadRecordNonDiscriminatedUnion3s(),
+            instrumentation);
     }
 
     private static final ClientLogger LOGGER = new ClientLogger(AdditionalPropertiesClientBuilder.class);

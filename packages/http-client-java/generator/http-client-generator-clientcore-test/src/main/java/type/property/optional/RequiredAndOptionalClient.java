@@ -52,8 +52,8 @@ public final class RequiredAndOptionalClient {
      */
     @Metadata(generated = true)
     public Response<RequiredAndOptionalProperty> getAllWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Optional.RequiredAndOptional.getAll", requestOptions,
-            updatedOptions -> this.serviceClient.getAllWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Property.Optional.RequiredAndOptional.getAll",
+            requestOptions, updatedOptions -> this.serviceClient.getAllWithResponse(updatedOptions));
     }
 
     /**
@@ -75,7 +75,7 @@ public final class RequiredAndOptionalClient {
      */
     @Metadata(generated = true)
     public Response<RequiredAndOptionalProperty> getRequiredOnlyWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Optional.RequiredAndOptional.getRequiredOnly",
+        return this.instrumentation.instrumentWithResponse("Type.Property.Optional.RequiredAndOptional.getRequiredOnly",
             requestOptions, updatedOptions -> this.serviceClient.getRequiredOnlyWithResponse(updatedOptions));
     }
 
@@ -99,8 +99,8 @@ public final class RequiredAndOptionalClient {
      */
     @Metadata(generated = true)
     public Response<Void> putAllWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Optional.RequiredAndOptional.putAll", requestOptions,
-            updatedOptions -> this.serviceClient.putAllWithResponse(body, updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Property.Optional.RequiredAndOptional.putAll",
+            requestOptions, updatedOptions -> this.serviceClient.putAllWithResponse(body, updatedOptions));
     }
 
     /**
@@ -123,7 +123,7 @@ public final class RequiredAndOptionalClient {
      */
     @Metadata(generated = true)
     public Response<Void> putRequiredOnlyWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Optional.RequiredAndOptional.putRequiredOnly",
+        return this.instrumentation.instrumentWithResponse("Type.Property.Optional.RequiredAndOptional.putRequiredOnly",
             requestOptions, updatedOptions -> this.serviceClient.putRequiredOnlyWithResponse(body, updatedOptions));
     }
 

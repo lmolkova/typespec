@@ -52,8 +52,8 @@ public final class SingleDiscriminatorClient {
      */
     @Metadata(generated = true)
     public Response<Bird> getModelWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Model.Inheritance.SingleDiscriminator.getModel", requestOptions,
-            updatedOptions -> this.serviceClient.getModelWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Model.Inheritance.SingleDiscriminator.getModel",
+            requestOptions, updatedOptions -> this.serviceClient.getModelWithResponse(updatedOptions));
     }
 
     /**
@@ -76,8 +76,8 @@ public final class SingleDiscriminatorClient {
      */
     @Metadata(generated = true)
     public Response<Void> putModelWithResponse(BinaryData input, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Model.Inheritance.SingleDiscriminator.putModel", requestOptions,
-            updatedOptions -> this.serviceClient.putModelWithResponse(input, updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Model.Inheritance.SingleDiscriminator.putModel",
+            requestOptions, updatedOptions -> this.serviceClient.putModelWithResponse(input, updatedOptions));
     }
 
     /**
@@ -99,8 +99,9 @@ public final class SingleDiscriminatorClient {
      */
     @Metadata(generated = true)
     public Response<Bird> getRecursiveModelWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Model.Inheritance.SingleDiscriminator.getRecursiveModel",
-            requestOptions, updatedOptions -> this.serviceClient.getRecursiveModelWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse(
+            "Type.Model.Inheritance.SingleDiscriminator.getRecursiveModel", requestOptions,
+            updatedOptions -> this.serviceClient.getRecursiveModelWithResponse(updatedOptions));
     }
 
     /**
@@ -123,8 +124,9 @@ public final class SingleDiscriminatorClient {
      */
     @Metadata(generated = true)
     public Response<Void> putRecursiveModelWithResponse(BinaryData input, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Model.Inheritance.SingleDiscriminator.putRecursiveModel",
-            requestOptions, updatedOptions -> this.serviceClient.putRecursiveModelWithResponse(input, updatedOptions));
+        return this.instrumentation.instrumentWithResponse(
+            "Type.Model.Inheritance.SingleDiscriminator.putRecursiveModel", requestOptions,
+            updatedOptions -> this.serviceClient.putRecursiveModelWithResponse(input, updatedOptions));
     }
 
     /**
@@ -146,8 +148,9 @@ public final class SingleDiscriminatorClient {
      */
     @Metadata(generated = true)
     public Response<Bird> getMissingDiscriminatorWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Model.Inheritance.SingleDiscriminator.getMissingDiscriminator",
-            requestOptions, updatedOptions -> this.serviceClient.getMissingDiscriminatorWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse(
+            "Type.Model.Inheritance.SingleDiscriminator.getMissingDiscriminator", requestOptions,
+            updatedOptions -> this.serviceClient.getMissingDiscriminatorWithResponse(updatedOptions));
     }
 
     /**
@@ -169,8 +172,9 @@ public final class SingleDiscriminatorClient {
      */
     @Metadata(generated = true)
     public Response<Bird> getWrongDiscriminatorWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Model.Inheritance.SingleDiscriminator.getWrongDiscriminator",
-            requestOptions, updatedOptions -> this.serviceClient.getWrongDiscriminatorWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse(
+            "Type.Model.Inheritance.SingleDiscriminator.getWrongDiscriminator", requestOptions,
+            updatedOptions -> this.serviceClient.getWrongDiscriminatorWithResponse(updatedOptions));
     }
 
     /**
@@ -192,7 +196,7 @@ public final class SingleDiscriminatorClient {
      */
     @Metadata(generated = true)
     public Response<Dinosaur> getLegacyModelWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Model.Inheritance.SingleDiscriminator.getLegacyModel",
+        return this.instrumentation.instrumentWithResponse("Type.Model.Inheritance.SingleDiscriminator.getLegacyModel",
             requestOptions, updatedOptions -> this.serviceClient.getLegacyModelWithResponse(updatedOptions));
     }
 

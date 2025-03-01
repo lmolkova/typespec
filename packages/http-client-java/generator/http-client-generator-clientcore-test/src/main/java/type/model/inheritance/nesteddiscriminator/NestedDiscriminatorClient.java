@@ -52,8 +52,8 @@ public final class NestedDiscriminatorClient {
      */
     @Metadata(generated = true)
     public Response<Fish> getModelWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Model.Inheritance.NestedDiscriminator.getModel", requestOptions,
-            updatedOptions -> this.serviceClient.getModelWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Model.Inheritance.NestedDiscriminator.getModel",
+            requestOptions, updatedOptions -> this.serviceClient.getModelWithResponse(updatedOptions));
     }
 
     /**
@@ -76,8 +76,8 @@ public final class NestedDiscriminatorClient {
      */
     @Metadata(generated = true)
     public Response<Void> putModelWithResponse(BinaryData input, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Model.Inheritance.NestedDiscriminator.putModel", requestOptions,
-            updatedOptions -> this.serviceClient.putModelWithResponse(input, updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Model.Inheritance.NestedDiscriminator.putModel",
+            requestOptions, updatedOptions -> this.serviceClient.putModelWithResponse(input, updatedOptions));
     }
 
     /**
@@ -99,8 +99,9 @@ public final class NestedDiscriminatorClient {
      */
     @Metadata(generated = true)
     public Response<Fish> getRecursiveModelWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Model.Inheritance.NestedDiscriminator.getRecursiveModel",
-            requestOptions, updatedOptions -> this.serviceClient.getRecursiveModelWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse(
+            "Type.Model.Inheritance.NestedDiscriminator.getRecursiveModel", requestOptions,
+            updatedOptions -> this.serviceClient.getRecursiveModelWithResponse(updatedOptions));
     }
 
     /**
@@ -123,8 +124,9 @@ public final class NestedDiscriminatorClient {
      */
     @Metadata(generated = true)
     public Response<Void> putRecursiveModelWithResponse(BinaryData input, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Model.Inheritance.NestedDiscriminator.putRecursiveModel",
-            requestOptions, updatedOptions -> this.serviceClient.putRecursiveModelWithResponse(input, updatedOptions));
+        return this.instrumentation.instrumentWithResponse(
+            "Type.Model.Inheritance.NestedDiscriminator.putRecursiveModel", requestOptions,
+            updatedOptions -> this.serviceClient.putRecursiveModelWithResponse(input, updatedOptions));
     }
 
     /**
@@ -146,8 +148,9 @@ public final class NestedDiscriminatorClient {
      */
     @Metadata(generated = true)
     public Response<Fish> getMissingDiscriminatorWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Model.Inheritance.NestedDiscriminator.getMissingDiscriminator",
-            requestOptions, updatedOptions -> this.serviceClient.getMissingDiscriminatorWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse(
+            "Type.Model.Inheritance.NestedDiscriminator.getMissingDiscriminator", requestOptions,
+            updatedOptions -> this.serviceClient.getMissingDiscriminatorWithResponse(updatedOptions));
     }
 
     /**
@@ -169,8 +172,9 @@ public final class NestedDiscriminatorClient {
      */
     @Metadata(generated = true)
     public Response<Fish> getWrongDiscriminatorWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Model.Inheritance.NestedDiscriminator.getWrongDiscriminator",
-            requestOptions, updatedOptions -> this.serviceClient.getWrongDiscriminatorWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse(
+            "Type.Model.Inheritance.NestedDiscriminator.getWrongDiscriminator", requestOptions,
+            updatedOptions -> this.serviceClient.getWrongDiscriminatorWithResponse(updatedOptions));
     }
 
     /**

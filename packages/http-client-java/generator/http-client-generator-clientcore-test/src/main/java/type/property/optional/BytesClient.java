@@ -51,7 +51,7 @@ public final class BytesClient {
      */
     @Metadata(generated = true)
     public Response<BytesProperty> getAllWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Optional.Bytes.getAll", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.Optional.Bytes.getAll", requestOptions,
             updatedOptions -> this.serviceClient.getAllWithResponse(updatedOptions));
     }
 
@@ -73,7 +73,7 @@ public final class BytesClient {
      */
     @Metadata(generated = true)
     public Response<BytesProperty> getDefaultWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Optional.Bytes.getDefault", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.Optional.Bytes.getDefault", requestOptions,
             updatedOptions -> this.serviceClient.getDefaultWithResponse(updatedOptions));
     }
 
@@ -96,7 +96,7 @@ public final class BytesClient {
      */
     @Metadata(generated = true)
     public Response<Void> putAllWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Optional.Bytes.putAll", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.Optional.Bytes.putAll", requestOptions,
             updatedOptions -> this.serviceClient.putAllWithResponse(body, updatedOptions));
     }
 
@@ -119,7 +119,7 @@ public final class BytesClient {
      */
     @Metadata(generated = true)
     public Response<Void> putDefaultWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Optional.Bytes.putDefault", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.Optional.Bytes.putDefault", requestOptions,
             updatedOptions -> this.serviceClient.putDefaultWithResponse(body, updatedOptions));
     }
 

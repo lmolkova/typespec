@@ -50,8 +50,8 @@ public final class RepeatabilityClient {
      */
     @Metadata(generated = true)
     public Response<Void> immediateSuccessWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("SpecialHeaders.Repeatability.immediateSuccess", requestOptions,
-            updatedOptions -> this.serviceClient.immediateSuccessWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("SpecialHeaders.Repeatability.immediateSuccess",
+            requestOptions, updatedOptions -> this.serviceClient.immediateSuccessWithResponse(updatedOptions));
     }
 
     /**

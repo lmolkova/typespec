@@ -41,7 +41,7 @@ public final class ResponseHeaderClient {
      */
     @Metadata(generated = true)
     public Response<Void> defaultMethodWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Datetime.ResponseHeader.default", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Datetime.ResponseHeader.default", requestOptions,
             updatedOptions -> this.serviceClient.defaultMethodWithResponse(updatedOptions));
     }
 
@@ -54,7 +54,7 @@ public final class ResponseHeaderClient {
      */
     @Metadata(generated = true)
     public Response<Void> rfc3339WithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Datetime.ResponseHeader.rfc3339", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Datetime.ResponseHeader.rfc3339", requestOptions,
             updatedOptions -> this.serviceClient.rfc3339WithResponse(updatedOptions));
     }
 
@@ -67,7 +67,7 @@ public final class ResponseHeaderClient {
      */
     @Metadata(generated = true)
     public Response<Void> rfc7231WithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Datetime.ResponseHeader.rfc7231", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Datetime.ResponseHeader.rfc7231", requestOptions,
             updatedOptions -> this.serviceClient.rfc7231WithResponse(updatedOptions));
     }
 
@@ -80,8 +80,8 @@ public final class ResponseHeaderClient {
      */
     @Metadata(generated = true)
     public Response<Void> unixTimestampWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Datetime.ResponseHeader.unixTimestamp", requestOptions,
-            updatedOptions -> this.serviceClient.unixTimestampWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Encode.Datetime.ResponseHeader.unixTimestamp",
+            requestOptions, updatedOptions -> this.serviceClient.unixTimestampWithResponse(updatedOptions));
     }
 
     /**

@@ -53,7 +53,7 @@ public final class DurationOperationClient {
      */
     @Metadata(generated = true)
     public Response<DurationProperty> getNonNullWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Nullable.Duration.getNonNull", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.Nullable.Duration.getNonNull", requestOptions,
             updatedOptions -> this.serviceClient.getNonNullWithResponse(updatedOptions));
     }
 
@@ -76,7 +76,7 @@ public final class DurationOperationClient {
      */
     @Metadata(generated = true)
     public Response<DurationProperty> getNullWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Nullable.Duration.getNull", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.Nullable.Duration.getNull", requestOptions,
             updatedOptions -> this.serviceClient.getNullWithResponse(updatedOptions));
     }
 
@@ -100,8 +100,8 @@ public final class DurationOperationClient {
      */
     @Metadata(generated = true)
     public Response<Void> patchNonNullWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Nullable.Duration.patchNonNull", requestOptions,
-            updatedOptions -> this.serviceClient.patchNonNullWithResponse(body, updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Property.Nullable.Duration.patchNonNull",
+            requestOptions, updatedOptions -> this.serviceClient.patchNonNullWithResponse(body, updatedOptions));
     }
 
     /**
@@ -124,7 +124,7 @@ public final class DurationOperationClient {
      */
     @Metadata(generated = true)
     public Response<Void> patchNullWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Nullable.Duration.patchNull", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.Nullable.Duration.patchNull", requestOptions,
             updatedOptions -> this.serviceClient.patchNullWithResponse(body, updatedOptions));
     }
 

@@ -51,7 +51,7 @@ public final class StringLiteralClient {
      */
     @Metadata(generated = true)
     public Response<StringLiteralProperty> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.ValueTypes.StringLiteral.get", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.ValueTypes.StringLiteral.get", requestOptions,
             updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
@@ -74,7 +74,7 @@ public final class StringLiteralClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.ValueTypes.StringLiteral.put", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.ValueTypes.StringLiteral.put", requestOptions,
             updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 

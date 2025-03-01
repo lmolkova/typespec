@@ -55,7 +55,7 @@ public final class EnumsOnlyClient {
      */
     @Metadata(generated = true)
     public Response<GetResponse3> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Union.EnumsOnly.get", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Union.EnumsOnly.get", requestOptions,
             updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
@@ -81,7 +81,7 @@ public final class EnumsOnlyClient {
      */
     @Metadata(generated = true)
     public Response<Void> sendWithResponse(BinaryData sendRequest3, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Union.EnumsOnly.send", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Union.EnumsOnly.send", requestOptions,
             updatedOptions -> this.serviceClient.sendWithResponse(sendRequest3, updatedOptions));
     }
 

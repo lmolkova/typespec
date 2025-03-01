@@ -15,6 +15,7 @@ import io.clientcore.core.http.pipeline.HttpRedirectOptions;
 import io.clientcore.core.http.pipeline.HttpRedirectPolicy;
 import io.clientcore.core.http.pipeline.HttpRetryOptions;
 import io.clientcore.core.http.pipeline.HttpRetryPolicy;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.instrumentation.LibraryInstrumentationOptions;
 import io.clientcore.core.instrumentation.logging.ClientLogger;
 import io.clientcore.core.traits.ConfigurationTrait;
@@ -242,7 +243,12 @@ public final class ContentNegotiationClientBuilder
      */
     @Metadata(generated = true)
     public SameBodyClient buildSameBodyClient() {
-        return new SameBodyClient(buildInnerClient().getSameBodies());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new SameBodyClient(buildInnerClient().getSameBodies(), instrumentation);
     }
 
     /**
@@ -252,7 +258,12 @@ public final class ContentNegotiationClientBuilder
      */
     @Metadata(generated = true)
     public DifferentBodyClient buildDifferentBodyClient() {
-        return new DifferentBodyClient(buildInnerClient().getDifferentBodies());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new DifferentBodyClient(buildInnerClient().getDifferentBodies(), instrumentation);
     }
 
     private static final ClientLogger LOGGER = new ClientLogger(ContentNegotiationClientBuilder.class);

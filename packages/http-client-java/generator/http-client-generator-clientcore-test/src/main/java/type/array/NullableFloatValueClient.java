@@ -52,7 +52,7 @@ public final class NullableFloatValueClient {
      */
     @Metadata(generated = true)
     public Response<List<Double>> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Array.NullableFloatValue.get", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Array.NullableFloatValue.get", requestOptions,
             updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
@@ -75,7 +75,7 @@ public final class NullableFloatValueClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Array.NullableFloatValue.put", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Array.NullableFloatValue.put", requestOptions,
             updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 

@@ -52,7 +52,7 @@ public final class StringExtensibleClient {
      */
     @Metadata(generated = true)
     public Response<GetResponse8> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Union.StringExtensible.get", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Union.StringExtensible.get", requestOptions,
             updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
@@ -75,7 +75,7 @@ public final class StringExtensibleClient {
      */
     @Metadata(generated = true)
     public Response<Void> sendWithResponse(BinaryData sendRequest8, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Union.StringExtensible.send", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Union.StringExtensible.send", requestOptions,
             updatedOptions -> this.serviceClient.sendWithResponse(sendRequest8, updatedOptions));
     }
 

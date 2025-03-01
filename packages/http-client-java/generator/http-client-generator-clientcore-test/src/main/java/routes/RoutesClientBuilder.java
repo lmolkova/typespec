@@ -263,7 +263,7 @@ public final class RoutesClientBuilder implements HttpTrait<RoutesClientBuilder>
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, this.endpoint);
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
         return new RoutesClient(buildInnerClient(), instrumentation);
     }
 
@@ -274,7 +274,12 @@ public final class RoutesClientBuilder implements HttpTrait<RoutesClientBuilder>
      */
     @Metadata(generated = true)
     public PathParametersClient buildPathParametersClient() {
-        return new PathParametersClient(buildInnerClient().getPathParameters());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new PathParametersClient(buildInnerClient().getPathParameters(), instrumentation);
     }
 
     /**
@@ -284,7 +289,13 @@ public final class RoutesClientBuilder implements HttpTrait<RoutesClientBuilder>
      */
     @Metadata(generated = true)
     public PathParametersReservedExpansionClient buildPathParametersReservedExpansionClient() {
-        return new PathParametersReservedExpansionClient(buildInnerClient().getPathParametersReservedExpansions());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new PathParametersReservedExpansionClient(buildInnerClient().getPathParametersReservedExpansions(),
+            instrumentation);
     }
 
     /**
@@ -294,8 +305,13 @@ public final class RoutesClientBuilder implements HttpTrait<RoutesClientBuilder>
      */
     @Metadata(generated = true)
     public PathParametersSimpleExpansionStandardClient buildPathParametersSimpleExpansionStandardClient() {
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
         return new PathParametersSimpleExpansionStandardClient(
-            buildInnerClient().getPathParametersSimpleExpansionStandards());
+            buildInnerClient().getPathParametersSimpleExpansionStandards(), instrumentation);
     }
 
     /**
@@ -305,8 +321,13 @@ public final class RoutesClientBuilder implements HttpTrait<RoutesClientBuilder>
      */
     @Metadata(generated = true)
     public PathParametersSimpleExpansionExplodeClient buildPathParametersSimpleExpansionExplodeClient() {
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
         return new PathParametersSimpleExpansionExplodeClient(
-            buildInnerClient().getPathParametersSimpleExpansionExplodes());
+            buildInnerClient().getPathParametersSimpleExpansionExplodes(), instrumentation);
     }
 
     /**
@@ -316,8 +337,13 @@ public final class RoutesClientBuilder implements HttpTrait<RoutesClientBuilder>
      */
     @Metadata(generated = true)
     public PathParametersPathExpansionStandardClient buildPathParametersPathExpansionStandardClient() {
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
         return new PathParametersPathExpansionStandardClient(
-            buildInnerClient().getPathParametersPathExpansionStandards());
+            buildInnerClient().getPathParametersPathExpansionStandards(), instrumentation);
     }
 
     /**
@@ -327,8 +353,13 @@ public final class RoutesClientBuilder implements HttpTrait<RoutesClientBuilder>
      */
     @Metadata(generated = true)
     public PathParametersPathExpansionExplodeClient buildPathParametersPathExpansionExplodeClient() {
-        return new PathParametersPathExpansionExplodeClient(
-            buildInnerClient().getPathParametersPathExpansionExplodes());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new PathParametersPathExpansionExplodeClient(buildInnerClient().getPathParametersPathExpansionExplodes(),
+            instrumentation);
     }
 
     /**
@@ -338,8 +369,13 @@ public final class RoutesClientBuilder implements HttpTrait<RoutesClientBuilder>
      */
     @Metadata(generated = true)
     public PathParametersLabelExpansionStandardClient buildPathParametersLabelExpansionStandardClient() {
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
         return new PathParametersLabelExpansionStandardClient(
-            buildInnerClient().getPathParametersLabelExpansionStandards());
+            buildInnerClient().getPathParametersLabelExpansionStandards(), instrumentation);
     }
 
     /**
@@ -349,8 +385,13 @@ public final class RoutesClientBuilder implements HttpTrait<RoutesClientBuilder>
      */
     @Metadata(generated = true)
     public PathParametersLabelExpansionExplodeClient buildPathParametersLabelExpansionExplodeClient() {
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
         return new PathParametersLabelExpansionExplodeClient(
-            buildInnerClient().getPathParametersLabelExpansionExplodes());
+            buildInnerClient().getPathParametersLabelExpansionExplodes(), instrumentation);
     }
 
     /**
@@ -360,8 +401,13 @@ public final class RoutesClientBuilder implements HttpTrait<RoutesClientBuilder>
      */
     @Metadata(generated = true)
     public PathParametersMatrixExpansionStandardClient buildPathParametersMatrixExpansionStandardClient() {
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
         return new PathParametersMatrixExpansionStandardClient(
-            buildInnerClient().getPathParametersMatrixExpansionStandards());
+            buildInnerClient().getPathParametersMatrixExpansionStandards(), instrumentation);
     }
 
     /**
@@ -371,8 +417,13 @@ public final class RoutesClientBuilder implements HttpTrait<RoutesClientBuilder>
      */
     @Metadata(generated = true)
     public PathParametersMatrixExpansionExplodeClient buildPathParametersMatrixExpansionExplodeClient() {
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
         return new PathParametersMatrixExpansionExplodeClient(
-            buildInnerClient().getPathParametersMatrixExpansionExplodes());
+            buildInnerClient().getPathParametersMatrixExpansionExplodes(), instrumentation);
     }
 
     /**
@@ -382,7 +433,12 @@ public final class RoutesClientBuilder implements HttpTrait<RoutesClientBuilder>
      */
     @Metadata(generated = true)
     public QueryParametersClient buildQueryParametersClient() {
-        return new QueryParametersClient(buildInnerClient().getQueryParameters());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new QueryParametersClient(buildInnerClient().getQueryParameters(), instrumentation);
     }
 
     /**
@@ -392,8 +448,13 @@ public final class RoutesClientBuilder implements HttpTrait<RoutesClientBuilder>
      */
     @Metadata(generated = true)
     public QueryParametersQueryExpansionStandardClient buildQueryParametersQueryExpansionStandardClient() {
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
         return new QueryParametersQueryExpansionStandardClient(
-            buildInnerClient().getQueryParametersQueryExpansionStandards());
+            buildInnerClient().getQueryParametersQueryExpansionStandards(), instrumentation);
     }
 
     /**
@@ -403,8 +464,13 @@ public final class RoutesClientBuilder implements HttpTrait<RoutesClientBuilder>
      */
     @Metadata(generated = true)
     public QueryParametersQueryExpansionExplodeClient buildQueryParametersQueryExpansionExplodeClient() {
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
         return new QueryParametersQueryExpansionExplodeClient(
-            buildInnerClient().getQueryParametersQueryExpansionExplodes());
+            buildInnerClient().getQueryParametersQueryExpansionExplodes(), instrumentation);
     }
 
     /**
@@ -414,8 +480,13 @@ public final class RoutesClientBuilder implements HttpTrait<RoutesClientBuilder>
      */
     @Metadata(generated = true)
     public QueryParametersQueryContinuationStandardClient buildQueryParametersQueryContinuationStandardClient() {
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
         return new QueryParametersQueryContinuationStandardClient(
-            buildInnerClient().getQueryParametersQueryContinuationStandards());
+            buildInnerClient().getQueryParametersQueryContinuationStandards(), instrumentation);
     }
 
     /**
@@ -425,8 +496,13 @@ public final class RoutesClientBuilder implements HttpTrait<RoutesClientBuilder>
      */
     @Metadata(generated = true)
     public QueryParametersQueryContinuationExplodeClient buildQueryParametersQueryContinuationExplodeClient() {
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
         return new QueryParametersQueryContinuationExplodeClient(
-            buildInnerClient().getQueryParametersQueryContinuationExplodes());
+            buildInnerClient().getQueryParametersQueryContinuationExplodes(), instrumentation);
     }
 
     /**
@@ -436,7 +512,12 @@ public final class RoutesClientBuilder implements HttpTrait<RoutesClientBuilder>
      */
     @Metadata(generated = true)
     public InInterfaceClient buildInInterfaceClient() {
-        return new InInterfaceClient(buildInnerClient().getInInterfaces());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new InInterfaceClient(buildInnerClient().getInInterfaces(), instrumentation);
     }
 
     private static final ClientLogger LOGGER = new ClientLogger(RoutesClientBuilder.class);

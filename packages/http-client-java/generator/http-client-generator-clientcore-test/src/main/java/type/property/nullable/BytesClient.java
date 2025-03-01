@@ -53,7 +53,7 @@ public final class BytesClient {
      */
     @Metadata(generated = true)
     public Response<BytesProperty> getNonNullWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Nullable.Bytes.getNonNull", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.Nullable.Bytes.getNonNull", requestOptions,
             updatedOptions -> this.serviceClient.getNonNullWithResponse(updatedOptions));
     }
 
@@ -76,7 +76,7 @@ public final class BytesClient {
      */
     @Metadata(generated = true)
     public Response<BytesProperty> getNullWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Nullable.Bytes.getNull", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.Nullable.Bytes.getNull", requestOptions,
             updatedOptions -> this.serviceClient.getNullWithResponse(updatedOptions));
     }
 
@@ -100,7 +100,7 @@ public final class BytesClient {
      */
     @Metadata(generated = true)
     public Response<Void> patchNonNullWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Nullable.Bytes.patchNonNull", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.Nullable.Bytes.patchNonNull", requestOptions,
             updatedOptions -> this.serviceClient.patchNonNullWithResponse(body, updatedOptions));
     }
 
@@ -124,7 +124,7 @@ public final class BytesClient {
      */
     @Metadata(generated = true)
     public Response<Void> patchNullWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Property.Nullable.Bytes.patchNull", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Property.Nullable.Bytes.patchNull", requestOptions,
             updatedOptions -> this.serviceClient.patchNullWithResponse(body, updatedOptions));
     }
 

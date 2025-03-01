@@ -54,8 +54,8 @@ public final class NotDiscriminatedClient {
      */
     @Metadata(generated = true)
     public Response<Void> postValidWithResponse(BinaryData input, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Model.Inheritance.NotDiscriminated.postValid", requestOptions,
-            updatedOptions -> this.serviceClient.postValidWithResponse(input, updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Model.Inheritance.NotDiscriminated.postValid",
+            requestOptions, updatedOptions -> this.serviceClient.postValidWithResponse(input, updatedOptions));
     }
 
     /**
@@ -78,8 +78,8 @@ public final class NotDiscriminatedClient {
      */
     @Metadata(generated = true)
     public Response<Siamese> getValidWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Model.Inheritance.NotDiscriminated.getValid", requestOptions,
-            updatedOptions -> this.serviceClient.getValidWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Model.Inheritance.NotDiscriminated.getValid",
+            requestOptions, updatedOptions -> this.serviceClient.getValidWithResponse(updatedOptions));
     }
 
     /**
@@ -115,8 +115,8 @@ public final class NotDiscriminatedClient {
      */
     @Metadata(generated = true)
     public Response<Siamese> putValidWithResponse(BinaryData input, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Model.Inheritance.NotDiscriminated.putValid", requestOptions,
-            updatedOptions -> this.serviceClient.putValidWithResponse(input, updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Type.Model.Inheritance.NotDiscriminated.putValid",
+            requestOptions, updatedOptions -> this.serviceClient.putValidWithResponse(input, updatedOptions));
     }
 
     /**

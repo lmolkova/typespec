@@ -54,7 +54,8 @@ public final class ModelClient {
      */
     @Metadata(generated = true)
     public Response<Void> spreadAsRequestBodyWithResponse(BinaryData bodyParameter, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Parameters.Spread.Model.spreadAsRequestBody", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Parameters.Spread.Model.spreadAsRequestBody",
+            requestOptions,
             updatedOptions -> this.serviceClient.spreadAsRequestBodyWithResponse(bodyParameter, updatedOptions));
     }
 
@@ -78,7 +79,7 @@ public final class ModelClient {
     @Metadata(generated = true)
     public Response<Void> spreadCompositeRequestOnlyWithBodyWithResponse(BinaryData body,
         RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Parameters.Spread.Model.spreadCompositeRequestOnlyWithBody",
+        return this.instrumentation.instrumentWithResponse("Parameters.Spread.Model.spreadCompositeRequestOnlyWithBody",
             requestOptions,
             updatedOptions -> this.serviceClient.spreadCompositeRequestOnlyWithBodyWithResponse(body, updatedOptions));
     }
@@ -95,7 +96,7 @@ public final class ModelClient {
     @Metadata(generated = true)
     public Response<Void> spreadCompositeRequestWithoutBodyWithResponse(String name, String testHeader,
         RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Parameters.Spread.Model.spreadCompositeRequestWithoutBody",
+        return this.instrumentation.instrumentWithResponse("Parameters.Spread.Model.spreadCompositeRequestWithoutBody",
             requestOptions, updatedOptions -> this.serviceClient.spreadCompositeRequestWithoutBodyWithResponse(name,
                 testHeader, updatedOptions));
     }
@@ -122,9 +123,9 @@ public final class ModelClient {
     @Metadata(generated = true)
     public Response<Void> spreadCompositeRequestWithResponse(String name, String testHeader, BinaryData body,
         RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Parameters.Spread.Model.spreadCompositeRequest", requestOptions,
-            updatedOptions -> this.serviceClient.spreadCompositeRequestWithResponse(name, testHeader, body,
-                updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Parameters.Spread.Model.spreadCompositeRequest",
+            requestOptions, updatedOptions -> this.serviceClient.spreadCompositeRequestWithResponse(name, testHeader,
+                body, updatedOptions));
     }
 
     /**
@@ -149,8 +150,8 @@ public final class ModelClient {
     @Metadata(generated = true)
     public Response<Void> spreadCompositeRequestMixWithResponse(String name, String testHeader,
         BinaryData spreadCompositeRequestMixRequest, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Parameters.Spread.Model.spreadCompositeRequestMix", requestOptions,
-            updatedOptions -> this.serviceClient.spreadCompositeRequestMixWithResponse(name, testHeader,
+        return this.instrumentation.instrumentWithResponse("Parameters.Spread.Model.spreadCompositeRequestMix",
+            requestOptions, updatedOptions -> this.serviceClient.spreadCompositeRequestMixWithResponse(name, testHeader,
                 spreadCompositeRequestMixRequest, updatedOptions));
     }
 

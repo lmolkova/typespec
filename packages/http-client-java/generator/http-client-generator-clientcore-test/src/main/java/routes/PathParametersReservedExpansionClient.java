@@ -43,8 +43,8 @@ public final class PathParametersReservedExpansionClient {
      */
     @Metadata(generated = true)
     public Response<Void> templateWithResponse(String param, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Routes.PathParameters.ReservedExpansion.template", requestOptions,
-            updatedOptions -> this.serviceClient.templateWithResponse(param, updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Routes.PathParameters.ReservedExpansion.template",
+            requestOptions, updatedOptions -> this.serviceClient.templateWithResponse(param, updatedOptions));
     }
 
     /**
@@ -57,8 +57,8 @@ public final class PathParametersReservedExpansionClient {
      */
     @Metadata(generated = true)
     public Response<Void> annotationWithResponse(String param, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Routes.PathParameters.ReservedExpansion.annotation", requestOptions,
-            updatedOptions -> this.serviceClient.annotationWithResponse(param, updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Routes.PathParameters.ReservedExpansion.annotation",
+            requestOptions, updatedOptions -> this.serviceClient.annotationWithResponse(param, updatedOptions));
     }
 
     /**

@@ -15,6 +15,7 @@ import io.clientcore.core.http.pipeline.HttpRedirectOptions;
 import io.clientcore.core.http.pipeline.HttpRedirectPolicy;
 import io.clientcore.core.http.pipeline.HttpRetryOptions;
 import io.clientcore.core.http.pipeline.HttpRetryPolicy;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.instrumentation.LibraryInstrumentationOptions;
 import io.clientcore.core.instrumentation.logging.ClientLogger;
 import io.clientcore.core.traits.ConfigurationTrait;
@@ -246,7 +247,12 @@ public final class MultiPartClientBuilder
      */
     @Metadata(generated = true)
     public FormDataClient buildFormDataClient() {
-        return new FormDataClient(buildInnerClient().getFormDatas());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new FormDataClient(buildInnerClient().getFormDatas(), instrumentation);
     }
 
     /**
@@ -256,7 +262,12 @@ public final class MultiPartClientBuilder
      */
     @Metadata(generated = true)
     public FormDataHttpPartsClient buildFormDataHttpPartsClient() {
-        return new FormDataHttpPartsClient(buildInnerClient().getFormDataHttpParts());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new FormDataHttpPartsClient(buildInnerClient().getFormDataHttpParts(), instrumentation);
     }
 
     /**
@@ -266,7 +277,13 @@ public final class MultiPartClientBuilder
      */
     @Metadata(generated = true)
     public FormDataHttpPartsContentTypeClient buildFormDataHttpPartsContentTypeClient() {
-        return new FormDataHttpPartsContentTypeClient(buildInnerClient().getFormDataHttpPartsContentTypes());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new FormDataHttpPartsContentTypeClient(buildInnerClient().getFormDataHttpPartsContentTypes(),
+            instrumentation);
     }
 
     /**
@@ -276,7 +293,13 @@ public final class MultiPartClientBuilder
      */
     @Metadata(generated = true)
     public FormDataHttpPartsNonStringClient buildFormDataHttpPartsNonStringClient() {
-        return new FormDataHttpPartsNonStringClient(buildInnerClient().getFormDataHttpPartsNonStrings());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+        return new FormDataHttpPartsNonStringClient(buildInnerClient().getFormDataHttpPartsNonStrings(),
+            instrumentation);
     }
 
     private static final ClientLogger LOGGER = new ClientLogger(MultiPartClientBuilder.class);

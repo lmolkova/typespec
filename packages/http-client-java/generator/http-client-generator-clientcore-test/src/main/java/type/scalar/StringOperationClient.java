@@ -49,7 +49,7 @@ public final class StringOperationClient {
      */
     @Metadata(generated = true)
     public Response<String> getWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Scalar.String.get", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Scalar.String.get", requestOptions,
             updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
@@ -70,7 +70,7 @@ public final class StringOperationClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Type.Scalar.String.put", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Type.Scalar.String.put", requestOptions,
             updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 

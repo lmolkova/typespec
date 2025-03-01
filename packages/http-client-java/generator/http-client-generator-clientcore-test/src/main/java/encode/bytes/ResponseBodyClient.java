@@ -49,7 +49,7 @@ public final class ResponseBodyClient {
      */
     @Metadata(generated = true)
     public Response<byte[]> defaultMethodWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Bytes.ResponseBody.default", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Bytes.ResponseBody.default", requestOptions,
             updatedOptions -> this.serviceClient.defaultMethodWithResponse(updatedOptions));
     }
 
@@ -69,7 +69,7 @@ public final class ResponseBodyClient {
      */
     @Metadata(generated = true)
     public Response<BinaryData> octetStreamWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Bytes.ResponseBody.octetStream", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Bytes.ResponseBody.octetStream", requestOptions,
             updatedOptions -> this.serviceClient.octetStreamWithResponse(updatedOptions));
     }
 
@@ -89,8 +89,8 @@ public final class ResponseBodyClient {
      */
     @Metadata(generated = true)
     public Response<BinaryData> customContentTypeWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Bytes.ResponseBody.customContentType", requestOptions,
-            updatedOptions -> this.serviceClient.customContentTypeWithResponse(updatedOptions));
+        return this.instrumentation.instrumentWithResponse("Encode.Bytes.ResponseBody.customContentType",
+            requestOptions, updatedOptions -> this.serviceClient.customContentTypeWithResponse(updatedOptions));
     }
 
     /**
@@ -109,7 +109,7 @@ public final class ResponseBodyClient {
      */
     @Metadata(generated = true)
     public Response<byte[]> base64WithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Bytes.ResponseBody.base64", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Bytes.ResponseBody.base64", requestOptions,
             updatedOptions -> this.serviceClient.base64WithResponse(updatedOptions));
     }
 
@@ -129,7 +129,7 @@ public final class ResponseBodyClient {
      */
     @Metadata(generated = true)
     public Response<byte[]> base64urlWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Encode.Bytes.ResponseBody.base64url", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Encode.Bytes.ResponseBody.base64url", requestOptions,
             updatedOptions -> this.serviceClient.base64urlWithResponse(updatedOptions));
     }
 
