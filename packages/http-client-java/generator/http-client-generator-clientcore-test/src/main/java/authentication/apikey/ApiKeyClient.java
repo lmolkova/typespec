@@ -54,7 +54,7 @@ public final class ApiKeyClient {
      */
     @Metadata(generated = true)
     public Response<Void> invalidWithResponse(RequestOptions requestOptions) {
-        return this.instrumentation.instrument("Authentication.ApiKey.invalid", requestOptions,
+        return this.instrumentation.instrumentWithResponse("Authentication.ApiKey.invalid", requestOptions,
             updatedOptions -> this.serviceClient.invalidWithResponse(updatedOptions));
     }
 

@@ -111,22 +111,24 @@ public class WrapperClientMethodTemplate extends ClientMethodTemplateBase {
             if (opName == null) {
                 opName = clientMethod.getProxyMethod().getOperationId();
             }
+
             String requestOptionsParam = parameters.stream()
                 .filter(p -> p.getClientType() == ClassType.REQUEST_OPTIONS)
                 .map(ClientMethodParameter::getName)
                 .findFirst()
                 .orElse(null);
 
-            function.line(
-                (shouldReturn ? "return " : "") + "this.instrumentation.instrument(\"%1$s\", %2$s, updatedOptions -> ",
-                opName, requestOptionsParam);
+            String allParams = parameters.stream()
+              .map(p -> p.getClientType() == ClassType.REQUEST_OPTIONS ? "updatedOptions" : p.getName())
+              .collect(Collectors.joining(", "));
 
-            function.line("this.serviceClient.%1$s(%2$s)", clientMethod.getName(),
-                parameters.stream()
-                    .map(p -> p.getClientType() == ClassType.REQUEST_OPTIONS ? "updatedOptions" : p.getName())
-                    .collect(Collectors.joining(", ")));
-
-            function.line(");");
+            if (shouldReturn) {
+              function.line(
+                "return this.instrumentation.instrumentWithResponse(\"%1$s\", %2$s, updatedOptions -> this.serviceClient.%3$s(%4$s));", opName, requestOptionsParam, clientMethod.getName(), allParams);
+            } else {
+              function.line(
+                "this.instrumentation.instrument(\"%1$s\", %2$s, updatedOptions -> this.serviceClient.%3$s(%4$s));", opName, requestOptionsParam, clientMethod.getName(), allParams);
+            }
         }
     }
 

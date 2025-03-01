@@ -35,6 +35,7 @@ import com.microsoft.typespec.http.client.generator.core.model.javamodel.JavaVis
 import com.microsoft.typespec.http.client.generator.core.util.ClientModelUtil;
 import com.microsoft.typespec.http.client.generator.core.util.CodeNamer;
 import com.microsoft.typespec.http.client.generator.core.util.TemplateUtil;
+import io.clientcore.core.traits.EndpointTrait;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -495,10 +496,16 @@ public class ServiceClientBuilderTemplate implements IJavaTemplate<ClientBuilder
         boolean isBranded = JavaSettings.getInstance().isBranded();
 
         if (!isBranded) {
+            boolean hasEndpoint = syncClient.getClientBuilder()
+                .getBuilderTraits()
+                .stream()
+                .anyMatch(trait -> trait instanceof EndpointTrait);
+
             function.line(
                 "HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null ? new HttpInstrumentationOptions() : this.httpInstrumentationOptions;");
             function.line(
-                "Instrumentation instrumentation = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, this.endpoint);");
+                "Instrumentation instrumentation = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, %1$s);",
+                hasEndpoint ? "this.endpoint" : "null");
         }
         if (wrapServiceClient) {
             if (!isBranded) {
