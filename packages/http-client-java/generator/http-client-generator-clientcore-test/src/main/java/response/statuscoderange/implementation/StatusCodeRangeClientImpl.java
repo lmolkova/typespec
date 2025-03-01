@@ -13,6 +13,8 @@ import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
 import io.clientcore.core.http.pipeline.HttpPipeline;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 import response.statuscoderange.DefaultError;
 import response.statuscoderange.ErrorInRange;
 import response.statuscoderange.NotFoundError;
@@ -73,6 +75,21 @@ public final class StatusCodeRangeClientImpl {
      */
     @ServiceInterface(name = "StatusCodeRangeClien", host = "{endpoint}")
     public interface StatusCodeRangeClientService {
+        static StatusCodeRangeClientService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer,
+            @HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept) {
+            try {
+                Class<?> clazz
+                    = Class.forName("response.statuscoderange.implementation.StatusCodeRangeClientServiceImpl");
+                return (StatusCodeRangeClientService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class, String.class, String.class)
+                    .invoke(null, pipeline, serializer, endpoint, accept);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/response/status-code-range/error-response-status-code-in-range",
@@ -81,8 +98,19 @@ public final class StatusCodeRangeClientImpl {
             statusCode = { 494, 495, 496, 497, 498, 499 },
             exceptionBodyClass = ErrorInRange.class)
         @UnexpectedResponseExceptionDetail(exceptionBodyClass = DefaultError.class)
-        Response<Integer> errorResponseStatusCodeInRangeSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Accept") String accept, RequestOptions requestOptions);
+        Response<Integer> errorResponseStatusCodeInRange(RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/response/status-code-range/error-response-status-code-in-range",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail(
+            statusCode = { 494, 495, 496, 497, 498, 499 },
+            exceptionBodyClass = ErrorInRange.class)
+        @UnexpectedResponseExceptionDetail(exceptionBodyClass = DefaultError.class)
+        default int errorResponseStatusCodeInRange() {
+            return errorResponseStatusCodeInRange(null).getValue();
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.GET,
@@ -192,8 +220,119 @@ public final class StatusCodeRangeClientImpl {
             exceptionBodyClass = Standard4XXError.class)
         @UnexpectedResponseExceptionDetail(statusCode = { 404 }, exceptionBodyClass = NotFoundError.class)
         @UnexpectedResponseExceptionDetail
-        Response<Integer> errorResponseStatusCode404Sync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Accept") String accept, RequestOptions requestOptions);
+        Response<Integer> errorResponseStatusCode404(RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/response/status-code-range/error-response-status-code-404",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail(
+            statusCode = {
+                400,
+                401,
+                402,
+                403,
+                405,
+                406,
+                407,
+                408,
+                409,
+                410,
+                411,
+                412,
+                413,
+                414,
+                415,
+                416,
+                417,
+                418,
+                419,
+                420,
+                421,
+                422,
+                423,
+                424,
+                425,
+                426,
+                427,
+                428,
+                429,
+                430,
+                431,
+                432,
+                433,
+                434,
+                435,
+                436,
+                437,
+                438,
+                439,
+                440,
+                441,
+                442,
+                443,
+                444,
+                445,
+                446,
+                447,
+                448,
+                449,
+                450,
+                451,
+                452,
+                453,
+                454,
+                455,
+                456,
+                457,
+                458,
+                459,
+                460,
+                461,
+                462,
+                463,
+                464,
+                465,
+                466,
+                467,
+                468,
+                469,
+                470,
+                471,
+                472,
+                473,
+                474,
+                475,
+                476,
+                477,
+                478,
+                479,
+                480,
+                481,
+                482,
+                483,
+                484,
+                485,
+                486,
+                487,
+                488,
+                489,
+                490,
+                491,
+                492,
+                493,
+                494,
+                495,
+                496,
+                497,
+                498,
+                499 },
+            exceptionBodyClass = Standard4XXError.class)
+        @UnexpectedResponseExceptionDetail(statusCode = { 404 }, exceptionBodyClass = NotFoundError.class)
+        @UnexpectedResponseExceptionDetail
+        default int errorResponseStatusCode404() {
+            return errorResponseStatusCode404(null).getValue();
+        }
     }
 
     /**
@@ -211,8 +350,7 @@ public final class StatusCodeRangeClientImpl {
      * @return the response.
      */
     public Response<Integer> errorResponseStatusCodeInRangeWithResponse(RequestOptions requestOptions) {
-        final String accept = "application/json";
-        return service.errorResponseStatusCodeInRangeSync(this.getEndpoint(), accept, requestOptions);
+        return service.errorResponseStatusCodeInRange(requestOptions);
     }
 
     /**
@@ -230,7 +368,6 @@ public final class StatusCodeRangeClientImpl {
      * @return the response.
      */
     public Response<Integer> errorResponseStatusCode404WithResponse(RequestOptions requestOptions) {
-        final String accept = "application/json";
-        return service.errorResponseStatusCode404Sync(this.getEndpoint(), accept, requestOptions);
+        return service.errorResponseStatusCode404(requestOptions);
     }
 }

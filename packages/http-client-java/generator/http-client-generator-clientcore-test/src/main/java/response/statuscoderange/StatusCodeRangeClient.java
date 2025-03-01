@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import response.statuscoderange.implementation.StatusCodeRangeClientImpl;
 
 /**
@@ -17,14 +18,18 @@ public final class StatusCodeRangeClient {
     @Metadata(generated = true)
     private final StatusCodeRangeClientImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of StatusCodeRangeClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    StatusCodeRangeClient(StatusCodeRangeClientImpl serviceClient) {
+    StatusCodeRangeClient(StatusCodeRangeClientImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -43,7 +48,9 @@ public final class StatusCodeRangeClient {
      */
     @Metadata(generated = true)
     public Response<Integer> errorResponseStatusCodeInRangeWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.errorResponseStatusCodeInRangeWithResponse(requestOptions);
+        return this.instrumentation.instrument("Response.StatusCodeRange.errorResponseStatusCodeInRange",
+            requestOptions,
+            updatedOptions -> this.serviceClient.errorResponseStatusCodeInRangeWithResponse(updatedOptions));
     }
 
     /**
@@ -62,7 +69,8 @@ public final class StatusCodeRangeClient {
      */
     @Metadata(generated = true)
     public Response<Integer> errorResponseStatusCode404WithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.errorResponseStatusCode404WithResponse(requestOptions);
+        return this.instrumentation.instrument("Response.StatusCodeRange.errorResponseStatusCode404", requestOptions,
+            updatedOptions -> this.serviceClient.errorResponseStatusCode404WithResponse(updatedOptions));
     }
 
     /**

@@ -19,7 +19,10 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * An instance of this class provides access to all the operations defined in Properties.
@@ -51,12 +54,44 @@ public final class PropertiesImpl {
      */
     @ServiceInterface(name = "DurationClientProper", host = "{endpoint}")
     public interface PropertiesService {
+        static PropertiesService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("encode.duration.implementation.PropertiesServiceImpl");
+                return (PropertiesService) clazz.getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.POST,
             path = "/encode/duration/property/default",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<DefaultDurationProperty> defaultMethodSync(@HostParam("endpoint") String endpoint,
+        Response<DefaultDurationProperty> defaultMethod(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
+            @BodyParam("application/json") BinaryData body, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/encode/duration/property/default",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default DefaultDurationProperty defaultMethod(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
+            @BodyParam("application/json") BinaryData body) {
+            return defaultMethod(endpoint, contentType, accept, body, null).getValue();
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/encode/duration/property/iso8601",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        Response<ISO8601DurationProperty> iso8601(@HostParam("endpoint") String endpoint,
             @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
             @BodyParam("application/json") BinaryData body, RequestOptions requestOptions);
 
@@ -65,7 +100,18 @@ public final class PropertiesImpl {
             path = "/encode/duration/property/iso8601",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<ISO8601DurationProperty> iso8601Sync(@HostParam("endpoint") String endpoint,
+        default ISO8601DurationProperty iso8601(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
+            @BodyParam("application/json") BinaryData body) {
+            return iso8601(endpoint, contentType, accept, body, null).getValue();
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/encode/duration/property/int32-seconds",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        Response<Int32SecondsDurationProperty> int32Seconds(@HostParam("endpoint") String endpoint,
             @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
             @BodyParam("application/json") BinaryData body, RequestOptions requestOptions);
 
@@ -74,7 +120,18 @@ public final class PropertiesImpl {
             path = "/encode/duration/property/int32-seconds",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Int32SecondsDurationProperty> int32SecondsSync(@HostParam("endpoint") String endpoint,
+        default Int32SecondsDurationProperty int32Seconds(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
+            @BodyParam("application/json") BinaryData body) {
+            return int32Seconds(endpoint, contentType, accept, body, null).getValue();
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/encode/duration/property/float-seconds",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        Response<FloatSecondsDurationProperty> floatSeconds(@HostParam("endpoint") String endpoint,
             @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
             @BodyParam("application/json") BinaryData body, RequestOptions requestOptions);
 
@@ -83,7 +140,18 @@ public final class PropertiesImpl {
             path = "/encode/duration/property/float-seconds",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<FloatSecondsDurationProperty> floatSecondsSync(@HostParam("endpoint") String endpoint,
+        default FloatSecondsDurationProperty floatSeconds(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
+            @BodyParam("application/json") BinaryData body) {
+            return floatSeconds(endpoint, contentType, accept, body, null).getValue();
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/encode/duration/property/float64-seconds",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        Response<Float64SecondsDurationProperty> float64Seconds(@HostParam("endpoint") String endpoint,
             @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
             @BodyParam("application/json") BinaryData body, RequestOptions requestOptions);
 
@@ -92,7 +160,18 @@ public final class PropertiesImpl {
             path = "/encode/duration/property/float64-seconds",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Float64SecondsDurationProperty> float64SecondsSync(@HostParam("endpoint") String endpoint,
+        default Float64SecondsDurationProperty float64Seconds(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
+            @BodyParam("application/json") BinaryData body) {
+            return float64Seconds(endpoint, contentType, accept, body, null).getValue();
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/encode/duration/property/float-seconds-array",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        Response<FloatSecondsDurationArrayProperty> floatSecondsArray(@HostParam("endpoint") String endpoint,
             @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
             @BodyParam("application/json") BinaryData body, RequestOptions requestOptions);
 
@@ -101,9 +180,11 @@ public final class PropertiesImpl {
             path = "/encode/duration/property/float-seconds-array",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<FloatSecondsDurationArrayProperty> floatSecondsArraySync(@HostParam("endpoint") String endpoint,
+        default FloatSecondsDurationArrayProperty floatSecondsArray(@HostParam("endpoint") String endpoint,
             @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
-            @BodyParam("application/json") BinaryData body, RequestOptions requestOptions);
+            @BodyParam("application/json") BinaryData body) {
+            return floatSecondsArray(endpoint, contentType, accept, body, null).getValue();
+        }
     }
 
     /**
@@ -136,7 +217,7 @@ public final class PropertiesImpl {
     public Response<DefaultDurationProperty> defaultMethodWithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "application/json";
         final String accept = "application/json";
-        return service.defaultMethodSync(this.client.getEndpoint(), contentType, accept, body, requestOptions);
+        return service.defaultMethod(this.client.getEndpoint(), contentType, accept, body, requestOptions);
     }
 
     /**
@@ -169,7 +250,7 @@ public final class PropertiesImpl {
     public Response<ISO8601DurationProperty> iso8601WithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "application/json";
         final String accept = "application/json";
-        return service.iso8601Sync(this.client.getEndpoint(), contentType, accept, body, requestOptions);
+        return service.iso8601(this.client.getEndpoint(), contentType, accept, body, requestOptions);
     }
 
     /**
@@ -203,7 +284,7 @@ public final class PropertiesImpl {
         RequestOptions requestOptions) {
         final String contentType = "application/json";
         final String accept = "application/json";
-        return service.int32SecondsSync(this.client.getEndpoint(), contentType, accept, body, requestOptions);
+        return service.int32Seconds(this.client.getEndpoint(), contentType, accept, body, requestOptions);
     }
 
     /**
@@ -237,7 +318,7 @@ public final class PropertiesImpl {
         RequestOptions requestOptions) {
         final String contentType = "application/json";
         final String accept = "application/json";
-        return service.floatSecondsSync(this.client.getEndpoint(), contentType, accept, body, requestOptions);
+        return service.floatSeconds(this.client.getEndpoint(), contentType, accept, body, requestOptions);
     }
 
     /**
@@ -271,7 +352,7 @@ public final class PropertiesImpl {
         RequestOptions requestOptions) {
         final String contentType = "application/json";
         final String accept = "application/json";
-        return service.float64SecondsSync(this.client.getEndpoint(), contentType, accept, body, requestOptions);
+        return service.float64Seconds(this.client.getEndpoint(), contentType, accept, body, requestOptions);
     }
 
     /**
@@ -309,6 +390,6 @@ public final class PropertiesImpl {
         RequestOptions requestOptions) {
         final String contentType = "application/json";
         final String accept = "application/json";
-        return service.floatSecondsArraySync(this.client.getEndpoint(), contentType, accept, body, requestOptions);
+        return service.floatSecondsArray(this.client.getEndpoint(), contentType, accept, body, requestOptions);
     }
 }

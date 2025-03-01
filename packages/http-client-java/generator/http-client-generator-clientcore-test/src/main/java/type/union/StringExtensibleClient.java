@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import type.union.implementation.SendRequest8;
 import type.union.implementation.StringExtensiblesImpl;
@@ -19,14 +20,18 @@ public final class StringExtensibleClient {
     @Metadata(generated = true)
     private final StringExtensiblesImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of StringExtensibleClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    StringExtensibleClient(StringExtensiblesImpl serviceClient) {
+    StringExtensibleClient(StringExtensiblesImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -47,7 +52,8 @@ public final class StringExtensibleClient {
      */
     @Metadata(generated = true)
     public Response<GetResponse8> getWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Union.StringExtensible.get", requestOptions,
+            updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
     /**
@@ -69,7 +75,8 @@ public final class StringExtensibleClient {
      */
     @Metadata(generated = true)
     public Response<Void> sendWithResponse(BinaryData sendRequest8, RequestOptions requestOptions) {
-        return this.serviceClient.sendWithResponse(sendRequest8, requestOptions);
+        return this.instrumentation.instrument("Type.Union.StringExtensible.send", requestOptions,
+            updatedOptions -> this.serviceClient.sendWithResponse(sendRequest8, updatedOptions));
     }
 
     /**

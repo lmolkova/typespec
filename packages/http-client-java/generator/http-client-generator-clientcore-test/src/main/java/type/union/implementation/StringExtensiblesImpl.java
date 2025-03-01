@@ -13,7 +13,10 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 import type.union.GetResponse8;
 
 /**
@@ -46,21 +49,53 @@ public final class StringExtensiblesImpl {
      */
     @ServiceInterface(name = "UnionClientStringExt", host = "{endpoint}")
     public interface StringExtensiblesService {
+        static StringExtensiblesService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("type.union.implementation.StringExtensiblesServiceImpl");
+                return (StringExtensiblesService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/type/union/string-extensible",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<GetResponse8> getSync(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
+        Response<GetResponse8> get(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
             RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/type/union/string-extensible",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default GetResponse8 get(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept) {
+            return get(endpoint, accept, null).getValue();
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.POST,
             path = "/type/union/string-extensible",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> sendSync(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
+        Response<Void> send(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
             @BodyParam("application/json") BinaryData sendRequest8, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/type/union/string-extensible",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void send(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData sendRequest8) {
+            send(endpoint, contentType, sendRequest8, null);
+        }
     }
 
     /**
@@ -81,7 +116,7 @@ public final class StringExtensiblesImpl {
      */
     public Response<GetResponse8> getWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.getSync(this.client.getEndpoint(), accept, requestOptions);
+        return service.get(this.client.getEndpoint(), accept, requestOptions);
     }
 
     /**
@@ -103,6 +138,6 @@ public final class StringExtensiblesImpl {
      */
     public Response<Void> sendWithResponse(BinaryData sendRequest8, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.sendSync(this.client.getEndpoint(), contentType, sendRequest8, requestOptions);
+        return service.send(this.client.getEndpoint(), contentType, sendRequest8, requestOptions);
     }
 }

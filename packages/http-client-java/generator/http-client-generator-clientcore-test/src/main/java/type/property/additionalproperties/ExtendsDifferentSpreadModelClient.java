@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import type.property.additionalproperties.implementation.ExtendsDifferentSpreadModelsImpl;
 
@@ -18,14 +19,18 @@ public final class ExtendsDifferentSpreadModelClient {
     @Metadata(generated = true)
     private final ExtendsDifferentSpreadModelsImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of ExtendsDifferentSpreadModelClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    ExtendsDifferentSpreadModelClient(ExtendsDifferentSpreadModelsImpl serviceClient) {
+    ExtendsDifferentSpreadModelClient(ExtendsDifferentSpreadModelsImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -52,7 +57,8 @@ public final class ExtendsDifferentSpreadModelClient {
      */
     @Metadata(generated = true)
     public Response<DifferentSpreadModelDerived> getWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Property.AdditionalProperties.ExtendsDifferentSpreadModel.get",
+            requestOptions, updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
     /**
@@ -80,7 +86,8 @@ public final class ExtendsDifferentSpreadModelClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.putWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Type.Property.AdditionalProperties.ExtendsDifferentSpreadModel.put",
+            requestOptions, updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 
     /**

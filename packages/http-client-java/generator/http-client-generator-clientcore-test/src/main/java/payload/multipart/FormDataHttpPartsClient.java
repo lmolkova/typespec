@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import java.util.stream.Collectors;
 import payload.multipart.implementation.FormDataHttpPartsImpl;
@@ -20,14 +21,18 @@ public final class FormDataHttpPartsClient {
     @Metadata(generated = true)
     private final FormDataHttpPartsImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of FormDataHttpPartsClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    FormDataHttpPartsClient(FormDataHttpPartsImpl serviceClient) {
+    FormDataHttpPartsClient(FormDataHttpPartsImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -42,7 +47,9 @@ public final class FormDataHttpPartsClient {
     Response<Void> jsonArrayAndFileArrayWithResponse(BinaryData body, RequestOptions requestOptions) {
         // Operation 'jsonArrayAndFileArray' is of content-type 'multipart/form-data'. Protocol API is not usable and
         // hence not generated.
-        return this.serviceClient.jsonArrayAndFileArrayWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Payload.MultiPart.FormData.HttpParts.jsonArrayAndFileArray",
+            requestOptions,
+            updatedOptions -> this.serviceClient.jsonArrayAndFileArrayWithResponse(body, updatedOptions));
     }
 
     /**

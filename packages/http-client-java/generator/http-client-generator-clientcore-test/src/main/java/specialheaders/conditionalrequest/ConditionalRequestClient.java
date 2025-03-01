@@ -8,6 +8,7 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpHeaderName;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.utils.DateTimeRfc1123;
 import java.time.OffsetDateTime;
 import specialheaders.conditionalrequest.implementation.ConditionalRequestClientImpl;
@@ -20,14 +21,18 @@ public final class ConditionalRequestClient {
     @Metadata(generated = true)
     private final ConditionalRequestClientImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of ConditionalRequestClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    ConditionalRequestClient(ConditionalRequestClientImpl serviceClient) {
+    ConditionalRequestClient(ConditionalRequestClientImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -47,7 +52,8 @@ public final class ConditionalRequestClient {
      */
     @Metadata(generated = true)
     public Response<Void> postIfMatchWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.postIfMatchWithResponse(requestOptions);
+        return this.instrumentation.instrument("SpecialHeaders.ConditionalRequest.postIfMatch", requestOptions,
+            updatedOptions -> this.serviceClient.postIfMatchWithResponse(updatedOptions));
     }
 
     /**
@@ -67,7 +73,8 @@ public final class ConditionalRequestClient {
      */
     @Metadata(generated = true)
     public Response<Void> postIfNoneMatchWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.postIfNoneMatchWithResponse(requestOptions);
+        return this.instrumentation.instrument("SpecialHeaders.ConditionalRequest.postIfNoneMatch", requestOptions,
+            updatedOptions -> this.serviceClient.postIfNoneMatchWithResponse(updatedOptions));
     }
 
     /**
@@ -89,7 +96,8 @@ public final class ConditionalRequestClient {
      */
     @Metadata(generated = true)
     public Response<Void> headIfModifiedSinceWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.headIfModifiedSinceWithResponse(requestOptions);
+        return this.instrumentation.instrument("SpecialHeaders.ConditionalRequest.headIfModifiedSince", requestOptions,
+            updatedOptions -> this.serviceClient.headIfModifiedSinceWithResponse(updatedOptions));
     }
 
     /**
@@ -111,7 +119,8 @@ public final class ConditionalRequestClient {
      */
     @Metadata(generated = true)
     public Response<Void> postIfUnmodifiedSinceWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.postIfUnmodifiedSinceWithResponse(requestOptions);
+        return this.instrumentation.instrument("SpecialHeaders.ConditionalRequest.postIfUnmodifiedSince",
+            requestOptions, updatedOptions -> this.serviceClient.postIfUnmodifiedSinceWithResponse(updatedOptions));
     }
 
     /**

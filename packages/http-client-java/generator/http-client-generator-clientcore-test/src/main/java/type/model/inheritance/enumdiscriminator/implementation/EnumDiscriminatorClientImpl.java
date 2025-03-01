@@ -15,6 +15,8 @@ import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
 import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 import type.model.inheritance.enumdiscriminator.Dog;
 import type.model.inheritance.enumdiscriminator.Snake;
 
@@ -73,21 +75,61 @@ public final class EnumDiscriminatorClientImpl {
      */
     @ServiceInterface(name = "EnumDiscriminatorCli", host = "{endpoint}")
     public interface EnumDiscriminatorClientService {
+        static EnumDiscriminatorClientService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer,
+            @HostParam("endpoint") String endpoint) {
+            try {
+                Class<?> clazz = Class.forName(
+                    "type.model.inheritance.enumdiscriminator.implementation.EnumDiscriminatorClientServiceImpl");
+                return (EnumDiscriminatorClientService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class, String.class)
+                    .invoke(null, pipeline, serializer, endpoint);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/type/model/inheritance/enum-discriminator/extensible-enum",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Dog> getExtensibleModelSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Accept") String accept, RequestOptions requestOptions);
+        Response<Dog> getExtensibleModel(@HeaderParam("Accept") String accept, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/type/model/inheritance/enum-discriminator/extensible-enum",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default Dog getExtensibleModel(@HeaderParam("Accept") String accept) {
+            return getExtensibleModel(accept, null).getValue();
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.PUT,
             path = "/type/model/inheritance/enum-discriminator/extensible-enum",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> putExtensibleModelSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Content-Type") String contentType, @BodyParam("application/json") BinaryData input,
+        Response<Void> putExtensibleModel(@HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData input, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.PUT,
+            path = "/type/model/inheritance/enum-discriminator/extensible-enum",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void putExtensibleModel(@HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData input) {
+            putExtensibleModel(contentType, input, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/type/model/inheritance/enum-discriminator/extensible-enum/missingdiscriminator",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        Response<Dog> getExtensibleModelMissingDiscriminator(@HeaderParam("Accept") String accept,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -95,32 +137,67 @@ public final class EnumDiscriminatorClientImpl {
             path = "/type/model/inheritance/enum-discriminator/extensible-enum/missingdiscriminator",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Dog> getExtensibleModelMissingDiscriminatorSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Accept") String accept, RequestOptions requestOptions);
+        default Dog getExtensibleModelMissingDiscriminator(@HeaderParam("Accept") String accept) {
+            return getExtensibleModelMissingDiscriminator(accept, null).getValue();
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/type/model/inheritance/enum-discriminator/extensible-enum/wrongdiscriminator",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Dog> getExtensibleModelWrongDiscriminatorSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Accept") String accept, RequestOptions requestOptions);
+        Response<Dog> getExtensibleModelWrongDiscriminator(@HeaderParam("Accept") String accept,
+            RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/type/model/inheritance/enum-discriminator/extensible-enum/wrongdiscriminator",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default Dog getExtensibleModelWrongDiscriminator(@HeaderParam("Accept") String accept) {
+            return getExtensibleModelWrongDiscriminator(accept, null).getValue();
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/type/model/inheritance/enum-discriminator/fixed-enum",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Snake> getFixedModelSync(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
-            RequestOptions requestOptions);
+        Response<Snake> getFixedModel(@HeaderParam("Accept") String accept, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/type/model/inheritance/enum-discriminator/fixed-enum",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default Snake getFixedModel(@HeaderParam("Accept") String accept) {
+            return getFixedModel(accept, null).getValue();
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.PUT,
             path = "/type/model/inheritance/enum-discriminator/fixed-enum",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> putFixedModelSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Content-Type") String contentType, @BodyParam("application/json") BinaryData input,
+        Response<Void> putFixedModel(@HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData input, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.PUT,
+            path = "/type/model/inheritance/enum-discriminator/fixed-enum",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void putFixedModel(@HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData input) {
+            putFixedModel(contentType, input, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/type/model/inheritance/enum-discriminator/fixed-enum/missingdiscriminator",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        Response<Snake> getFixedModelMissingDiscriminator(@HeaderParam("Accept") String accept,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -128,16 +205,26 @@ public final class EnumDiscriminatorClientImpl {
             path = "/type/model/inheritance/enum-discriminator/fixed-enum/missingdiscriminator",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Snake> getFixedModelMissingDiscriminatorSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Accept") String accept, RequestOptions requestOptions);
+        default Snake getFixedModelMissingDiscriminator(@HeaderParam("Accept") String accept) {
+            return getFixedModelMissingDiscriminator(accept, null).getValue();
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/type/model/inheritance/enum-discriminator/fixed-enum/wrongdiscriminator",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Snake> getFixedModelWrongDiscriminatorSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Accept") String accept, RequestOptions requestOptions);
+        Response<Snake> getFixedModelWrongDiscriminator(@HeaderParam("Accept") String accept,
+            RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/type/model/inheritance/enum-discriminator/fixed-enum/wrongdiscriminator",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default Snake getFixedModelWrongDiscriminator(@HeaderParam("Accept") String accept) {
+            return getFixedModelWrongDiscriminator(accept, null).getValue();
+        }
     }
 
     /**
@@ -159,7 +246,7 @@ public final class EnumDiscriminatorClientImpl {
      */
     public Response<Dog> getExtensibleModelWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.getExtensibleModelSync(this.getEndpoint(), accept, requestOptions);
+        return service.getExtensibleModel(accept, requestOptions);
     }
 
     /**
@@ -182,7 +269,7 @@ public final class EnumDiscriminatorClientImpl {
      */
     public Response<Void> putExtensibleModelWithResponse(BinaryData input, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.putExtensibleModelSync(this.getEndpoint(), contentType, input, requestOptions);
+        return service.putExtensibleModel(contentType, input, requestOptions);
     }
 
     /**
@@ -204,7 +291,7 @@ public final class EnumDiscriminatorClientImpl {
      */
     public Response<Dog> getExtensibleModelMissingDiscriminatorWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.getExtensibleModelMissingDiscriminatorSync(this.getEndpoint(), accept, requestOptions);
+        return service.getExtensibleModelMissingDiscriminator(accept, requestOptions);
     }
 
     /**
@@ -226,7 +313,7 @@ public final class EnumDiscriminatorClientImpl {
      */
     public Response<Dog> getExtensibleModelWrongDiscriminatorWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.getExtensibleModelWrongDiscriminatorSync(this.getEndpoint(), accept, requestOptions);
+        return service.getExtensibleModelWrongDiscriminator(accept, requestOptions);
     }
 
     /**
@@ -248,7 +335,7 @@ public final class EnumDiscriminatorClientImpl {
      */
     public Response<Snake> getFixedModelWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.getFixedModelSync(this.getEndpoint(), accept, requestOptions);
+        return service.getFixedModel(accept, requestOptions);
     }
 
     /**
@@ -271,7 +358,7 @@ public final class EnumDiscriminatorClientImpl {
      */
     public Response<Void> putFixedModelWithResponse(BinaryData input, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.putFixedModelSync(this.getEndpoint(), contentType, input, requestOptions);
+        return service.putFixedModel(contentType, input, requestOptions);
     }
 
     /**
@@ -293,7 +380,7 @@ public final class EnumDiscriminatorClientImpl {
      */
     public Response<Snake> getFixedModelMissingDiscriminatorWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.getFixedModelMissingDiscriminatorSync(this.getEndpoint(), accept, requestOptions);
+        return service.getFixedModelMissingDiscriminator(accept, requestOptions);
     }
 
     /**
@@ -315,6 +402,6 @@ public final class EnumDiscriminatorClientImpl {
      */
     public Response<Snake> getFixedModelWrongDiscriminatorWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.getFixedModelWrongDiscriminatorSync(this.getEndpoint(), accept, requestOptions);
+        return service.getFixedModelWrongDiscriminator(accept, requestOptions);
     }
 }

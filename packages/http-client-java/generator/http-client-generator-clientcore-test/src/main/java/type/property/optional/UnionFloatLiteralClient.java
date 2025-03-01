@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import type.property.optional.implementation.UnionFloatLiteralsImpl;
 
@@ -18,14 +19,18 @@ public final class UnionFloatLiteralClient {
     @Metadata(generated = true)
     private final UnionFloatLiteralsImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of UnionFloatLiteralClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    UnionFloatLiteralClient(UnionFloatLiteralsImpl serviceClient) {
+    UnionFloatLiteralClient(UnionFloatLiteralsImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -46,7 +51,8 @@ public final class UnionFloatLiteralClient {
      */
     @Metadata(generated = true)
     public Response<UnionFloatLiteralProperty> getAllWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getAllWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Property.Optional.UnionFloatLiteral.getAll", requestOptions,
+            updatedOptions -> this.serviceClient.getAllWithResponse(updatedOptions));
     }
 
     /**
@@ -67,7 +73,8 @@ public final class UnionFloatLiteralClient {
      */
     @Metadata(generated = true)
     public Response<UnionFloatLiteralProperty> getDefaultWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getDefaultWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Property.Optional.UnionFloatLiteral.getDefault", requestOptions,
+            updatedOptions -> this.serviceClient.getDefaultWithResponse(updatedOptions));
     }
 
     /**
@@ -89,7 +96,8 @@ public final class UnionFloatLiteralClient {
      */
     @Metadata(generated = true)
     public Response<Void> putAllWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.putAllWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Type.Property.Optional.UnionFloatLiteral.putAll", requestOptions,
+            updatedOptions -> this.serviceClient.putAllWithResponse(body, updatedOptions));
     }
 
     /**
@@ -111,7 +119,8 @@ public final class UnionFloatLiteralClient {
      */
     @Metadata(generated = true)
     public Response<Void> putDefaultWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.putDefaultWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Type.Property.Optional.UnionFloatLiteral.putDefault", requestOptions,
+            updatedOptions -> this.serviceClient.putDefaultWithResponse(body, updatedOptions));
     }
 
     /**

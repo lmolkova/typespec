@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import server.endpoint.notdefined.implementation.NotDefinedClientImpl;
 
 /**
@@ -17,14 +18,18 @@ public final class NotDefinedClient {
     @Metadata(generated = true)
     private final NotDefinedClientImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of NotDefinedClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    NotDefinedClient(NotDefinedClientImpl serviceClient) {
+    NotDefinedClient(NotDefinedClientImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -36,7 +41,8 @@ public final class NotDefinedClient {
      */
     @Metadata(generated = true)
     public Response<Void> validWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.validWithResponse(requestOptions);
+        return this.instrumentation.instrument("Server.Endpoint.NotDefined.valid", requestOptions,
+            updatedOptions -> this.serviceClient.validWithResponse(updatedOptions));
     }
 
     /**

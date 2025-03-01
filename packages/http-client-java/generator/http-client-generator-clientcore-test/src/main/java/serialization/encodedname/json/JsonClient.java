@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import serialization.encodedname.json.implementation.PropertiesImpl;
 import serialization.encodedname.json.property.JsonEncodedNameModel;
@@ -19,14 +20,18 @@ public final class JsonClient {
     @Metadata(generated = true)
     private final PropertiesImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of JsonClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    JsonClient(PropertiesImpl serviceClient) {
+    JsonClient(PropertiesImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -48,7 +53,8 @@ public final class JsonClient {
      */
     @Metadata(generated = true)
     public Response<Void> sendWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.sendWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Serialization.EncodedName.Json.Property.send", requestOptions,
+            updatedOptions -> this.serviceClient.sendWithResponse(body, updatedOptions));
     }
 
     /**
@@ -69,7 +75,8 @@ public final class JsonClient {
      */
     @Metadata(generated = true)
     public Response<JsonEncodedNameModel> getWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getWithResponse(requestOptions);
+        return this.instrumentation.instrument("Serialization.EncodedName.Json.Property.get", requestOptions,
+            updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
     /**

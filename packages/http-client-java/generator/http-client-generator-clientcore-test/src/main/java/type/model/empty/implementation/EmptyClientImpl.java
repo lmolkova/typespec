@@ -15,6 +15,8 @@ import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
 import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 import type.model.empty.EmptyInputOutput;
 import type.model.empty.EmptyOutput;
 
@@ -72,21 +74,61 @@ public final class EmptyClientImpl {
      */
     @ServiceInterface(name = "EmptyClient", host = "{endpoint}")
     public interface EmptyClientService {
+        static EmptyClientService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer,
+            @HostParam("endpoint") String endpoint) {
+            try {
+                Class<?> clazz = Class.forName("type.model.empty.implementation.EmptyClientServiceImpl");
+                return (EmptyClientService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class, String.class)
+                    .invoke(null, pipeline, serializer, endpoint);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.PUT,
             path = "/type/model/empty/alone",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> putEmptySync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Content-Type") String contentType, @BodyParam("application/json") BinaryData input,
-            RequestOptions requestOptions);
+        Response<Void> putEmpty(@HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData input, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.PUT,
+            path = "/type/model/empty/alone",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void putEmpty(@HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData input) {
+            putEmpty(contentType, input, null);
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/type/model/empty/alone",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<EmptyOutput> getEmptySync(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
+        Response<EmptyOutput> getEmpty(@HeaderParam("Accept") String accept, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/type/model/empty/alone",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default EmptyOutput getEmpty(@HeaderParam("Accept") String accept) {
+            return getEmpty(accept, null).getValue();
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/type/model/empty/round-trip",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        Response<EmptyInputOutput> postRoundTripEmpty(@HeaderParam("Content-Type") String contentType,
+            @HeaderParam("Accept") String accept, @BodyParam("application/json") BinaryData body,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -94,9 +136,10 @@ public final class EmptyClientImpl {
             path = "/type/model/empty/round-trip",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<EmptyInputOutput> postRoundTripEmptySync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
-            @BodyParam("application/json") BinaryData body, RequestOptions requestOptions);
+        default EmptyInputOutput postRoundTripEmpty(@HeaderParam("Content-Type") String contentType,
+            @HeaderParam("Accept") String accept, @BodyParam("application/json") BinaryData body) {
+            return postRoundTripEmpty(contentType, accept, body, null).getValue();
+        }
     }
 
     /**
@@ -117,7 +160,7 @@ public final class EmptyClientImpl {
      */
     public Response<Void> putEmptyWithResponse(BinaryData input, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.putEmptySync(this.getEndpoint(), contentType, input, requestOptions);
+        return service.putEmpty(contentType, input, requestOptions);
     }
 
     /**
@@ -137,7 +180,7 @@ public final class EmptyClientImpl {
      */
     public Response<EmptyOutput> getEmptyWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.getEmptySync(this.getEndpoint(), accept, requestOptions);
+        return service.getEmpty(accept, requestOptions);
     }
 
     /**
@@ -168,6 +211,6 @@ public final class EmptyClientImpl {
     public Response<EmptyInputOutput> postRoundTripEmptyWithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "application/json";
         final String accept = "application/json";
-        return service.postRoundTripEmptySync(this.getEndpoint(), contentType, accept, body, requestOptions);
+        return service.postRoundTripEmpty(contentType, accept, body, requestOptions);
     }
 }

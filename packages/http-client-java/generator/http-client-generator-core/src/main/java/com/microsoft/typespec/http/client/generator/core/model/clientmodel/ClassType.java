@@ -56,6 +56,7 @@ import com.azure.core.util.logging.LogLevel;
 import com.azure.core.util.polling.PollOperationDetails;
 import com.azure.core.util.serializer.JsonSerializer;
 import com.azure.core.util.serializer.SerializerAdapter;
+import com.azure.core.util.serializer.TypeReference;
 import com.azure.json.JsonReader;
 import com.azure.json.JsonSerializable;
 import com.azure.json.JsonToken;
@@ -229,6 +230,28 @@ public class ClassType implements IType {
     public static final ClassType XML_WRITER = getClassTypeBuilder(XmlWriter.class).build();
     public static final ClassType XML_READER = getClassTypeBuilder(XmlReader.class).build();
     public static final ClassType XML_TOKEN = getClassTypeBuilder(XmlToken.class).build();
+    public static final ClassType INSTRUMENTATION
+        = new ClassType.Builder(false).packageName("io.clientcore.core.instrumentation")
+            .name("Instrumentation")
+            .build();
+    public static final ClassType LIBRARY_INSTRUMENTATION_OPTIONS
+        = new ClassType.Builder(false).packageName("io.clientcore.core.instrumentation")
+            .name("LibraryInstrumentationOptions")
+            .build();
+    public static final ClassType OPERATION_INSTRUMENTATION
+        = new ClassType.Builder(false).packageName("io.clientcore.core.instrumentation")
+            .name("OperationInstrumentation")
+            .build();
+
+    public static final ClassType INSTRUMENTED_OPERATION_DETAILS
+        = new ClassType.Builder(false).packageName("io.clientcore.core.instrumentation")
+            .name("InstrumentedOperationDetails")
+            .build();
+
+    public static final ClassType HTTP_INSTRUMENTATION_POLICY
+        = new ClassType.Builder(false).packageName("io.clientcore.core.http.pipeline")
+            .name("HttpInstrumentationPolicy")
+            .build();
 
     public static final ClassType VOID = new ClassType.Builder(false).knownClass(Void.class).build();
 
@@ -492,6 +515,7 @@ public class ClassType implements IType {
         = new ClassType.Builder(false).packageName("com.azure.android.core.util").name("Context").build();
 
     public static final ClassType CLIENT_LOGGER = ClassType.getClassTypeBuilder(ClientLogger.class).build();
+
     public static final ClassType LOG_LEVEL = ClassType.getClassTypeBuilder(LogLevel.class).build();
 
     public static final ClassType AZURE_CLOUD

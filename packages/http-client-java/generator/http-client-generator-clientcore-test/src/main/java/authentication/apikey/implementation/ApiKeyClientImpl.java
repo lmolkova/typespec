@@ -14,6 +14,8 @@ import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
 import io.clientcore.core.http.pipeline.HttpPipeline;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Initializes a new instance of the ApiKeyClient type.
@@ -69,12 +71,35 @@ public final class ApiKeyClientImpl {
      */
     @ServiceInterface(name = "ApiKeyClient", host = "{endpoint}")
     public interface ApiKeyClientService {
+        static ApiKeyClientService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer,
+            @HostParam("endpoint") String endpoint) {
+            try {
+                Class<?> clazz = Class.forName("authentication.apikey.implementation.ApiKeyClientServiceImpl");
+                return (ApiKeyClientService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class, String.class)
+                    .invoke(null, pipeline, serializer, endpoint);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/authentication/api-key/valid",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> validSync(@HostParam("endpoint") String endpoint, RequestOptions requestOptions);
+        Response<Void> valid(RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/authentication/api-key/valid",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void valid() {
+            valid(null);
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.GET,
@@ -82,8 +107,17 @@ public final class ApiKeyClientImpl {
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail(statusCode = { 403 }, exceptionBodyClass = InvalidAuth.class)
         @UnexpectedResponseExceptionDetail
-        Response<Void> invalidSync(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
-            RequestOptions requestOptions);
+        Response<Void> invalid(@HeaderParam("Accept") String accept, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/authentication/api-key/invalid",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail(statusCode = { 403 }, exceptionBodyClass = InvalidAuth.class)
+        @UnexpectedResponseExceptionDetail
+        default void invalid(@HeaderParam("Accept") String accept) {
+            invalid(accept, null);
+        }
     }
 
     /**
@@ -94,7 +128,7 @@ public final class ApiKeyClientImpl {
      * @return the response.
      */
     public Response<Void> validWithResponse(RequestOptions requestOptions) {
-        return service.validSync(this.getEndpoint(), requestOptions);
+        return service.valid(requestOptions);
     }
 
     /**
@@ -106,6 +140,6 @@ public final class ApiKeyClientImpl {
      */
     public Response<Void> invalidWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.invalidSync(this.getEndpoint(), accept, requestOptions);
+        return service.invalid(accept, requestOptions);
     }
 }

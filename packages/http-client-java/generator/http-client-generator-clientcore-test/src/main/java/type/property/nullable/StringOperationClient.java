@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import type.property.nullable.implementation.JsonMergePatchHelper;
 import type.property.nullable.implementation.StringOperationsImpl;
@@ -19,14 +20,18 @@ public final class StringOperationClient {
     @Metadata(generated = true)
     private final StringOperationsImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of StringOperationClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    StringOperationClient(StringOperationsImpl serviceClient) {
+    StringOperationClient(StringOperationsImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -48,7 +53,8 @@ public final class StringOperationClient {
      */
     @Metadata(generated = true)
     public Response<StringProperty> getNonNullWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getNonNullWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Property.Nullable.String.getNonNull", requestOptions,
+            updatedOptions -> this.serviceClient.getNonNullWithResponse(updatedOptions));
     }
 
     /**
@@ -70,7 +76,8 @@ public final class StringOperationClient {
      */
     @Metadata(generated = true)
     public Response<StringProperty> getNullWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getNullWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Property.Nullable.String.getNull", requestOptions,
+            updatedOptions -> this.serviceClient.getNullWithResponse(updatedOptions));
     }
 
     /**
@@ -93,7 +100,8 @@ public final class StringOperationClient {
      */
     @Metadata(generated = true)
     public Response<Void> patchNonNullWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.patchNonNullWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Type.Property.Nullable.String.patchNonNull", requestOptions,
+            updatedOptions -> this.serviceClient.patchNonNullWithResponse(body, updatedOptions));
     }
 
     /**
@@ -116,7 +124,8 @@ public final class StringOperationClient {
      */
     @Metadata(generated = true)
     public Response<Void> patchNullWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.patchNullWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Type.Property.Nullable.String.patchNull", requestOptions,
+            updatedOptions -> this.serviceClient.patchNullWithResponse(body, updatedOptions));
     }
 
     /**

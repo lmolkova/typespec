@@ -13,7 +13,10 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 import type.property.optional.UnionFloatLiteralProperty;
 
 /**
@@ -46,12 +49,43 @@ public final class UnionFloatLiteralsImpl {
      */
     @ServiceInterface(name = "OptionalClientUnionF", host = "{endpoint}")
     public interface UnionFloatLiteralsService {
+        static UnionFloatLiteralsService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("type.property.optional.implementation.UnionFloatLiteralsServiceImpl");
+                return (UnionFloatLiteralsService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/type/property/optional/union/float/literal/all",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<UnionFloatLiteralProperty> getAllSync(@HostParam("endpoint") String endpoint,
+        Response<UnionFloatLiteralProperty> getAll(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Accept") String accept, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/type/property/optional/union/float/literal/all",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default UnionFloatLiteralProperty getAll(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Accept") String accept) {
+            return getAll(endpoint, accept, null).getValue();
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/type/property/optional/union/float/literal/default",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        Response<UnionFloatLiteralProperty> getDefault(@HostParam("endpoint") String endpoint,
             @HeaderParam("Accept") String accept, RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -59,15 +93,35 @@ public final class UnionFloatLiteralsImpl {
             path = "/type/property/optional/union/float/literal/default",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<UnionFloatLiteralProperty> getDefaultSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Accept") String accept, RequestOptions requestOptions);
+        default UnionFloatLiteralProperty getDefault(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Accept") String accept) {
+            return getDefault(endpoint, accept, null).getValue();
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.PUT,
             path = "/type/property/optional/union/float/literal/all",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> putAllSync(@HostParam("endpoint") String endpoint,
+        Response<Void> putAll(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData body, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.PUT,
+            path = "/type/property/optional/union/float/literal/all",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void putAll(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData body) {
+            putAll(endpoint, contentType, body, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.PUT,
+            path = "/type/property/optional/union/float/literal/default",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> putDefault(@HostParam("endpoint") String endpoint,
             @HeaderParam("Content-Type") String contentType, @BodyParam("application/json") BinaryData body,
             RequestOptions requestOptions);
 
@@ -76,9 +130,10 @@ public final class UnionFloatLiteralsImpl {
             path = "/type/property/optional/union/float/literal/default",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> putDefaultSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Content-Type") String contentType, @BodyParam("application/json") BinaryData body,
-            RequestOptions requestOptions);
+        default void putDefault(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData body) {
+            putDefault(endpoint, contentType, body, null);
+        }
     }
 
     /**
@@ -99,7 +154,7 @@ public final class UnionFloatLiteralsImpl {
      */
     public Response<UnionFloatLiteralProperty> getAllWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.getAllSync(this.client.getEndpoint(), accept, requestOptions);
+        return service.getAll(this.client.getEndpoint(), accept, requestOptions);
     }
 
     /**
@@ -120,7 +175,7 @@ public final class UnionFloatLiteralsImpl {
      */
     public Response<UnionFloatLiteralProperty> getDefaultWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.getDefaultSync(this.client.getEndpoint(), accept, requestOptions);
+        return service.getDefault(this.client.getEndpoint(), accept, requestOptions);
     }
 
     /**
@@ -142,7 +197,7 @@ public final class UnionFloatLiteralsImpl {
      */
     public Response<Void> putAllWithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.putAllSync(this.client.getEndpoint(), contentType, body, requestOptions);
+        return service.putAll(this.client.getEndpoint(), contentType, body, requestOptions);
     }
 
     /**
@@ -164,6 +219,6 @@ public final class UnionFloatLiteralsImpl {
      */
     public Response<Void> putDefaultWithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.putDefaultSync(this.client.getEndpoint(), contentType, body, requestOptions);
+        return service.putDefault(this.client.getEndpoint(), contentType, body, requestOptions);
     }
 }

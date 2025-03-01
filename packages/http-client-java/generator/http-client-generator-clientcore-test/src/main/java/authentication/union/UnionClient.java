@@ -8,6 +8,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 
 /**
  * Initializes a new instance of the synchronous UnionClient type.
@@ -17,14 +18,18 @@ public final class UnionClient {
     @Metadata(generated = true)
     private final UnionClientImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of UnionClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    UnionClient(UnionClientImpl serviceClient) {
+    UnionClient(UnionClientImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -36,7 +41,8 @@ public final class UnionClient {
      */
     @Metadata(generated = true)
     public Response<Void> validKeyWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.validKeyWithResponse(requestOptions);
+        return this.instrumentation.instrument("Authentication.Union.validKey", requestOptions,
+            updatedOptions -> this.serviceClient.validKeyWithResponse(updatedOptions));
     }
 
     /**
@@ -48,7 +54,8 @@ public final class UnionClient {
      */
     @Metadata(generated = true)
     public Response<Void> validTokenWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.validTokenWithResponse(requestOptions);
+        return this.instrumentation.instrument("Authentication.Union.validToken", requestOptions,
+            updatedOptions -> this.serviceClient.validTokenWithResponse(updatedOptions));
     }
 
     /**

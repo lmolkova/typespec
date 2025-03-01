@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import type.model.usage.implementation.UsageClientImpl;
 
@@ -18,14 +19,18 @@ public final class UsageClient {
     @Metadata(generated = true)
     private final UsageClientImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of UsageClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    UsageClient(UsageClientImpl serviceClient) {
+    UsageClient(UsageClientImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -47,7 +52,8 @@ public final class UsageClient {
      */
     @Metadata(generated = true)
     public Response<Void> inputWithResponse(BinaryData input, RequestOptions requestOptions) {
-        return this.serviceClient.inputWithResponse(input, requestOptions);
+        return this.instrumentation.instrument("Type.Model.Usage.input", requestOptions,
+            updatedOptions -> this.serviceClient.inputWithResponse(input, updatedOptions));
     }
 
     /**
@@ -68,7 +74,8 @@ public final class UsageClient {
      */
     @Metadata(generated = true)
     public Response<OutputRecord> outputWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.outputWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Model.Usage.output", requestOptions,
+            updatedOptions -> this.serviceClient.outputWithResponse(updatedOptions));
     }
 
     /**
@@ -100,7 +107,8 @@ public final class UsageClient {
      */
     @Metadata(generated = true)
     public Response<InputOutputRecord> inputAndOutputWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.inputAndOutputWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Type.Model.Usage.inputAndOutput", requestOptions,
+            updatedOptions -> this.serviceClient.inputAndOutputWithResponse(body, updatedOptions));
     }
 
     /**

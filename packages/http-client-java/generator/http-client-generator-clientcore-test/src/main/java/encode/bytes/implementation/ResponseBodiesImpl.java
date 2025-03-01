@@ -12,7 +12,10 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * An instance of this class provides access to all the operations defined in ResponseBodies.
@@ -44,12 +47,42 @@ public final class ResponseBodiesImpl {
      */
     @ServiceInterface(name = "BytesClientResponseB", host = "{endpoint}")
     public interface ResponseBodiesService {
+        static ResponseBodiesService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("encode.bytes.implementation.ResponseBodiesServiceImpl");
+                return (ResponseBodiesService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/encode/bytes/body/response/default",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<byte[]> defaultMethodSync(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
+        Response<byte[]> defaultMethod(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
+            RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/encode/bytes/body/response/default",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default byte[] defaultMethod(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept) {
+            return defaultMethod(endpoint, accept, null).getValue();
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/encode/bytes/body/response/octet-stream",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        Response<BinaryData> octetStream(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -57,7 +90,16 @@ public final class ResponseBodiesImpl {
             path = "/encode/bytes/body/response/octet-stream",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<BinaryData> octetStreamSync(@HostParam("endpoint") String endpoint,
+        default BinaryData octetStream(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept) {
+            return octetStream(endpoint, accept, null).getValue();
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/encode/bytes/body/response/custom-content-type",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        Response<BinaryData> customContentType(@HostParam("endpoint") String endpoint,
             @HeaderParam("Accept") String accept, RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -65,15 +107,34 @@ public final class ResponseBodiesImpl {
             path = "/encode/bytes/body/response/custom-content-type",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<BinaryData> customContentTypeSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Accept") String accept, RequestOptions requestOptions);
+        default BinaryData customContentType(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Accept") String accept) {
+            return customContentType(endpoint, accept, null).getValue();
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/encode/bytes/body/response/base64",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<byte[]> base64Sync(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
+        Response<byte[]> base64(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
+            RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/encode/bytes/body/response/base64",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default byte[] base64(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept) {
+            return base64(endpoint, accept, null).getValue();
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/encode/bytes/body/response/base64url",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        Response<byte[]> base64url(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -81,8 +142,9 @@ public final class ResponseBodiesImpl {
             path = "/encode/bytes/body/response/base64url",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<byte[]> base64urlSync(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
-            RequestOptions requestOptions);
+        default byte[] base64url(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept) {
+            return base64url(endpoint, accept, null).getValue();
+        }
     }
 
     /**
@@ -101,7 +163,7 @@ public final class ResponseBodiesImpl {
      */
     public Response<byte[]> defaultMethodWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.defaultMethodSync(this.client.getEndpoint(), accept, requestOptions);
+        return service.defaultMethod(this.client.getEndpoint(), accept, requestOptions);
     }
 
     /**
@@ -120,7 +182,7 @@ public final class ResponseBodiesImpl {
      */
     public Response<BinaryData> octetStreamWithResponse(RequestOptions requestOptions) {
         final String accept = "application/octet-stream";
-        return service.octetStreamSync(this.client.getEndpoint(), accept, requestOptions);
+        return service.octetStream(this.client.getEndpoint(), accept, requestOptions);
     }
 
     /**
@@ -139,7 +201,7 @@ public final class ResponseBodiesImpl {
      */
     public Response<BinaryData> customContentTypeWithResponse(RequestOptions requestOptions) {
         final String accept = "image/png";
-        return service.customContentTypeSync(this.client.getEndpoint(), accept, requestOptions);
+        return service.customContentType(this.client.getEndpoint(), accept, requestOptions);
     }
 
     /**
@@ -158,7 +220,7 @@ public final class ResponseBodiesImpl {
      */
     public Response<byte[]> base64WithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.base64Sync(this.client.getEndpoint(), accept, requestOptions);
+        return service.base64(this.client.getEndpoint(), accept, requestOptions);
     }
 
     /**
@@ -167,7 +229,7 @@ public final class ResponseBodiesImpl {
      * 
      * <pre>
      * {@code
-     * Base64Uri
+     * Base64Url
      * }
      * </pre>
      * 
@@ -177,6 +239,6 @@ public final class ResponseBodiesImpl {
      */
     public Response<byte[]> base64urlWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.base64urlSync(this.client.getEndpoint(), accept, requestOptions);
+        return service.base64url(this.client.getEndpoint(), accept, requestOptions);
     }
 }

@@ -12,6 +12,9 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * An instance of this class provides access to all the operations defined in PathParametersReservedExpansions.
@@ -43,12 +46,44 @@ public final class PathParametersReservedExpansionsImpl {
      */
     @ServiceInterface(name = "RoutesClientPathPara", host = "{endpoint}")
     public interface PathParametersReservedExpansionsService {
+        static PathParametersReservedExpansionsService getNewInstance(HttpPipeline pipeline,
+            ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("routes.implementation.PathParametersReservedExpansionsServiceImpl");
+                return (PathParametersReservedExpansionsService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/routes/path/reserved-expansion/template/{param}",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> templateSync(@HostParam("endpoint") String endpoint,
+        Response<Void> template(@HostParam("endpoint") String endpoint,
+            @PathParam(value = "param", encoded = true) String param, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/routes/path/reserved-expansion/template/{param}",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void template(@HostParam("endpoint") String endpoint,
+            @PathParam(value = "param", encoded = true) String param) {
+            template(endpoint, param, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/routes/path/reserved-expansion/annotation/{param}",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> annotation(@HostParam("endpoint") String endpoint,
             @PathParam(value = "param", encoded = true) String param, RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -56,8 +91,10 @@ public final class PathParametersReservedExpansionsImpl {
             path = "/routes/path/reserved-expansion/annotation/{param}",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> annotationSync(@HostParam("endpoint") String endpoint,
-            @PathParam(value = "param", encoded = true) String param, RequestOptions requestOptions);
+        default void annotation(@HostParam("endpoint") String endpoint,
+            @PathParam(value = "param", encoded = true) String param) {
+            annotation(endpoint, param, null);
+        }
     }
 
     /**
@@ -69,7 +106,7 @@ public final class PathParametersReservedExpansionsImpl {
      * @return the response.
      */
     public Response<Void> templateWithResponse(String param, RequestOptions requestOptions) {
-        return service.templateSync(this.client.getEndpoint(), param, requestOptions);
+        return service.template(this.client.getEndpoint(), param, requestOptions);
     }
 
     /**
@@ -81,6 +118,6 @@ public final class PathParametersReservedExpansionsImpl {
      * @return the response.
      */
     public Response<Void> annotationWithResponse(String param, RequestOptions requestOptions) {
-        return service.annotationSync(this.client.getEndpoint(), param, requestOptions);
+        return service.annotation(this.client.getEndpoint(), param, requestOptions);
     }
 }

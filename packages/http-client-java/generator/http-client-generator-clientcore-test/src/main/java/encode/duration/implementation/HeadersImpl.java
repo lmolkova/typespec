@@ -12,7 +12,10 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,20 +50,58 @@ public final class HeadersImpl {
      */
     @ServiceInterface(name = "DurationClientHeader", host = "{endpoint}")
     public interface HeadersService {
+        static HeadersService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("encode.duration.implementation.HeadersServiceImpl");
+                return (HeadersService) clazz.getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/encode/duration/header/default",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> defaultMethodSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("duration") Duration duration, RequestOptions requestOptions);
+        Response<Void> defaultMethod(@HostParam("endpoint") String endpoint, @HeaderParam("duration") Duration duration,
+            RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/encode/duration/header/default",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void defaultMethod(@HostParam("endpoint") String endpoint, @HeaderParam("duration") Duration duration) {
+            defaultMethod(endpoint, duration, null);
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/encode/duration/header/iso8601",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> iso8601Sync(@HostParam("endpoint") String endpoint, @HeaderParam("duration") Duration duration,
+        Response<Void> iso8601(@HostParam("endpoint") String endpoint, @HeaderParam("duration") Duration duration,
+            RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/encode/duration/header/iso8601",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void iso8601(@HostParam("endpoint") String endpoint, @HeaderParam("duration") Duration duration) {
+            iso8601(endpoint, duration, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/encode/duration/header/iso8601-array",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> iso8601Array(@HostParam("endpoint") String endpoint, @HeaderParam("duration") String duration,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -68,15 +109,33 @@ public final class HeadersImpl {
             path = "/encode/duration/header/iso8601-array",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> iso8601ArraySync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("duration") String duration, RequestOptions requestOptions);
+        default void iso8601Array(@HostParam("endpoint") String endpoint, @HeaderParam("duration") String duration) {
+            iso8601Array(endpoint, duration, null);
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/encode/duration/header/int32-seconds",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> int32SecondsSync(@HostParam("endpoint") String endpoint, @HeaderParam("duration") long duration,
+        Response<Void> int32Seconds(@HostParam("endpoint") String endpoint, @HeaderParam("duration") long duration,
+            RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/encode/duration/header/int32-seconds",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void int32Seconds(@HostParam("endpoint") String endpoint, @HeaderParam("duration") long duration) {
+            int32Seconds(endpoint, duration, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/encode/duration/header/float-seconds",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> floatSeconds(@HostParam("endpoint") String endpoint, @HeaderParam("duration") double duration,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -84,16 +143,26 @@ public final class HeadersImpl {
             path = "/encode/duration/header/float-seconds",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> floatSecondsSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("duration") double duration, RequestOptions requestOptions);
+        default void floatSeconds(@HostParam("endpoint") String endpoint, @HeaderParam("duration") double duration) {
+            floatSeconds(endpoint, duration, null);
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/encode/duration/header/float64-seconds",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> float64SecondsSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("duration") double duration, RequestOptions requestOptions);
+        Response<Void> float64Seconds(@HostParam("endpoint") String endpoint, @HeaderParam("duration") double duration,
+            RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/encode/duration/header/float64-seconds",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void float64Seconds(@HostParam("endpoint") String endpoint, @HeaderParam("duration") double duration) {
+            float64Seconds(endpoint, duration, null);
+        }
     }
 
     /**
@@ -105,7 +174,7 @@ public final class HeadersImpl {
      * @return the response.
      */
     public Response<Void> defaultMethodWithResponse(Duration duration, RequestOptions requestOptions) {
-        return service.defaultMethodSync(this.client.getEndpoint(), duration, requestOptions);
+        return service.defaultMethod(this.client.getEndpoint(), duration, requestOptions);
     }
 
     /**
@@ -117,7 +186,7 @@ public final class HeadersImpl {
      * @return the response.
      */
     public Response<Void> iso8601WithResponse(Duration duration, RequestOptions requestOptions) {
-        return service.iso8601Sync(this.client.getEndpoint(), duration, requestOptions);
+        return service.iso8601(this.client.getEndpoint(), duration, requestOptions);
     }
 
     /**
@@ -156,7 +225,7 @@ public final class HeadersImpl {
                 return itemValueString.substring(startOffset, endOffset + 1);
             }
         }).collect(Collectors.joining(","));
-        return service.iso8601ArraySync(this.client.getEndpoint(), durationConverted, requestOptions);
+        return service.iso8601Array(this.client.getEndpoint(), durationConverted, requestOptions);
     }
 
     /**
@@ -169,7 +238,7 @@ public final class HeadersImpl {
      */
     public Response<Void> int32SecondsWithResponse(Duration duration, RequestOptions requestOptions) {
         long durationConverted = duration.getSeconds();
-        return service.int32SecondsSync(this.client.getEndpoint(), durationConverted, requestOptions);
+        return service.int32Seconds(this.client.getEndpoint(), durationConverted, requestOptions);
     }
 
     /**
@@ -182,7 +251,7 @@ public final class HeadersImpl {
      */
     public Response<Void> floatSecondsWithResponse(Duration duration, RequestOptions requestOptions) {
         double durationConverted = (double) duration.toNanos() / 1000_000_000L;
-        return service.floatSecondsSync(this.client.getEndpoint(), durationConverted, requestOptions);
+        return service.floatSeconds(this.client.getEndpoint(), durationConverted, requestOptions);
     }
 
     /**
@@ -195,6 +264,6 @@ public final class HeadersImpl {
      */
     public Response<Void> float64SecondsWithResponse(Duration duration, RequestOptions requestOptions) {
         double durationConverted = (double) duration.toNanos() / 1000_000_000L;
-        return service.float64SecondsSync(this.client.getEndpoint(), durationConverted, requestOptions);
+        return service.float64Seconds(this.client.getEndpoint(), durationConverted, requestOptions);
     }
 }

@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import java.util.List;
 import type.array.implementation.Int64ValuesImpl;
@@ -19,14 +20,18 @@ public final class Int64ValueClient {
     @Metadata(generated = true)
     private final Int64ValuesImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of Int64ValueClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    Int64ValueClient(Int64ValuesImpl serviceClient) {
+    Int64ValueClient(Int64ValuesImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -47,7 +52,8 @@ public final class Int64ValueClient {
      */
     @Metadata(generated = true)
     public Response<List<Long>> getWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Array.Int64Value.get", requestOptions,
+            updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
     /**
@@ -69,7 +75,8 @@ public final class Int64ValueClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.putWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Type.Array.Int64Value.put", requestOptions,
+            updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 
     /**

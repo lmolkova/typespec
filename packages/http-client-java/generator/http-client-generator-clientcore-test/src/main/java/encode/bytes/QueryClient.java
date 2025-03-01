@@ -8,6 +8,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import java.util.List;
 
 /**
@@ -18,14 +19,18 @@ public final class QueryClient {
     @Metadata(generated = true)
     private final QueriesImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of QueryClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    QueryClient(QueriesImpl serviceClient) {
+    QueryClient(QueriesImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -38,7 +43,8 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> defaultMethodWithResponse(byte[] value, RequestOptions requestOptions) {
-        return this.serviceClient.defaultMethodWithResponse(value, requestOptions);
+        return this.instrumentation.instrument("Encode.Bytes.Query.default", requestOptions,
+            updatedOptions -> this.serviceClient.defaultMethodWithResponse(value, updatedOptions));
     }
 
     /**
@@ -51,7 +57,8 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> base64WithResponse(byte[] value, RequestOptions requestOptions) {
-        return this.serviceClient.base64WithResponse(value, requestOptions);
+        return this.instrumentation.instrument("Encode.Bytes.Query.base64", requestOptions,
+            updatedOptions -> this.serviceClient.base64WithResponse(value, updatedOptions));
     }
 
     /**
@@ -64,7 +71,8 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> base64urlWithResponse(byte[] value, RequestOptions requestOptions) {
-        return this.serviceClient.base64urlWithResponse(value, requestOptions);
+        return this.instrumentation.instrument("Encode.Bytes.Query.base64url", requestOptions,
+            updatedOptions -> this.serviceClient.base64urlWithResponse(value, updatedOptions));
     }
 
     /**
@@ -77,7 +85,8 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> base64urlArrayWithResponse(List<byte[]> value, RequestOptions requestOptions) {
-        return this.serviceClient.base64urlArrayWithResponse(value, requestOptions);
+        return this.instrumentation.instrument("Encode.Bytes.Query.base64urlArray", requestOptions,
+            updatedOptions -> this.serviceClient.base64urlArrayWithResponse(value, updatedOptions));
     }
 
     /**

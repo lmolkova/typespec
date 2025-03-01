@@ -8,6 +8,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import java.util.List;
 
 /**
@@ -18,14 +19,18 @@ public final class HeaderClient {
     @Metadata(generated = true)
     private final HeadersImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of HeaderClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    HeaderClient(HeadersImpl serviceClient) {
+    HeaderClient(HeadersImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -38,7 +43,8 @@ public final class HeaderClient {
      */
     @Metadata(generated = true)
     public Response<Void> defaultMethodWithResponse(byte[] value, RequestOptions requestOptions) {
-        return this.serviceClient.defaultMethodWithResponse(value, requestOptions);
+        return this.instrumentation.instrument("Encode.Bytes.Header.default", requestOptions,
+            updatedOptions -> this.serviceClient.defaultMethodWithResponse(value, updatedOptions));
     }
 
     /**
@@ -51,7 +57,8 @@ public final class HeaderClient {
      */
     @Metadata(generated = true)
     public Response<Void> base64WithResponse(byte[] value, RequestOptions requestOptions) {
-        return this.serviceClient.base64WithResponse(value, requestOptions);
+        return this.instrumentation.instrument("Encode.Bytes.Header.base64", requestOptions,
+            updatedOptions -> this.serviceClient.base64WithResponse(value, updatedOptions));
     }
 
     /**
@@ -64,7 +71,8 @@ public final class HeaderClient {
      */
     @Metadata(generated = true)
     public Response<Void> base64urlWithResponse(byte[] value, RequestOptions requestOptions) {
-        return this.serviceClient.base64urlWithResponse(value, requestOptions);
+        return this.instrumentation.instrument("Encode.Bytes.Header.base64url", requestOptions,
+            updatedOptions -> this.serviceClient.base64urlWithResponse(value, updatedOptions));
     }
 
     /**
@@ -77,7 +85,8 @@ public final class HeaderClient {
      */
     @Metadata(generated = true)
     public Response<Void> base64urlArrayWithResponse(List<byte[]> value, RequestOptions requestOptions) {
-        return this.serviceClient.base64urlArrayWithResponse(value, requestOptions);
+        return this.instrumentation.instrument("Encode.Bytes.Header.base64urlArray", requestOptions,
+            updatedOptions -> this.serviceClient.base64urlArrayWithResponse(value, updatedOptions));
     }
 
     /**

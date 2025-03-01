@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import type.property.additionalproperties.implementation.ExtendsStringsImpl;
 
@@ -18,14 +19,18 @@ public final class ExtendsStringClient {
     @Metadata(generated = true)
     private final ExtendsStringsImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of ExtendsStringClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    ExtendsStringClient(ExtendsStringsImpl serviceClient) {
+    ExtendsStringClient(ExtendsStringsImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -49,7 +54,8 @@ public final class ExtendsStringClient {
      */
     @Metadata(generated = true)
     public Response<ExtendsStringAdditionalProperties> getWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Property.AdditionalProperties.ExtendsString.get", requestOptions,
+            updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
     /**
@@ -74,7 +80,8 @@ public final class ExtendsStringClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.putWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Type.Property.AdditionalProperties.ExtendsString.put", requestOptions,
+            updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 
     /**

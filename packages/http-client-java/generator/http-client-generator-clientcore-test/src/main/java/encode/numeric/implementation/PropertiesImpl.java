@@ -16,7 +16,10 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * An instance of this class provides access to all the operations defined in Properties.
@@ -48,12 +51,44 @@ public final class PropertiesImpl {
      */
     @ServiceInterface(name = "NumericClientPropert", host = "{endpoint}")
     public interface PropertiesService {
+        static PropertiesService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("encode.numeric.implementation.PropertiesServiceImpl");
+                return (PropertiesService) clazz.getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.POST,
             path = "/encode/numeric/property/safeint",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<SafeintAsStringProperty> safeintAsStringSync(@HostParam("endpoint") String endpoint,
+        Response<SafeintAsStringProperty> safeintAsString(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
+            @BodyParam("application/json") BinaryData value, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/encode/numeric/property/safeint",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default SafeintAsStringProperty safeintAsString(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
+            @BodyParam("application/json") BinaryData value) {
+            return safeintAsString(endpoint, contentType, accept, value, null).getValue();
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/encode/numeric/property/uint32",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        Response<Uint32AsStringProperty> uint32AsStringOptional(@HostParam("endpoint") String endpoint,
             @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
             @BodyParam("application/json") BinaryData value, RequestOptions requestOptions);
 
@@ -62,7 +97,18 @@ public final class PropertiesImpl {
             path = "/encode/numeric/property/uint32",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Uint32AsStringProperty> uint32AsStringOptionalSync(@HostParam("endpoint") String endpoint,
+        default Uint32AsStringProperty uint32AsStringOptional(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
+            @BodyParam("application/json") BinaryData value) {
+            return uint32AsStringOptional(endpoint, contentType, accept, value, null).getValue();
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/encode/numeric/property/uint8",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        Response<Uint8AsStringProperty> uint8AsString(@HostParam("endpoint") String endpoint,
             @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
             @BodyParam("application/json") BinaryData value, RequestOptions requestOptions);
 
@@ -71,9 +117,11 @@ public final class PropertiesImpl {
             path = "/encode/numeric/property/uint8",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Uint8AsStringProperty> uint8AsStringSync(@HostParam("endpoint") String endpoint,
+        default Uint8AsStringProperty uint8AsString(@HostParam("endpoint") String endpoint,
             @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
-            @BodyParam("application/json") BinaryData value, RequestOptions requestOptions);
+            @BodyParam("application/json") BinaryData value) {
+            return uint8AsString(endpoint, contentType, accept, value, null).getValue();
+        }
     }
 
     /**
@@ -107,7 +155,7 @@ public final class PropertiesImpl {
         RequestOptions requestOptions) {
         final String contentType = "application/json";
         final String accept = "application/json";
-        return service.safeintAsStringSync(this.client.getEndpoint(), contentType, accept, value, requestOptions);
+        return service.safeintAsString(this.client.getEndpoint(), contentType, accept, value, requestOptions);
     }
 
     /**
@@ -141,8 +189,7 @@ public final class PropertiesImpl {
         RequestOptions requestOptions) {
         final String contentType = "application/json";
         final String accept = "application/json";
-        return service.uint32AsStringOptionalSync(this.client.getEndpoint(), contentType, accept, value,
-            requestOptions);
+        return service.uint32AsStringOptional(this.client.getEndpoint(), contentType, accept, value, requestOptions);
     }
 
     /**
@@ -175,6 +222,6 @@ public final class PropertiesImpl {
     public Response<Uint8AsStringProperty> uint8AsStringWithResponse(BinaryData value, RequestOptions requestOptions) {
         final String contentType = "application/json";
         final String accept = "application/json";
-        return service.uint8AsStringSync(this.client.getEndpoint(), contentType, accept, value, requestOptions);
+        return service.uint8AsString(this.client.getEndpoint(), contentType, accept, value, requestOptions);
     }
 }

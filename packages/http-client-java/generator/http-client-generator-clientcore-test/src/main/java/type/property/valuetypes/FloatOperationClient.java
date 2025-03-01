@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import type.property.valuetypes.implementation.FloatOperationsImpl;
 
@@ -18,14 +19,18 @@ public final class FloatOperationClient {
     @Metadata(generated = true)
     private final FloatOperationsImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of FloatOperationClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    FloatOperationClient(FloatOperationsImpl serviceClient) {
+    FloatOperationClient(FloatOperationsImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -46,7 +51,8 @@ public final class FloatOperationClient {
      */
     @Metadata(generated = true)
     public Response<FloatProperty> getWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Property.ValueTypes.Float.get", requestOptions,
+            updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
     /**
@@ -68,7 +74,8 @@ public final class FloatOperationClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.putWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Type.Property.ValueTypes.Float.put", requestOptions,
+            updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 
     /**

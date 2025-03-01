@@ -15,6 +15,8 @@ import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
 import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 import type.model.inheritance.singlediscriminator.Bird;
 import type.model.inheritance.singlediscriminator.Dinosaur;
 
@@ -73,63 +75,136 @@ public final class SingleDiscriminatorClientImpl {
      */
     @ServiceInterface(name = "SingleDiscriminatorC", host = "{endpoint}")
     public interface SingleDiscriminatorClientService {
+        static SingleDiscriminatorClientService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer,
+            @HostParam("endpoint") String endpoint) {
+            try {
+                Class<?> clazz = Class.forName(
+                    "type.model.inheritance.singlediscriminator.implementation.SingleDiscriminatorClientServiceImpl");
+                return (SingleDiscriminatorClientService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class, String.class)
+                    .invoke(null, pipeline, serializer, endpoint);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/type/model/inheritance/single-discriminator/model",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Bird> getModelSync(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
-            RequestOptions requestOptions);
+        Response<Bird> getModel(@HeaderParam("Accept") String accept, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/type/model/inheritance/single-discriminator/model",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default Bird getModel(@HeaderParam("Accept") String accept) {
+            return getModel(accept, null).getValue();
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.PUT,
             path = "/type/model/inheritance/single-discriminator/model",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> putModelSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Content-Type") String contentType, @BodyParam("application/json") BinaryData input,
-            RequestOptions requestOptions);
+        Response<Void> putModel(@HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData input, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.PUT,
+            path = "/type/model/inheritance/single-discriminator/model",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void putModel(@HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData input) {
+            putModel(contentType, input, null);
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/type/model/inheritance/single-discriminator/recursivemodel",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Bird> getRecursiveModelSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Accept") String accept, RequestOptions requestOptions);
+        Response<Bird> getRecursiveModel(@HeaderParam("Accept") String accept, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/type/model/inheritance/single-discriminator/recursivemodel",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default Bird getRecursiveModel(@HeaderParam("Accept") String accept) {
+            return getRecursiveModel(accept, null).getValue();
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.PUT,
             path = "/type/model/inheritance/single-discriminator/recursivemodel",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> putRecursiveModelSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Content-Type") String contentType, @BodyParam("application/json") BinaryData input,
-            RequestOptions requestOptions);
+        Response<Void> putRecursiveModel(@HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData input, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.PUT,
+            path = "/type/model/inheritance/single-discriminator/recursivemodel",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void putRecursiveModel(@HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData input) {
+            putRecursiveModel(contentType, input, null);
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/type/model/inheritance/single-discriminator/missingdiscriminator",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Bird> getMissingDiscriminatorSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Accept") String accept, RequestOptions requestOptions);
+        Response<Bird> getMissingDiscriminator(@HeaderParam("Accept") String accept, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/type/model/inheritance/single-discriminator/missingdiscriminator",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default Bird getMissingDiscriminator(@HeaderParam("Accept") String accept) {
+            return getMissingDiscriminator(accept, null).getValue();
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/type/model/inheritance/single-discriminator/wrongdiscriminator",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Bird> getWrongDiscriminatorSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Accept") String accept, RequestOptions requestOptions);
+        Response<Bird> getWrongDiscriminator(@HeaderParam("Accept") String accept, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/type/model/inheritance/single-discriminator/wrongdiscriminator",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default Bird getWrongDiscriminator(@HeaderParam("Accept") String accept) {
+            return getWrongDiscriminator(accept, null).getValue();
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/type/model/inheritance/single-discriminator/legacy-model",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Dinosaur> getLegacyModelSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Accept") String accept, RequestOptions requestOptions);
+        Response<Dinosaur> getLegacyModel(@HeaderParam("Accept") String accept, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/type/model/inheritance/single-discriminator/legacy-model",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default Dinosaur getLegacyModel(@HeaderParam("Accept") String accept) {
+            return getLegacyModel(accept, null).getValue();
+        }
     }
 
     /**
@@ -151,7 +226,7 @@ public final class SingleDiscriminatorClientImpl {
      */
     public Response<Bird> getModelWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.getModelSync(this.getEndpoint(), accept, requestOptions);
+        return service.getModel(accept, requestOptions);
     }
 
     /**
@@ -174,7 +249,7 @@ public final class SingleDiscriminatorClientImpl {
      */
     public Response<Void> putModelWithResponse(BinaryData input, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.putModelSync(this.getEndpoint(), contentType, input, requestOptions);
+        return service.putModel(contentType, input, requestOptions);
     }
 
     /**
@@ -196,7 +271,7 @@ public final class SingleDiscriminatorClientImpl {
      */
     public Response<Bird> getRecursiveModelWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.getRecursiveModelSync(this.getEndpoint(), accept, requestOptions);
+        return service.getRecursiveModel(accept, requestOptions);
     }
 
     /**
@@ -219,7 +294,7 @@ public final class SingleDiscriminatorClientImpl {
      */
     public Response<Void> putRecursiveModelWithResponse(BinaryData input, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.putRecursiveModelSync(this.getEndpoint(), contentType, input, requestOptions);
+        return service.putRecursiveModel(contentType, input, requestOptions);
     }
 
     /**
@@ -241,7 +316,7 @@ public final class SingleDiscriminatorClientImpl {
      */
     public Response<Bird> getMissingDiscriminatorWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.getMissingDiscriminatorSync(this.getEndpoint(), accept, requestOptions);
+        return service.getMissingDiscriminator(accept, requestOptions);
     }
 
     /**
@@ -263,7 +338,7 @@ public final class SingleDiscriminatorClientImpl {
      */
     public Response<Bird> getWrongDiscriminatorWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.getWrongDiscriminatorSync(this.getEndpoint(), accept, requestOptions);
+        return service.getWrongDiscriminator(accept, requestOptions);
     }
 
     /**
@@ -285,6 +360,6 @@ public final class SingleDiscriminatorClientImpl {
      */
     public Response<Dinosaur> getLegacyModelWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.getLegacyModelSync(this.getEndpoint(), accept, requestOptions);
+        return service.getLegacyModel(accept, requestOptions);
     }
 }

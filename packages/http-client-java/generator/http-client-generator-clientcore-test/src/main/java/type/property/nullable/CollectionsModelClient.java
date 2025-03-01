@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import type.property.nullable.implementation.CollectionsModelsImpl;
 import type.property.nullable.implementation.JsonMergePatchHelper;
@@ -19,14 +20,18 @@ public final class CollectionsModelClient {
     @Metadata(generated = true)
     private final CollectionsModelsImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of CollectionsModelClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    CollectionsModelClient(CollectionsModelsImpl serviceClient) {
+    CollectionsModelClient(CollectionsModelsImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -52,7 +57,8 @@ public final class CollectionsModelClient {
      */
     @Metadata(generated = true)
     public Response<CollectionsModelProperty> getNonNullWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getNonNullWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Property.Nullable.CollectionsModel.getNonNull", requestOptions,
+            updatedOptions -> this.serviceClient.getNonNullWithResponse(updatedOptions));
     }
 
     /**
@@ -78,7 +84,8 @@ public final class CollectionsModelClient {
      */
     @Metadata(generated = true)
     public Response<CollectionsModelProperty> getNullWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getNullWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Property.Nullable.CollectionsModel.getNull", requestOptions,
+            updatedOptions -> this.serviceClient.getNullWithResponse(updatedOptions));
     }
 
     /**
@@ -105,7 +112,8 @@ public final class CollectionsModelClient {
      */
     @Metadata(generated = true)
     public Response<Void> patchNonNullWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.patchNonNullWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Type.Property.Nullable.CollectionsModel.patchNonNull", requestOptions,
+            updatedOptions -> this.serviceClient.patchNonNullWithResponse(body, updatedOptions));
     }
 
     /**
@@ -132,7 +140,8 @@ public final class CollectionsModelClient {
      */
     @Metadata(generated = true)
     public Response<Void> patchNullWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.patchNullWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Type.Property.Nullable.CollectionsModel.patchNull", requestOptions,
+            updatedOptions -> this.serviceClient.patchNullWithResponse(body, updatedOptions));
     }
 
     /**

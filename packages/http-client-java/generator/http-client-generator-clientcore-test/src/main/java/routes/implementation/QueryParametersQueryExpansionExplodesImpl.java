@@ -12,6 +12,9 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -47,29 +50,72 @@ public final class QueryParametersQueryExpansionExplodesImpl {
      */
     @ServiceInterface(name = "RoutesClientQueryPar", host = "{endpoint}")
     public interface QueryParametersQueryExpansionExplodesService {
+        static QueryParametersQueryExpansionExplodesService getNewInstance(HttpPipeline pipeline,
+            ObjectSerializer serializer) {
+            try {
+                Class<?> clazz
+                    = Class.forName("routes.implementation.QueryParametersQueryExpansionExplodesServiceImpl");
+                return (QueryParametersQueryExpansionExplodesService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/routes/query/query-expansion/explode/primitive",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> primitiveSync(@HostParam("endpoint") String endpoint, @QueryParam("param") String param,
+        Response<Void> primitive(@HostParam("endpoint") String endpoint, @QueryParam("param") String param,
             RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/routes/query/query-expansion/explode/primitive",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void primitive(@HostParam("endpoint") String endpoint, @QueryParam("param") String param) {
+            primitive(endpoint, param, null);
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/routes/query/query-expansion/explode/array",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> arraySync(@HostParam("endpoint") String endpoint,
+        Response<Void> array(@HostParam("endpoint") String endpoint,
             @QueryParam(value = "param", multipleQueryParams = true) List<String> param, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/routes/query/query-expansion/explode/array",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void array(@HostParam("endpoint") String endpoint,
+            @QueryParam(value = "param", multipleQueryParams = true) List<String> param) {
+            array(endpoint, param, null);
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/routes/query/query-expansion/explode/record",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> recordSync(@HostParam("endpoint") String endpoint,
-            @QueryParam("param") Map<String, Integer> param, RequestOptions requestOptions);
+        Response<Void> record(@HostParam("endpoint") String endpoint, @QueryParam("param") Map<String, Integer> param,
+            RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/routes/query/query-expansion/explode/record",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void record(@HostParam("endpoint") String endpoint, @QueryParam("param") Map<String, Integer> param) {
+            record(endpoint, param, null);
+        }
     }
 
     /**
@@ -81,7 +127,7 @@ public final class QueryParametersQueryExpansionExplodesImpl {
      * @return the response.
      */
     public Response<Void> primitiveWithResponse(String param, RequestOptions requestOptions) {
-        return service.primitiveSync(this.client.getEndpoint(), param, requestOptions);
+        return service.primitive(this.client.getEndpoint(), param, requestOptions);
     }
 
     /**
@@ -95,7 +141,7 @@ public final class QueryParametersQueryExpansionExplodesImpl {
     public Response<Void> arrayWithResponse(List<String> param, RequestOptions requestOptions) {
         List<String> paramConverted
             = param.stream().map(item -> Objects.toString(item, "")).collect(Collectors.toList());
-        return service.arraySync(this.client.getEndpoint(), paramConverted, requestOptions);
+        return service.array(this.client.getEndpoint(), paramConverted, requestOptions);
     }
 
     /**
@@ -107,6 +153,6 @@ public final class QueryParametersQueryExpansionExplodesImpl {
      * @return the response.
      */
     public Response<Void> recordWithResponse(Map<String, Integer> param, RequestOptions requestOptions) {
-        return service.recordSync(this.client.getEndpoint(), param, requestOptions);
+        return service.record(this.client.getEndpoint(), param, requestOptions);
     }
 }

@@ -14,6 +14,8 @@ import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
 import io.clientcore.core.http.pipeline.HttpPipeline;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Initializes a new instance of the OAuth2Client type.
@@ -69,12 +71,35 @@ public final class OAuth2ClientImpl {
      */
     @ServiceInterface(name = "OAuth2Client", host = "{endpoint}")
     public interface OAuth2ClientService {
+        static OAuth2ClientService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer,
+            @HostParam("endpoint") String endpoint) {
+            try {
+                Class<?> clazz = Class.forName("authentication.oauth2.implementation.OAuth2ClientServiceImpl");
+                return (OAuth2ClientService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class, String.class)
+                    .invoke(null, pipeline, serializer, endpoint);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/authentication/oauth2/valid",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> validSync(@HostParam("endpoint") String endpoint, RequestOptions requestOptions);
+        Response<Void> valid(RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/authentication/oauth2/valid",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void valid() {
+            valid(null);
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.GET,
@@ -82,8 +107,17 @@ public final class OAuth2ClientImpl {
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail(statusCode = { 403 }, exceptionBodyClass = InvalidAuth.class)
         @UnexpectedResponseExceptionDetail
-        Response<Void> invalidSync(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
-            RequestOptions requestOptions);
+        Response<Void> invalid(@HeaderParam("Accept") String accept, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/authentication/oauth2/invalid",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail(statusCode = { 403 }, exceptionBodyClass = InvalidAuth.class)
+        @UnexpectedResponseExceptionDetail
+        default void invalid(@HeaderParam("Accept") String accept) {
+            invalid(accept, null);
+        }
     }
 
     /**
@@ -94,7 +128,7 @@ public final class OAuth2ClientImpl {
      * @return the response.
      */
     public Response<Void> validWithResponse(RequestOptions requestOptions) {
-        return service.validSync(this.getEndpoint(), requestOptions);
+        return service.valid(requestOptions);
     }
 
     /**
@@ -106,6 +140,6 @@ public final class OAuth2ClientImpl {
      */
     public Response<Void> invalidWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.invalidSync(this.getEndpoint(), accept, requestOptions);
+        return service.invalid(accept, requestOptions);
     }
 }

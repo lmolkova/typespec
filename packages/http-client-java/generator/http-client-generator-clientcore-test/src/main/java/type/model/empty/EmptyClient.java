@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import type.model.empty.implementation.EmptyClientImpl;
 
@@ -18,14 +19,18 @@ public final class EmptyClient {
     @Metadata(generated = true)
     private final EmptyClientImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of EmptyClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    EmptyClient(EmptyClientImpl serviceClient) {
+    EmptyClient(EmptyClientImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -46,7 +51,8 @@ public final class EmptyClient {
      */
     @Metadata(generated = true)
     public Response<Void> putEmptyWithResponse(BinaryData input, RequestOptions requestOptions) {
-        return this.serviceClient.putEmptyWithResponse(input, requestOptions);
+        return this.instrumentation.instrument("Type.Model.Empty.putEmpty", requestOptions,
+            updatedOptions -> this.serviceClient.putEmptyWithResponse(input, updatedOptions));
     }
 
     /**
@@ -66,7 +72,8 @@ public final class EmptyClient {
      */
     @Metadata(generated = true)
     public Response<EmptyOutput> getEmptyWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getEmptyWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Model.Empty.getEmpty", requestOptions,
+            updatedOptions -> this.serviceClient.getEmptyWithResponse(updatedOptions));
     }
 
     /**
@@ -96,7 +103,8 @@ public final class EmptyClient {
      */
     @Metadata(generated = true)
     public Response<EmptyInputOutput> postRoundTripEmptyWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.postRoundTripEmptyWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Type.Model.Empty.postRoundTripEmpty", requestOptions,
+            updatedOptions -> this.serviceClient.postRoundTripEmptyWithResponse(body, updatedOptions));
     }
 
     /**

@@ -13,7 +13,10 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * An instance of this class provides access to all the operations defined in FormDataHttpPartsContentTypes.
@@ -45,13 +48,48 @@ public final class FormDataHttpPartsContentTypesImpl {
      */
     @ServiceInterface(name = "MultiPartClientFormD", host = "{endpoint}")
     public interface FormDataHttpPartsContentTypesService {
+        static FormDataHttpPartsContentTypesService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz
+                    = Class.forName("payload.multipart.implementation.FormDataHttpPartsContentTypesServiceImpl");
+                return (FormDataHttpPartsContentTypesService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         // @Multipart not supported by RestProxy
         @HttpRequestInformation(
             method = HttpMethod.POST,
             path = "/multipart/form-data/check-filename-and-specific-content-type-with-httppart",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> imageJpegContentTypeSync(@HostParam("endpoint") String endpoint,
+        Response<Void> imageJpegContentType(@HostParam("endpoint") String endpoint,
+            @HeaderParam("content-type") String contentType, @BodyParam("multipart/form-data") BinaryData body,
+            RequestOptions requestOptions);
+
+        // @Multipart not supported by RestProxy
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/multipart/form-data/check-filename-and-specific-content-type-with-httppart",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void imageJpegContentType(@HostParam("endpoint") String endpoint,
+            @HeaderParam("content-type") String contentType, @BodyParam("multipart/form-data") BinaryData body) {
+            imageJpegContentType(endpoint, contentType, body, null);
+        }
+
+        // @Multipart not supported by RestProxy
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/multipart/form-data/check-filename-and-required-content-type-with-httppart",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> requiredContentType(@HostParam("endpoint") String endpoint,
             @HeaderParam("content-type") String contentType, @BodyParam("multipart/form-data") BinaryData body,
             RequestOptions requestOptions);
 
@@ -61,7 +99,18 @@ public final class FormDataHttpPartsContentTypesImpl {
             path = "/multipart/form-data/check-filename-and-required-content-type-with-httppart",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> requiredContentTypeSync(@HostParam("endpoint") String endpoint,
+        default void requiredContentType(@HostParam("endpoint") String endpoint,
+            @HeaderParam("content-type") String contentType, @BodyParam("multipart/form-data") BinaryData body) {
+            requiredContentType(endpoint, contentType, body, null);
+        }
+
+        // @Multipart not supported by RestProxy
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/multipart/form-data/file-with-http-part-optional-content-type",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> optionalContentType(@HostParam("endpoint") String endpoint,
             @HeaderParam("content-type") String contentType, @BodyParam("multipart/form-data") BinaryData body,
             RequestOptions requestOptions);
 
@@ -71,9 +120,10 @@ public final class FormDataHttpPartsContentTypesImpl {
             path = "/multipart/form-data/file-with-http-part-optional-content-type",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> optionalContentTypeSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("content-type") String contentType, @BodyParam("multipart/form-data") BinaryData body,
-            RequestOptions requestOptions);
+        default void optionalContentType(@HostParam("endpoint") String endpoint,
+            @HeaderParam("content-type") String contentType, @BodyParam("multipart/form-data") BinaryData body) {
+            optionalContentType(endpoint, contentType, body, null);
+        }
     }
 
     /**
@@ -86,7 +136,7 @@ public final class FormDataHttpPartsContentTypesImpl {
      */
     public Response<Void> imageJpegContentTypeWithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "multipart/form-data";
-        return service.imageJpegContentTypeSync(this.client.getEndpoint(), contentType, body, requestOptions);
+        return service.imageJpegContentType(this.client.getEndpoint(), contentType, body, requestOptions);
     }
 
     /**
@@ -99,7 +149,7 @@ public final class FormDataHttpPartsContentTypesImpl {
      */
     public Response<Void> requiredContentTypeWithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "multipart/form-data";
-        return service.requiredContentTypeSync(this.client.getEndpoint(), contentType, body, requestOptions);
+        return service.requiredContentType(this.client.getEndpoint(), contentType, body, requestOptions);
     }
 
     /**
@@ -112,6 +162,6 @@ public final class FormDataHttpPartsContentTypesImpl {
      */
     public Response<Void> optionalContentTypeWithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "multipart/form-data";
-        return service.optionalContentTypeSync(this.client.getEndpoint(), contentType, body, requestOptions);
+        return service.optionalContentType(this.client.getEndpoint(), contentType, body, requestOptions);
     }
 }

@@ -14,7 +14,10 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 
 /**
@@ -47,21 +50,61 @@ public final class DecimalTypesImpl {
      */
     @ServiceInterface(name = "ScalarClientDecimalT", host = "{endpoint}")
     public interface DecimalTypesService {
+        static DecimalTypesService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("type.scalar.implementation.DecimalTypesServiceImpl");
+                return (DecimalTypesService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/type/scalar/decimal/response_body",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<BigDecimal> responseBodySync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Accept") String accept, RequestOptions requestOptions);
+        Response<BigDecimal> responseBody(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
+            RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/type/scalar/decimal/response_body",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default BigDecimal responseBody(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept) {
+            return responseBody(endpoint, accept, null).getValue();
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.PUT,
             path = "/type/scalar/decimal/resquest_body",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> requestBodySync(@HostParam("endpoint") String endpoint,
+        Response<Void> requestBody(@HostParam("endpoint") String endpoint,
             @HeaderParam("Content-Type") String contentType, @BodyParam("application/json") BinaryData body,
+            RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.PUT,
+            path = "/type/scalar/decimal/resquest_body",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void requestBody(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Content-Type") String contentType, @BodyParam("application/json") BinaryData body) {
+            requestBody(endpoint, contentType, body, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/type/scalar/decimal/request_parameter",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> requestParameter(@HostParam("endpoint") String endpoint, @QueryParam("value") BigDecimal value,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -69,8 +112,9 @@ public final class DecimalTypesImpl {
             path = "/type/scalar/decimal/request_parameter",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> requestParameterSync(@HostParam("endpoint") String endpoint,
-            @QueryParam("value") BigDecimal value, RequestOptions requestOptions);
+        default void requestParameter(@HostParam("endpoint") String endpoint, @QueryParam("value") BigDecimal value) {
+            requestParameter(endpoint, value, null);
+        }
     }
 
     /**
@@ -89,7 +133,7 @@ public final class DecimalTypesImpl {
      */
     public Response<BigDecimal> responseBodyWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.responseBodySync(this.client.getEndpoint(), accept, requestOptions);
+        return service.responseBody(this.client.getEndpoint(), accept, requestOptions);
     }
 
     /**
@@ -109,7 +153,7 @@ public final class DecimalTypesImpl {
      */
     public Response<Void> requestBodyWithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.requestBodySync(this.client.getEndpoint(), contentType, body, requestOptions);
+        return service.requestBody(this.client.getEndpoint(), contentType, body, requestOptions);
     }
 
     /**
@@ -121,6 +165,6 @@ public final class DecimalTypesImpl {
      * @return the response.
      */
     public Response<Void> requestParameterWithResponse(BigDecimal value, RequestOptions requestOptions) {
-        return service.requestParameterSync(this.client.getEndpoint(), value, requestOptions);
+        return service.requestParameter(this.client.getEndpoint(), value, requestOptions);
     }
 }

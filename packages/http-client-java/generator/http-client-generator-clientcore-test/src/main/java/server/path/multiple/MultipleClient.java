@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import server.path.multiple.implementation.MultipleClientImpl;
 
 /**
@@ -17,14 +18,18 @@ public final class MultipleClient {
     @Metadata(generated = true)
     private final MultipleClientImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of MultipleClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    MultipleClient(MultipleClientImpl serviceClient) {
+    MultipleClient(MultipleClientImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -36,7 +41,8 @@ public final class MultipleClient {
      */
     @Metadata(generated = true)
     public Response<Void> noOperationParamsWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.noOperationParamsWithResponse(requestOptions);
+        return this.instrumentation.instrument("Server.Path.Multiple.noOperationParams", requestOptions,
+            updatedOptions -> this.serviceClient.noOperationParamsWithResponse(updatedOptions));
     }
 
     /**
@@ -49,7 +55,8 @@ public final class MultipleClient {
      */
     @Metadata(generated = true)
     public Response<Void> withOperationPathParamWithResponse(String keyword, RequestOptions requestOptions) {
-        return this.serviceClient.withOperationPathParamWithResponse(keyword, requestOptions);
+        return this.instrumentation.instrument("Server.Path.Multiple.withOperationPathParam", requestOptions,
+            updatedOptions -> this.serviceClient.withOperationPathParamWithResponse(keyword, updatedOptions));
     }
 
     /**

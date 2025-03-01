@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import parameters.basic.implementation.ImplicitBodiesImpl;
 import parameters.basic.implicitbody.implementation.SimpleRequest;
@@ -19,14 +20,18 @@ public final class ImplicitBodyClient {
     @Metadata(generated = true)
     private final ImplicitBodiesImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of ImplicitBodyClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    ImplicitBodyClient(ImplicitBodiesImpl serviceClient) {
+    ImplicitBodyClient(ImplicitBodiesImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -48,7 +53,8 @@ public final class ImplicitBodyClient {
      */
     @Metadata(generated = true)
     public Response<Void> simpleWithResponse(BinaryData simpleRequest, RequestOptions requestOptions) {
-        return this.serviceClient.simpleWithResponse(simpleRequest, requestOptions);
+        return this.instrumentation.instrument("Parameters.Basic.ImplicitBody.simple", requestOptions,
+            updatedOptions -> this.serviceClient.simpleWithResponse(simpleRequest, updatedOptions));
     }
 
     /**

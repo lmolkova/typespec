@@ -13,7 +13,10 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 import type.enums.extensible.DaysOfWeekExtensibleEnum;
 
 /**
@@ -46,12 +49,43 @@ public final class StringOperationsImpl {
      */
     @ServiceInterface(name = "ExtensibleClientStri", host = "{endpoint}")
     public interface StringOperationsService {
+        static StringOperationsService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("type.enums.extensible.implementation.StringOperationsServiceImpl");
+                return (StringOperationsService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/type/enum/extensible/string/known-value",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<DaysOfWeekExtensibleEnum> getKnownValueSync(@HostParam("endpoint") String endpoint,
+        Response<DaysOfWeekExtensibleEnum> getKnownValue(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Accept") String accept, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/type/enum/extensible/string/known-value",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default DaysOfWeekExtensibleEnum getKnownValue(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Accept") String accept) {
+            return getKnownValue(endpoint, accept, null).getValue();
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/type/enum/extensible/string/unknown-value",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        Response<DaysOfWeekExtensibleEnum> getUnknownValue(@HostParam("endpoint") String endpoint,
             @HeaderParam("Accept") String accept, RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -59,15 +93,36 @@ public final class StringOperationsImpl {
             path = "/type/enum/extensible/string/unknown-value",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<DaysOfWeekExtensibleEnum> getUnknownValueSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Accept") String accept, RequestOptions requestOptions);
+        default DaysOfWeekExtensibleEnum getUnknownValue(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Accept") String accept) {
+            return getUnknownValue(endpoint, accept, null).getValue();
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.PUT,
             path = "/type/enum/extensible/string/known-value",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> putKnownValueSync(@HostParam("endpoint") String endpoint,
+        Response<Void> putKnownValue(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Content-Type") String contentType, @BodyParam("application/json") BinaryData body,
+            RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.PUT,
+            path = "/type/enum/extensible/string/known-value",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void putKnownValue(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Content-Type") String contentType, @BodyParam("application/json") BinaryData body) {
+            putKnownValue(endpoint, contentType, body, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.PUT,
+            path = "/type/enum/extensible/string/unknown-value",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> putUnknownValue(@HostParam("endpoint") String endpoint,
             @HeaderParam("Content-Type") String contentType, @BodyParam("application/json") BinaryData body,
             RequestOptions requestOptions);
 
@@ -76,9 +131,10 @@ public final class StringOperationsImpl {
             path = "/type/enum/extensible/string/unknown-value",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> putUnknownValueSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Content-Type") String contentType, @BodyParam("application/json") BinaryData body,
-            RequestOptions requestOptions);
+        default void putUnknownValue(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Content-Type") String contentType, @BodyParam("application/json") BinaryData body) {
+            putUnknownValue(endpoint, contentType, body, null);
+        }
     }
 
     /**
@@ -97,7 +153,7 @@ public final class StringOperationsImpl {
      */
     public Response<DaysOfWeekExtensibleEnum> getKnownValueWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.getKnownValueSync(this.client.getEndpoint(), accept, requestOptions);
+        return service.getKnownValue(this.client.getEndpoint(), accept, requestOptions);
     }
 
     /**
@@ -116,7 +172,7 @@ public final class StringOperationsImpl {
      */
     public Response<DaysOfWeekExtensibleEnum> getUnknownValueWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.getUnknownValueSync(this.client.getEndpoint(), accept, requestOptions);
+        return service.getUnknownValue(this.client.getEndpoint(), accept, requestOptions);
     }
 
     /**
@@ -136,7 +192,7 @@ public final class StringOperationsImpl {
      */
     public Response<Void> putKnownValueWithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.putKnownValueSync(this.client.getEndpoint(), contentType, body, requestOptions);
+        return service.putKnownValue(this.client.getEndpoint(), contentType, body, requestOptions);
     }
 
     /**
@@ -156,6 +212,6 @@ public final class StringOperationsImpl {
      */
     public Response<Void> putUnknownValueWithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.putUnknownValueSync(this.client.getEndpoint(), contentType, body, requestOptions);
+        return service.putUnknownValue(this.client.getEndpoint(), contentType, body, requestOptions);
     }
 }

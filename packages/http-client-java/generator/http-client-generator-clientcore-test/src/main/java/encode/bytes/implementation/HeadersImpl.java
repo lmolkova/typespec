@@ -12,9 +12,12 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
-import io.clientcore.core.utils.Base64Uri;
+import io.clientcore.core.serialization.ObjectSerializer;
+import io.clientcore.core.utils.Base64Url;
 import io.clientcore.core.utils.Base64Util;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,12 +51,41 @@ public final class HeadersImpl {
      */
     @ServiceInterface(name = "BytesClientHeaders", host = "{endpoint}")
     public interface HeadersService {
+        static HeadersService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("encode.bytes.implementation.HeadersServiceImpl");
+                return (HeadersService) clazz.getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/encode/bytes/header/default",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> defaultMethodSync(@HostParam("endpoint") String endpoint, @HeaderParam("value") String value,
+        Response<Void> defaultMethod(@HostParam("endpoint") String endpoint, @HeaderParam("value") String value,
+            RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/encode/bytes/header/default",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void defaultMethod(@HostParam("endpoint") String endpoint, @HeaderParam("value") String value) {
+            defaultMethod(endpoint, value, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/encode/bytes/header/base64",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> base64(@HostParam("endpoint") String endpoint, @HeaderParam("value") String value,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -61,7 +93,16 @@ public final class HeadersImpl {
             path = "/encode/bytes/header/base64",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> base64Sync(@HostParam("endpoint") String endpoint, @HeaderParam("value") String value,
+        default void base64(@HostParam("endpoint") String endpoint, @HeaderParam("value") String value) {
+            base64(endpoint, value, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/encode/bytes/header/base64url",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> base64url(@HostParam("endpoint") String endpoint, @HeaderParam("value") Base64Url value,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -69,7 +110,16 @@ public final class HeadersImpl {
             path = "/encode/bytes/header/base64url",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> base64urlSync(@HostParam("endpoint") String endpoint, @HeaderParam("value") Base64Uri value,
+        default void base64url(@HostParam("endpoint") String endpoint, @HeaderParam("value") Base64Url value) {
+            base64url(endpoint, value, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/encode/bytes/header/base64url-array",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> base64urlArray(@HostParam("endpoint") String endpoint, @HeaderParam("value") String value,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -77,8 +127,9 @@ public final class HeadersImpl {
             path = "/encode/bytes/header/base64url-array",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> base64urlArraySync(@HostParam("endpoint") String endpoint, @HeaderParam("value") String value,
-            RequestOptions requestOptions);
+        default void base64urlArray(@HostParam("endpoint") String endpoint, @HeaderParam("value") String value) {
+            base64urlArray(endpoint, value, null);
+        }
     }
 
     /**
@@ -91,7 +142,7 @@ public final class HeadersImpl {
      */
     public Response<Void> defaultMethodWithResponse(byte[] value, RequestOptions requestOptions) {
         String valueConverted = Base64Util.encodeToString(value);
-        return service.defaultMethodSync(this.client.getEndpoint(), valueConverted, requestOptions);
+        return service.defaultMethod(this.client.getEndpoint(), valueConverted, requestOptions);
     }
 
     /**
@@ -104,7 +155,7 @@ public final class HeadersImpl {
      */
     public Response<Void> base64WithResponse(byte[] value, RequestOptions requestOptions) {
         String valueConverted = Base64Util.encodeToString(value);
-        return service.base64Sync(this.client.getEndpoint(), valueConverted, requestOptions);
+        return service.base64(this.client.getEndpoint(), valueConverted, requestOptions);
     }
 
     /**
@@ -116,8 +167,8 @@ public final class HeadersImpl {
      * @return the response.
      */
     public Response<Void> base64urlWithResponse(byte[] value, RequestOptions requestOptions) {
-        Base64Uri valueConverted = Base64Uri.encode(value);
-        return service.base64urlSync(this.client.getEndpoint(), valueConverted, requestOptions);
+        Base64Url valueConverted = Base64Url.encode(value);
+        return service.base64url(this.client.getEndpoint(), valueConverted, requestOptions);
     }
 
     /**
@@ -130,7 +181,7 @@ public final class HeadersImpl {
      */
     public Response<Void> base64urlArrayWithResponse(List<byte[]> value, RequestOptions requestOptions) {
         String valueConverted = value.stream()
-            .map(paramItemValue -> Base64Uri.encode(paramItemValue))
+            .map(paramItemValue -> Base64Url.encode(paramItemValue))
             .collect(Collectors.toList())
             .stream()
             .map(paramItemValue -> {
@@ -161,6 +212,6 @@ public final class HeadersImpl {
                 }
             })
             .collect(Collectors.joining(","));
-        return service.base64urlArraySync(this.client.getEndpoint(), valueConverted, requestOptions);
+        return service.base64urlArray(this.client.getEndpoint(), valueConverted, requestOptions);
     }
 }

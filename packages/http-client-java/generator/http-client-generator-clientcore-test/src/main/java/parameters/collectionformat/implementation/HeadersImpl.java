@@ -12,6 +12,9 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -46,13 +49,34 @@ public final class HeadersImpl {
      */
     @ServiceInterface(name = "CollectionFormatClie", host = "{endpoint}")
     public interface HeadersService {
+        static HeadersService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("parameters.collectionformat.implementation.HeadersServiceImpl");
+                return (HeadersService) clazz.getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/parameters/collection-format/header/csv",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> csvSync(@HostParam("endpoint") String endpoint, @HeaderParam("colors") String colors,
+        Response<Void> csv(@HostParam("endpoint") String endpoint, @HeaderParam("colors") String colors,
             RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/parameters/collection-format/header/csv",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void csv(@HostParam("endpoint") String endpoint, @HeaderParam("colors") String colors) {
+            csv(endpoint, colors, null);
+        }
     }
 
     /**
@@ -67,6 +91,6 @@ public final class HeadersImpl {
         String colorsConverted = colors.stream()
             .map(paramItemValue -> Objects.toString(paramItemValue, ""))
             .collect(Collectors.joining(","));
-        return service.csvSync(this.client.getEndpoint(), colorsConverted, requestOptions);
+        return service.csv(this.client.getEndpoint(), colorsConverted, requestOptions);
     }
 }

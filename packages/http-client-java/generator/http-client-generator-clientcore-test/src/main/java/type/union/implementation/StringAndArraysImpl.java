@@ -13,7 +13,10 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 import type.union.GetResponse2;
 
 /**
@@ -46,21 +49,53 @@ public final class StringAndArraysImpl {
      */
     @ServiceInterface(name = "UnionClientStringAnd", host = "{endpoint}")
     public interface StringAndArraysService {
+        static StringAndArraysService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("type.union.implementation.StringAndArraysServiceImpl");
+                return (StringAndArraysService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/type/union/string-and-array",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<GetResponse2> getSync(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
+        Response<GetResponse2> get(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
             RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/type/union/string-and-array",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default GetResponse2 get(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept) {
+            return get(endpoint, accept, null).getValue();
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.POST,
             path = "/type/union/string-and-array",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> sendSync(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
+        Response<Void> send(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
             @BodyParam("application/json") BinaryData sendRequest2, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/type/union/string-and-array",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void send(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData sendRequest2) {
+            send(endpoint, contentType, sendRequest2, null);
+        }
     }
 
     /**
@@ -84,7 +119,7 @@ public final class StringAndArraysImpl {
      */
     public Response<GetResponse2> getWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.getSync(this.client.getEndpoint(), accept, requestOptions);
+        return service.get(this.client.getEndpoint(), accept, requestOptions);
     }
 
     /**
@@ -109,6 +144,6 @@ public final class StringAndArraysImpl {
      */
     public Response<Void> sendWithResponse(BinaryData sendRequest2, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.sendSync(this.client.getEndpoint(), contentType, sendRequest2, requestOptions);
+        return service.send(this.client.getEndpoint(), contentType, sendRequest2, requestOptions);
     }
 }

@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import payload.contentnegotiation.differentbody.PngImageAsJson;
 import payload.contentnegotiation.implementation.DifferentBodiesImpl;
@@ -19,14 +20,18 @@ public final class DifferentBodyClient {
     @Metadata(generated = true)
     private final DifferentBodiesImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of DifferentBodyClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    DifferentBodyClient(DifferentBodiesImpl serviceClient) {
+    DifferentBodyClient(DifferentBodiesImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -45,7 +50,8 @@ public final class DifferentBodyClient {
      */
     @Metadata(generated = true)
     public Response<BinaryData> getAvatarAsPngWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getAvatarAsPngWithResponse(requestOptions);
+        return this.instrumentation.instrument("Payload.ContentNegotiation.DifferentBody.getAvatarAsPng",
+            requestOptions, updatedOptions -> this.serviceClient.getAvatarAsPngWithResponse(updatedOptions));
     }
 
     /**
@@ -66,7 +72,8 @@ public final class DifferentBodyClient {
      */
     @Metadata(generated = true)
     public Response<PngImageAsJson> getAvatarAsJsonWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getAvatarAsJsonWithResponse(requestOptions);
+        return this.instrumentation.instrument("Payload.ContentNegotiation.DifferentBody.getAvatarAsJson",
+            requestOptions, updatedOptions -> this.serviceClient.getAvatarAsJsonWithResponse(updatedOptions));
     }
 
     /**

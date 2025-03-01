@@ -13,7 +13,10 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 import type.union.GetResponse5;
 
 /**
@@ -46,21 +49,53 @@ public final class FloatsOnliesImpl {
      */
     @ServiceInterface(name = "UnionClientFloatsOnl", host = "{endpoint}")
     public interface FloatsOnliesService {
+        static FloatsOnliesService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("type.union.implementation.FloatsOnliesServiceImpl");
+                return (FloatsOnliesService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/type/union/floats-only",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<GetResponse5> getSync(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
+        Response<GetResponse5> get(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
             RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/type/union/floats-only",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default GetResponse5 get(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept) {
+            return get(endpoint, accept, null).getValue();
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.POST,
             path = "/type/union/floats-only",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> sendSync(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
+        Response<Void> send(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
             @BodyParam("application/json") BinaryData sendRequest5, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/type/union/floats-only",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void send(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData sendRequest5) {
+            send(endpoint, contentType, sendRequest5, null);
+        }
     }
 
     /**
@@ -81,7 +116,7 @@ public final class FloatsOnliesImpl {
      */
     public Response<GetResponse5> getWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.getSync(this.client.getEndpoint(), accept, requestOptions);
+        return service.get(this.client.getEndpoint(), accept, requestOptions);
     }
 
     /**
@@ -103,6 +138,6 @@ public final class FloatsOnliesImpl {
      */
     public Response<Void> sendWithResponse(BinaryData sendRequest5, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.sendSync(this.client.getEndpoint(), contentType, sendRequest5, requestOptions);
+        return service.send(this.client.getEndpoint(), contentType, sendRequest5, requestOptions);
     }
 }

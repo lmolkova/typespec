@@ -13,7 +13,10 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * An instance of this class provides access to all the operations defined in StringBodies.
@@ -45,13 +48,44 @@ public final class StringBodiesImpl {
      */
     @ServiceInterface(name = "MediaTypeClientStrin", host = "{endpoint}")
     public interface StringBodiesService {
+        static StringBodiesService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("payload.mediatype.implementation.StringBodiesServiceImpl");
+                return (StringBodiesService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.POST,
             path = "/payload/media-type/string-body/sendAsText",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> sendAsTextSync(@HostParam("endpoint") String endpoint,
+        Response<Void> sendAsText(@HostParam("endpoint") String endpoint,
             @HeaderParam("content-type") String contentType, @BodyParam("text/plain") BinaryData text,
+            RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/payload/media-type/string-body/sendAsText",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default void sendAsText(@HostParam("endpoint") String endpoint, @HeaderParam("content-type") String contentType,
+            @BodyParam("text/plain") BinaryData text) {
+            sendAsText(endpoint, contentType, text, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/payload/media-type/string-body/getAsText",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        Response<String> getAsText(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -59,7 +93,17 @@ public final class StringBodiesImpl {
             path = "/payload/media-type/string-body/getAsText",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<String> getAsTextSync(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
+        default String getAsText(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept) {
+            return getAsText(endpoint, accept, null).getValue();
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/payload/media-type/string-body/sendAsJson",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> sendAsJson(@HostParam("endpoint") String endpoint,
+            @HeaderParam("content-type") String contentType, @BodyParam("application/json") BinaryData text,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -67,8 +111,17 @@ public final class StringBodiesImpl {
             path = "/payload/media-type/string-body/sendAsJson",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> sendAsJsonSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("content-type") String contentType, @BodyParam("application/json") BinaryData text,
+        default void sendAsJson(@HostParam("endpoint") String endpoint, @HeaderParam("content-type") String contentType,
+            @BodyParam("application/json") BinaryData text) {
+            sendAsJson(endpoint, contentType, text, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/payload/media-type/string-body/getAsJson",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        Response<String> getAsJson(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -76,8 +129,9 @@ public final class StringBodiesImpl {
             path = "/payload/media-type/string-body/getAsJson",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<String> getAsJsonSync(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
-            RequestOptions requestOptions);
+        default String getAsJson(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept) {
+            return getAsJson(endpoint, accept, null).getValue();
+        }
     }
 
     /**
@@ -97,7 +151,7 @@ public final class StringBodiesImpl {
      */
     public Response<Void> sendAsTextWithResponse(BinaryData text, RequestOptions requestOptions) {
         final String contentType = "text/plain";
-        return service.sendAsTextSync(this.client.getEndpoint(), contentType, text, requestOptions);
+        return service.sendAsText(this.client.getEndpoint(), contentType, text, requestOptions);
     }
 
     /**
@@ -116,7 +170,7 @@ public final class StringBodiesImpl {
      */
     public Response<String> getAsTextWithResponse(RequestOptions requestOptions) {
         final String accept = "text/plain";
-        return service.getAsTextSync(this.client.getEndpoint(), accept, requestOptions);
+        return service.getAsText(this.client.getEndpoint(), accept, requestOptions);
     }
 
     /**
@@ -136,7 +190,7 @@ public final class StringBodiesImpl {
      */
     public Response<Void> sendAsJsonWithResponse(BinaryData text, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.sendAsJsonSync(this.client.getEndpoint(), contentType, text, requestOptions);
+        return service.sendAsJson(this.client.getEndpoint(), contentType, text, requestOptions);
     }
 
     /**
@@ -155,6 +209,6 @@ public final class StringBodiesImpl {
      */
     public Response<String> getAsJsonWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.getAsJsonSync(this.client.getEndpoint(), accept, requestOptions);
+        return service.getAsJson(this.client.getEndpoint(), accept, requestOptions);
     }
 }

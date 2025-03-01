@@ -9,6 +9,7 @@ import io.clientcore.core.annotations.ServiceMethod;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.PagedIterable;
 import io.clientcore.core.http.models.RequestOptions;
+import io.clientcore.core.instrumentation.Instrumentation;
 import payload.pageable.implementation.ServerDrivenPaginationsImpl;
 
 /**
@@ -19,14 +20,18 @@ public final class PageableClient {
     @Metadata(generated = true)
     private final ServerDrivenPaginationsImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of PageableClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    PageableClient(ServerDrivenPaginationsImpl serviceClient) {
+    PageableClient(ServerDrivenPaginationsImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -54,7 +59,8 @@ public final class PageableClient {
     @Metadata(generated = true)
     @ServiceMethod(returns = ReturnType.COLLECTION)
     public PagedIterable<Pet> link(RequestOptions requestOptions) {
-        return this.serviceClient.link(requestOptions);
+        return this.instrumentation.instrument("Payload.Pageable.ServerDrivenPagination.link", requestOptions,
+            updatedOptions -> this.serviceClient.link(updatedOptions));
     }
 
     /**

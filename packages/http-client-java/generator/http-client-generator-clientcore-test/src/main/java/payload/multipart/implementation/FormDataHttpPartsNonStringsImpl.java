@@ -13,7 +13,10 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * An instance of this class provides access to all the operations defined in FormDataHttpPartsNonStrings.
@@ -45,15 +48,40 @@ public final class FormDataHttpPartsNonStringsImpl {
      */
     @ServiceInterface(name = "MultiPartClientFormD", host = "{endpoint}")
     public interface FormDataHttpPartsNonStringsService {
+        static FormDataHttpPartsNonStringsService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz
+                    = Class.forName("payload.multipart.implementation.FormDataHttpPartsNonStringsServiceImpl");
+                return (FormDataHttpPartsNonStringsService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         // @Multipart not supported by RestProxy
         @HttpRequestInformation(
             method = HttpMethod.POST,
             path = "/multipart/form-data/non-string-float",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> floatMethodSync(@HostParam("endpoint") String endpoint,
+        Response<Void> floatMethod(@HostParam("endpoint") String endpoint,
             @HeaderParam("content-type") String contentType, @BodyParam("multipart/form-data") BinaryData body,
             RequestOptions requestOptions);
+
+        // @Multipart not supported by RestProxy
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/multipart/form-data/non-string-float",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void floatMethod(@HostParam("endpoint") String endpoint,
+            @HeaderParam("content-type") String contentType, @BodyParam("multipart/form-data") BinaryData body) {
+            floatMethod(endpoint, contentType, body, null);
+        }
     }
 
     /**
@@ -66,6 +94,6 @@ public final class FormDataHttpPartsNonStringsImpl {
      */
     public Response<Void> floatMethodWithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "multipart/form-data";
-        return service.floatMethodSync(this.client.getEndpoint(), contentType, body, requestOptions);
+        return service.floatMethod(this.client.getEndpoint(), contentType, body, requestOptions);
     }
 }

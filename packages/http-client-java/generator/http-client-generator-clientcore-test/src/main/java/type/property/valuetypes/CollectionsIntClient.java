@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import type.property.valuetypes.implementation.CollectionsIntsImpl;
 
@@ -18,14 +19,18 @@ public final class CollectionsIntClient {
     @Metadata(generated = true)
     private final CollectionsIntsImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of CollectionsIntClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    CollectionsIntClient(CollectionsIntsImpl serviceClient) {
+    CollectionsIntClient(CollectionsIntsImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -48,7 +53,8 @@ public final class CollectionsIntClient {
      */
     @Metadata(generated = true)
     public Response<CollectionsIntProperty> getWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Property.ValueTypes.CollectionsInt.get", requestOptions,
+            updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
     /**
@@ -72,7 +78,8 @@ public final class CollectionsIntClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.putWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Type.Property.ValueTypes.CollectionsInt.put", requestOptions,
+            updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 
     /**

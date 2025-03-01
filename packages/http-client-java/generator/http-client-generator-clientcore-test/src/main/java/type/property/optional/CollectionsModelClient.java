@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import type.property.optional.implementation.CollectionsModelsImpl;
 
@@ -18,14 +19,18 @@ public final class CollectionsModelClient {
     @Metadata(generated = true)
     private final CollectionsModelsImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of CollectionsModelClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    CollectionsModelClient(CollectionsModelsImpl serviceClient) {
+    CollectionsModelClient(CollectionsModelsImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -50,7 +55,8 @@ public final class CollectionsModelClient {
      */
     @Metadata(generated = true)
     public Response<CollectionsModelProperty> getAllWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getAllWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Property.Optional.CollectionsModel.getAll", requestOptions,
+            updatedOptions -> this.serviceClient.getAllWithResponse(updatedOptions));
     }
 
     /**
@@ -75,7 +81,8 @@ public final class CollectionsModelClient {
      */
     @Metadata(generated = true)
     public Response<CollectionsModelProperty> getDefaultWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getDefaultWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Property.Optional.CollectionsModel.getDefault", requestOptions,
+            updatedOptions -> this.serviceClient.getDefaultWithResponse(updatedOptions));
     }
 
     /**
@@ -101,7 +108,8 @@ public final class CollectionsModelClient {
      */
     @Metadata(generated = true)
     public Response<Void> putAllWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.putAllWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Type.Property.Optional.CollectionsModel.putAll", requestOptions,
+            updatedOptions -> this.serviceClient.putAllWithResponse(body, updatedOptions));
     }
 
     /**
@@ -127,7 +135,8 @@ public final class CollectionsModelClient {
      */
     @Metadata(generated = true)
     public Response<Void> putDefaultWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.putDefaultWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Type.Property.Optional.CollectionsModel.putDefault", requestOptions,
+            updatedOptions -> this.serviceClient.putDefaultWithResponse(body, updatedOptions));
     }
 
     /**

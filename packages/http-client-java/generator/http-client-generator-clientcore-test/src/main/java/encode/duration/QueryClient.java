@@ -8,6 +8,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import java.time.Duration;
 import java.util.List;
 
@@ -19,14 +20,18 @@ public final class QueryClient {
     @Metadata(generated = true)
     private final QueriesImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of QueryClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    QueryClient(QueriesImpl serviceClient) {
+    QueryClient(QueriesImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -39,7 +44,8 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> defaultMethodWithResponse(Duration input, RequestOptions requestOptions) {
-        return this.serviceClient.defaultMethodWithResponse(input, requestOptions);
+        return this.instrumentation.instrument("Encode.Duration.Query.default", requestOptions,
+            updatedOptions -> this.serviceClient.defaultMethodWithResponse(input, updatedOptions));
     }
 
     /**
@@ -52,7 +58,8 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> iso8601WithResponse(Duration input, RequestOptions requestOptions) {
-        return this.serviceClient.iso8601WithResponse(input, requestOptions);
+        return this.instrumentation.instrument("Encode.Duration.Query.iso8601", requestOptions,
+            updatedOptions -> this.serviceClient.iso8601WithResponse(input, updatedOptions));
     }
 
     /**
@@ -65,7 +72,8 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> int32SecondsWithResponse(Duration input, RequestOptions requestOptions) {
-        return this.serviceClient.int32SecondsWithResponse(input, requestOptions);
+        return this.instrumentation.instrument("Encode.Duration.Query.int32Seconds", requestOptions,
+            updatedOptions -> this.serviceClient.int32SecondsWithResponse(input, updatedOptions));
     }
 
     /**
@@ -78,7 +86,8 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> floatSecondsWithResponse(Duration input, RequestOptions requestOptions) {
-        return this.serviceClient.floatSecondsWithResponse(input, requestOptions);
+        return this.instrumentation.instrument("Encode.Duration.Query.floatSeconds", requestOptions,
+            updatedOptions -> this.serviceClient.floatSecondsWithResponse(input, updatedOptions));
     }
 
     /**
@@ -91,7 +100,8 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> float64SecondsWithResponse(Duration input, RequestOptions requestOptions) {
-        return this.serviceClient.float64SecondsWithResponse(input, requestOptions);
+        return this.instrumentation.instrument("Encode.Duration.Query.float64Seconds", requestOptions,
+            updatedOptions -> this.serviceClient.float64SecondsWithResponse(input, updatedOptions));
     }
 
     /**
@@ -104,7 +114,8 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> int32SecondsArrayWithResponse(List<Duration> input, RequestOptions requestOptions) {
-        return this.serviceClient.int32SecondsArrayWithResponse(input, requestOptions);
+        return this.instrumentation.instrument("Encode.Duration.Query.int32SecondsArray", requestOptions,
+            updatedOptions -> this.serviceClient.int32SecondsArrayWithResponse(input, updatedOptions));
     }
 
     /**

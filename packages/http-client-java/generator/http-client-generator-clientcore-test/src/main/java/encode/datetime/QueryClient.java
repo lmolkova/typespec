@@ -8,6 +8,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import java.time.OffsetDateTime;
 import java.util.List;
 
@@ -19,14 +20,18 @@ public final class QueryClient {
     @Metadata(generated = true)
     private final QueriesImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of QueryClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    QueryClient(QueriesImpl serviceClient) {
+    QueryClient(QueriesImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -39,7 +44,8 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> defaultMethodWithResponse(OffsetDateTime value, RequestOptions requestOptions) {
-        return this.serviceClient.defaultMethodWithResponse(value, requestOptions);
+        return this.instrumentation.instrument("Encode.Datetime.Query.default", requestOptions,
+            updatedOptions -> this.serviceClient.defaultMethodWithResponse(value, updatedOptions));
     }
 
     /**
@@ -52,7 +58,8 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> rfc3339WithResponse(OffsetDateTime value, RequestOptions requestOptions) {
-        return this.serviceClient.rfc3339WithResponse(value, requestOptions);
+        return this.instrumentation.instrument("Encode.Datetime.Query.rfc3339", requestOptions,
+            updatedOptions -> this.serviceClient.rfc3339WithResponse(value, updatedOptions));
     }
 
     /**
@@ -65,7 +72,8 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> rfc7231WithResponse(OffsetDateTime value, RequestOptions requestOptions) {
-        return this.serviceClient.rfc7231WithResponse(value, requestOptions);
+        return this.instrumentation.instrument("Encode.Datetime.Query.rfc7231", requestOptions,
+            updatedOptions -> this.serviceClient.rfc7231WithResponse(value, updatedOptions));
     }
 
     /**
@@ -78,7 +86,8 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> unixTimestampWithResponse(OffsetDateTime value, RequestOptions requestOptions) {
-        return this.serviceClient.unixTimestampWithResponse(value, requestOptions);
+        return this.instrumentation.instrument("Encode.Datetime.Query.unixTimestamp", requestOptions,
+            updatedOptions -> this.serviceClient.unixTimestampWithResponse(value, updatedOptions));
     }
 
     /**
@@ -91,7 +100,8 @@ public final class QueryClient {
      */
     @Metadata(generated = true)
     public Response<Void> unixTimestampArrayWithResponse(List<OffsetDateTime> value, RequestOptions requestOptions) {
-        return this.serviceClient.unixTimestampArrayWithResponse(value, requestOptions);
+        return this.instrumentation.instrument("Encode.Datetime.Query.unixTimestampArray", requestOptions,
+            updatedOptions -> this.serviceClient.unixTimestampArrayWithResponse(value, updatedOptions));
     }
 
     /**

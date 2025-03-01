@@ -15,6 +15,8 @@ import io.clientcore.core.http.pipeline.HttpRedirectOptions;
 import io.clientcore.core.http.pipeline.HttpRedirectPolicy;
 import io.clientcore.core.http.pipeline.HttpRetryOptions;
 import io.clientcore.core.http.pipeline.HttpRetryPolicy;
+import io.clientcore.core.instrumentation.Instrumentation;
+import io.clientcore.core.instrumentation.LibraryInstrumentationOptions;
 import io.clientcore.core.instrumentation.logging.ClientLogger;
 import io.clientcore.core.traits.ConfigurationTrait;
 import io.clientcore.core.traits.EndpointTrait;
@@ -37,6 +39,10 @@ public final class SingleClientBuilder implements HttpTrait<SingleClientBuilder>
 
     @Metadata(generated = true)
     private static final String SDK_VERSION = "version";
+
+    @Metadata(generated = true)
+    private static final LibraryInstrumentationOptions LIBRARY_INSTRUMENTATION_OPTIONS
+        = new LibraryInstrumentationOptions("");
 
     @Metadata(generated = true)
     private final List<HttpPipelinePolicy> pipelinePolicies;
@@ -85,22 +91,6 @@ public final class SingleClientBuilder implements HttpTrait<SingleClientBuilder>
     }
 
     /*
-     * The logging configuration for HTTP requests and responses.
-     */
-    @Metadata(generated = true)
-    private HttpInstrumentationOptions httpInstrumentationOptions;
-
-    /**
-     * {@inheritDoc}.
-     */
-    @Metadata(generated = true)
-    @Override
-    public SingleClientBuilder httpInstrumentationOptions(HttpInstrumentationOptions httpInstrumentationOptions) {
-        this.httpInstrumentationOptions = httpInstrumentationOptions;
-        return this;
-    }
-
-    /*
      * The retry options to configure retry policy for failed requests.
      */
     @Metadata(generated = true)
@@ -140,6 +130,22 @@ public final class SingleClientBuilder implements HttpTrait<SingleClientBuilder>
     @Override
     public SingleClientBuilder httpRedirectOptions(HttpRedirectOptions redirectOptions) {
         this.redirectOptions = redirectOptions;
+        return this;
+    }
+
+    /*
+     * The instrumentation configuration for HTTP requests and responses.
+     */
+    @Metadata(generated = true)
+    private HttpInstrumentationOptions httpInstrumentationOptions;
+
+    /**
+     * {@inheritDoc}.
+     */
+    @Metadata(generated = true)
+    @Override
+    public SingleClientBuilder httpInstrumentationOptions(HttpInstrumentationOptions httpInstrumentationOptions) {
+        this.httpInstrumentationOptions = httpInstrumentationOptions;
         return this;
     }
 
@@ -235,7 +241,12 @@ public final class SingleClientBuilder implements HttpTrait<SingleClientBuilder>
      */
     @Metadata(generated = true)
     public SingleClient buildClient() {
-        return new SingleClient(buildInnerClient());
+        HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
+            ? new HttpInstrumentationOptions()
+            : this.httpInstrumentationOptions;
+        Instrumentation instrumentation
+            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, this.endpoint);
+        return new SingleClient(buildInnerClient(), instrumentation);
     }
 
     private static final ClientLogger LOGGER = new ClientLogger(SingleClientBuilder.class);

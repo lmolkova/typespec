@@ -13,7 +13,9 @@ import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
 import io.clientcore.core.http.pipeline.HttpPipeline;
+import io.clientcore.core.serialization.ObjectSerializer;
 import io.clientcore.core.utils.DateTimeRfc1123;
+import java.lang.reflect.InvocationTargetException;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
@@ -72,12 +74,36 @@ public final class RepeatabilityClientImpl {
      */
     @ServiceInterface(name = "RepeatabilityClient", host = "{endpoint}")
     public interface RepeatabilityClientService {
+        static RepeatabilityClientService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer,
+            @HostParam("endpoint") String endpoint) {
+            try {
+                Class<?> clazz
+                    = Class.forName("specialheaders.repeatability.implementation.RepeatabilityClientServiceImpl");
+                return (RepeatabilityClientService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class, String.class)
+                    .invoke(null, pipeline, serializer, endpoint);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.POST,
             path = "/special-headers/repeatability/immediateSuccess",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> immediateSuccessSync(@HostParam("endpoint") String endpoint, RequestOptions requestOptions);
+        Response<Void> immediateSuccess(RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/special-headers/repeatability/immediateSuccess",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void immediateSuccess() {
+            immediateSuccess(null, null, null);
+        }
     }
 
     /**
@@ -111,6 +137,6 @@ public final class RepeatabilityClientImpl {
                         DateTimeRfc1123.toRfc1123String(OffsetDateTime.now()));
             }
         });
-        return service.immediateSuccessSync(this.getEndpoint(), requestOptionsLocal);
+        return service.immediateSuccess(requestOptionsLocal);
     }
 }

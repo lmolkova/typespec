@@ -8,6 +8,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 
 /**
  * Initializes a new instance of the synchronous ApiKeyClient type.
@@ -17,14 +18,18 @@ public final class ApiKeyClient {
     @Metadata(generated = true)
     private final ApiKeyClientImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of ApiKeyClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    ApiKeyClient(ApiKeyClientImpl serviceClient) {
+    ApiKeyClient(ApiKeyClientImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -36,7 +41,8 @@ public final class ApiKeyClient {
      */
     @Metadata(generated = true)
     public Response<Void> validWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.validWithResponse(requestOptions);
+        return this.instrumentation.instrument("Authentication.ApiKey.valid", requestOptions,
+            updatedOptions -> this.serviceClient.validWithResponse(updatedOptions));
     }
 
     /**
@@ -48,7 +54,8 @@ public final class ApiKeyClient {
      */
     @Metadata(generated = true)
     public Response<Void> invalidWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.invalidWithResponse(requestOptions);
+        return this.instrumentation.instrument("Authentication.ApiKey.invalid", requestOptions,
+            updatedOptions -> this.serviceClient.invalidWithResponse(updatedOptions));
     }
 
     /**

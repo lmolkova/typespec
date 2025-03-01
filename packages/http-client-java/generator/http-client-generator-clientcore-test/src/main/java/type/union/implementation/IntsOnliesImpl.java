@@ -13,7 +13,10 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 import type.union.GetResponse6;
 
 /**
@@ -46,15 +49,40 @@ public final class IntsOnliesImpl {
      */
     @ServiceInterface(name = "UnionClientIntsOnlie", host = "{endpoint}")
     public interface IntsOnliesService {
+        static IntsOnliesService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("type.union.implementation.IntsOnliesServiceImpl");
+                return (IntsOnliesService) clazz.getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(method = HttpMethod.GET, path = "/type/union/ints-only", expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<GetResponse6> getSync(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
+        Response<GetResponse6> get(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
             RequestOptions requestOptions);
+
+        @HttpRequestInformation(method = HttpMethod.GET, path = "/type/union/ints-only", expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default GetResponse6 get(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept) {
+            return get(endpoint, accept, null).getValue();
+        }
 
         @HttpRequestInformation(method = HttpMethod.POST, path = "/type/union/ints-only", expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> sendSync(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
+        Response<Void> send(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
             @BodyParam("application/json") BinaryData sendRequest6, RequestOptions requestOptions);
+
+        @HttpRequestInformation(method = HttpMethod.POST, path = "/type/union/ints-only", expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void send(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData sendRequest6) {
+            send(endpoint, contentType, sendRequest6, null);
+        }
     }
 
     /**
@@ -75,7 +103,7 @@ public final class IntsOnliesImpl {
      */
     public Response<GetResponse6> getWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.getSync(this.client.getEndpoint(), accept, requestOptions);
+        return service.get(this.client.getEndpoint(), accept, requestOptions);
     }
 
     /**
@@ -97,6 +125,6 @@ public final class IntsOnliesImpl {
      */
     public Response<Void> sendWithResponse(BinaryData sendRequest6, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.sendSync(this.client.getEndpoint(), contentType, sendRequest6, requestOptions);
+        return service.send(this.client.getEndpoint(), contentType, sendRequest6, requestOptions);
     }
 }

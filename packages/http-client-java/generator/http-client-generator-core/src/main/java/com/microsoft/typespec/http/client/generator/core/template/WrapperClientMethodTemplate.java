@@ -10,6 +10,7 @@ import com.microsoft.typespec.http.client.generator.core.model.clientmodel.Class
 import com.microsoft.typespec.http.client.generator.core.model.clientmodel.ClientMethod;
 import com.microsoft.typespec.http.client.generator.core.model.clientmodel.ClientMethodParameter;
 import com.microsoft.typespec.http.client.generator.core.model.clientmodel.ClientMethodType;
+import com.microsoft.typespec.http.client.generator.core.model.clientmodel.MethodParameter;
 import com.microsoft.typespec.http.client.generator.core.model.clientmodel.PrimitiveType;
 import com.microsoft.typespec.http.client.generator.core.model.clientmodel.ProxyMethod;
 import com.microsoft.typespec.http.client.generator.core.model.javamodel.JavaBlock;
@@ -100,8 +101,30 @@ public class WrapperClientMethodTemplate extends ClientMethodTemplateBase {
      */
     protected void writeMethodInvocation(ClientMethod clientMethod, JavaBlock function, boolean shouldReturn) {
         List<ClientMethodParameter> parameters = clientMethod.getMethodInputParameters();
-        function.line((shouldReturn ? "return " : "") + "this.serviceClient.%1$s(%2$s);", clientMethod.getName(),
-            parameters.stream().map(ClientMethodParameter::getName).collect(Collectors.joining(", ")));
+
+        if (JavaSettings.getInstance().isBranded()) {
+            function.line("(shouldReturn ? \"return \" : \"\") + this.serviceClient.%1$s(%2$s)", clientMethod.getName(),
+                parameters.stream().map(MethodParameter::getName).collect(Collectors.joining(", ")));
+        } else {
+            // TODO
+            String opName = clientMethod.getCrossLanguageDefinitionId();
+            String requestOptionsParam = parameters.stream()
+                .filter(p -> p.getClientType() == ClassType.REQUEST_OPTIONS)
+                .map(ClientMethodParameter::getName)
+                .findFirst()
+                .orElse(null);
+
+            function.line(
+                (shouldReturn ? "return " : "") + "this.instrumentation.instrument(\"%1$s\", %2$s, updatedOptions -> ",
+                opName, requestOptionsParam);
+
+            function.line("this.serviceClient.%1$s(%2$s)", clientMethod.getName(),
+                parameters.stream()
+                    .map(p -> p.getClientType() == ClassType.REQUEST_OPTIONS ? "updatedOptions" : p.getName())
+                    .collect(Collectors.joining(", ")));
+
+            function.line(");");
+        }
     }
 
     protected void generateJavadoc(ClientMethod clientMethod, JavaType typeBlock, ProxyMethod restAPIMethod) {

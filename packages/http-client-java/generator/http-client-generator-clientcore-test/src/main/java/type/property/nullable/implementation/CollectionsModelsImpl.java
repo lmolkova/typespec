@@ -13,7 +13,10 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 import type.property.nullable.CollectionsModelProperty;
 
 /**
@@ -46,12 +49,43 @@ public final class CollectionsModelsImpl {
      */
     @ServiceInterface(name = "NullableClientCollec", host = "{endpoint}")
     public interface CollectionsModelsService {
+        static CollectionsModelsService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("type.property.nullable.implementation.CollectionsModelsServiceImpl");
+                return (CollectionsModelsService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/type/property/nullable/collections/model/non-null",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<CollectionsModelProperty> getNonNullSync(@HostParam("endpoint") String endpoint,
+        Response<CollectionsModelProperty> getNonNull(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Accept") String accept, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/type/property/nullable/collections/model/non-null",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default CollectionsModelProperty getNonNull(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Accept") String accept) {
+            return getNonNull(endpoint, accept, null).getValue();
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/type/property/nullable/collections/model/null",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        Response<CollectionsModelProperty> getNull(@HostParam("endpoint") String endpoint,
             @HeaderParam("Accept") String accept, RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -59,15 +93,37 @@ public final class CollectionsModelsImpl {
             path = "/type/property/nullable/collections/model/null",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<CollectionsModelProperty> getNullSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Accept") String accept, RequestOptions requestOptions);
+        default CollectionsModelProperty getNull(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Accept") String accept) {
+            return getNull(endpoint, accept, null).getValue();
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.PATCH,
             path = "/type/property/nullable/collections/model/non-null",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> patchNonNullSync(@HostParam("endpoint") String endpoint,
+        Response<Void> patchNonNull(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Content-Type") String contentType, @BodyParam("application/merge-patch+json") BinaryData body,
+            RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.PATCH,
+            path = "/type/property/nullable/collections/model/non-null",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void patchNonNull(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/merge-patch+json") BinaryData body) {
+            patchNonNull(endpoint, contentType, body, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.PATCH,
+            path = "/type/property/nullable/collections/model/null",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> patchNull(@HostParam("endpoint") String endpoint,
             @HeaderParam("Content-Type") String contentType, @BodyParam("application/merge-patch+json") BinaryData body,
             RequestOptions requestOptions);
 
@@ -76,9 +132,10 @@ public final class CollectionsModelsImpl {
             path = "/type/property/nullable/collections/model/null",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> patchNullSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Content-Type") String contentType, @BodyParam("application/merge-patch+json") BinaryData body,
-            RequestOptions requestOptions);
+        default void patchNull(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/merge-patch+json") BinaryData body) {
+            patchNull(endpoint, contentType, body, null);
+        }
     }
 
     /**
@@ -104,7 +161,7 @@ public final class CollectionsModelsImpl {
      */
     public Response<CollectionsModelProperty> getNonNullWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.getNonNullSync(this.client.getEndpoint(), accept, requestOptions);
+        return service.getNonNull(this.client.getEndpoint(), accept, requestOptions);
     }
 
     /**
@@ -130,7 +187,7 @@ public final class CollectionsModelsImpl {
      */
     public Response<CollectionsModelProperty> getNullWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.getNullSync(this.client.getEndpoint(), accept, requestOptions);
+        return service.getNull(this.client.getEndpoint(), accept, requestOptions);
     }
 
     /**
@@ -157,7 +214,7 @@ public final class CollectionsModelsImpl {
      */
     public Response<Void> patchNonNullWithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "application/merge-patch+json";
-        return service.patchNonNullSync(this.client.getEndpoint(), contentType, body, requestOptions);
+        return service.patchNonNull(this.client.getEndpoint(), contentType, body, requestOptions);
     }
 
     /**
@@ -184,6 +241,6 @@ public final class CollectionsModelsImpl {
      */
     public Response<Void> patchNullWithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "application/merge-patch+json";
-        return service.patchNullSync(this.client.getEndpoint(), contentType, body, requestOptions);
+        return service.patchNull(this.client.getEndpoint(), contentType, body, requestOptions);
     }
 }

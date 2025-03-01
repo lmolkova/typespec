@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import java.util.List;
 import java.util.Map;
 import routes.implementation.PathParametersSimpleExpansionExplodesImpl;
@@ -19,14 +20,19 @@ public final class PathParametersSimpleExpansionExplodeClient {
     @Metadata(generated = true)
     private final PathParametersSimpleExpansionExplodesImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of PathParametersSimpleExpansionExplodeClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    PathParametersSimpleExpansionExplodeClient(PathParametersSimpleExpansionExplodesImpl serviceClient) {
+    PathParametersSimpleExpansionExplodeClient(PathParametersSimpleExpansionExplodesImpl serviceClient,
+        Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -39,7 +45,8 @@ public final class PathParametersSimpleExpansionExplodeClient {
      */
     @Metadata(generated = true)
     public Response<Void> primitiveWithResponse(String param, RequestOptions requestOptions) {
-        return this.serviceClient.primitiveWithResponse(param, requestOptions);
+        return this.instrumentation.instrument("Routes.PathParameters.SimpleExpansion.Explode.primitive",
+            requestOptions, updatedOptions -> this.serviceClient.primitiveWithResponse(param, updatedOptions));
     }
 
     /**
@@ -52,7 +59,8 @@ public final class PathParametersSimpleExpansionExplodeClient {
      */
     @Metadata(generated = true)
     public Response<Void> arrayWithResponse(List<String> param, RequestOptions requestOptions) {
-        return this.serviceClient.arrayWithResponse(param, requestOptions);
+        return this.instrumentation.instrument("Routes.PathParameters.SimpleExpansion.Explode.array", requestOptions,
+            updatedOptions -> this.serviceClient.arrayWithResponse(param, updatedOptions));
     }
 
     /**
@@ -65,7 +73,8 @@ public final class PathParametersSimpleExpansionExplodeClient {
      */
     @Metadata(generated = true)
     public Response<Void> recordWithResponse(Map<String, Integer> param, RequestOptions requestOptions) {
-        return this.serviceClient.recordWithResponse(param, requestOptions);
+        return this.instrumentation.instrument("Routes.PathParameters.SimpleExpansion.Explode.record", requestOptions,
+            updatedOptions -> this.serviceClient.recordWithResponse(param, updatedOptions));
     }
 
     /**

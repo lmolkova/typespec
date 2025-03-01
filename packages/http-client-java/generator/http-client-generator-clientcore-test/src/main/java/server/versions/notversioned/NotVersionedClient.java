@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import server.versions.notversioned.implementation.NotVersionedClientImpl;
 
 /**
@@ -17,14 +18,18 @@ public final class NotVersionedClient {
     @Metadata(generated = true)
     private final NotVersionedClientImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of NotVersionedClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    NotVersionedClient(NotVersionedClientImpl serviceClient) {
+    NotVersionedClient(NotVersionedClientImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -36,7 +41,8 @@ public final class NotVersionedClient {
      */
     @Metadata(generated = true)
     public Response<Void> withoutApiVersionWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.withoutApiVersionWithResponse(requestOptions);
+        return this.instrumentation.instrument("Server.Versions.NotVersioned.withoutApiVersion", requestOptions,
+            updatedOptions -> this.serviceClient.withoutApiVersionWithResponse(updatedOptions));
     }
 
     /**
@@ -49,7 +55,8 @@ public final class NotVersionedClient {
      */
     @Metadata(generated = true)
     public Response<Void> withQueryApiVersionWithResponse(String apiVersion, RequestOptions requestOptions) {
-        return this.serviceClient.withQueryApiVersionWithResponse(apiVersion, requestOptions);
+        return this.instrumentation.instrument("Server.Versions.NotVersioned.withQueryApiVersion", requestOptions,
+            updatedOptions -> this.serviceClient.withQueryApiVersionWithResponse(apiVersion, updatedOptions));
     }
 
     /**
@@ -62,7 +69,8 @@ public final class NotVersionedClient {
      */
     @Metadata(generated = true)
     public Response<Void> withPathApiVersionWithResponse(String apiVersion, RequestOptions requestOptions) {
-        return this.serviceClient.withPathApiVersionWithResponse(apiVersion, requestOptions);
+        return this.instrumentation.instrument("Server.Versions.NotVersioned.withPathApiVersion", requestOptions,
+            updatedOptions -> this.serviceClient.withPathApiVersionWithResponse(apiVersion, updatedOptions));
     }
 
     /**

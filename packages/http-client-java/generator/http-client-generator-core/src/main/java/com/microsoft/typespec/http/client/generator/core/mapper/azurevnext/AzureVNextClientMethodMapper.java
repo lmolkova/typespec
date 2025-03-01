@@ -172,7 +172,8 @@ public class AzureVNextClientMethodMapper extends ClientMethodMapper {
         String description
             = operation.getLanguage().getJava() == null ? null : operation.getLanguage().getJava().getDescription();
         if (CoreUtils.isNullOrEmpty(summary) && CoreUtils.isNullOrEmpty(description)) {
-            builder.description(String.format("The %s operation.", operation.getLanguage().getJava().getName()));
+            builder.description(
+                String.format("The %s operation and ~!!!!!!!!!.", operation.getLanguage().getJava().getName()));
         } else {
             builder.description(SchemaUtil.mergeSummaryWithDescription(summary, description));
         }
@@ -181,8 +182,8 @@ public class AzureVNextClientMethodMapper extends ClientMethodMapper {
         ImplementationDetails.Builder implDetailsBuilder = null;
         if (operation.getLanguage().getJava() != null
             && !CoreUtils.isNullOrEmpty(operation.getLanguage().getJava().getComment())) {
-            implDetailsBuilder
-                = new ImplementationDetails.Builder().comment(operation.getLanguage().getJava().getComment());
+            implDetailsBuilder = new ImplementationDetails.Builder()
+                .comment(operation.getLanguage().getJava().getComment() + "~!!!!!!!!!.");
             builder.implementationDetails(implDetailsBuilder.build());
         }
 

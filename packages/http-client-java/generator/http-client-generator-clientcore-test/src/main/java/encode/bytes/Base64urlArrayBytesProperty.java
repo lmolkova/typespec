@@ -8,7 +8,7 @@ import io.clientcore.core.serialization.json.JsonReader;
 import io.clientcore.core.serialization.json.JsonSerializable;
 import io.clientcore.core.serialization.json.JsonToken;
 import io.clientcore.core.serialization.json.JsonWriter;
-import io.clientcore.core.utils.Base64Uri;
+import io.clientcore.core.utils.Base64Url;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
@@ -22,7 +22,7 @@ public final class Base64urlArrayBytesProperty implements JsonSerializable<Base6
      * The value property.
      */
     @Metadata(generated = true)
-    private final List<Base64Uri> value;
+    private final List<Base64Url> value;
 
     /**
      * Creates an instance of Base64urlArrayBytesProperty class.
@@ -34,7 +34,7 @@ public final class Base64urlArrayBytesProperty implements JsonSerializable<Base6
         if (value == null) {
             this.value = null;
         } else {
-            this.value = value.stream().map(el -> Base64Uri.encode(el)).collect(java.util.stream.Collectors.toList());
+            this.value = value.stream().map(el -> Base64Url.encode(el)).collect(java.util.stream.Collectors.toList());
         }
     }
 
@@ -82,7 +82,7 @@ public final class Base64urlArrayBytesProperty implements JsonSerializable<Base6
 
                 if ("value".equals(fieldName)) {
                     value = reader.readArray(reader1 -> {
-                        Base64Uri reader1ValueHolder
+                        Base64Url reader1ValueHolder
                             = reader1.getNullable(nonNullReader -> new Base64Uri(nonNullReader.getString()));
                         if (reader1ValueHolder != null) {
                             return reader1ValueHolder.decodedBytes();

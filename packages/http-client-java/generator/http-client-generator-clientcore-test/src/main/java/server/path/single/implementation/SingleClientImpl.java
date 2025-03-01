@@ -12,6 +12,8 @@ import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
 import io.clientcore.core.http.pipeline.HttpPipeline;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Initializes a new instance of the SingleClient type.
@@ -67,12 +69,35 @@ public final class SingleClientImpl {
      */
     @ServiceInterface(name = "SingleClient", host = "{endpoint}")
     public interface SingleClientService {
+        static SingleClientService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer,
+            @HostParam("endpoint") String endpoint) {
+            try {
+                Class<?> clazz = Class.forName("server.path.single.implementation.SingleClientServiceImpl");
+                return (SingleClientService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class, String.class)
+                    .invoke(null, pipeline, serializer, endpoint);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.HEAD,
             path = "/server/path/single/myOp",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> myOpSync(@HostParam("endpoint") String endpoint, RequestOptions requestOptions);
+        Response<Void> myOp(RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.HEAD,
+            path = "/server/path/single/myOp",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default void myOp() {
+            myOp(null);
+        }
     }
 
     /**
@@ -83,6 +108,6 @@ public final class SingleClientImpl {
      * @return the response.
      */
     public Response<Void> myOpWithResponse(RequestOptions requestOptions) {
-        return service.myOpSync(this.getEndpoint(), requestOptions);
+        return service.myOp(requestOptions);
     }
 }

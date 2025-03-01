@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import type.property.optional.implementation.RequiredAndOptionalsImpl;
 
@@ -18,14 +19,18 @@ public final class RequiredAndOptionalClient {
     @Metadata(generated = true)
     private final RequiredAndOptionalsImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of RequiredAndOptionalClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    RequiredAndOptionalClient(RequiredAndOptionalsImpl serviceClient) {
+    RequiredAndOptionalClient(RequiredAndOptionalsImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -47,7 +52,8 @@ public final class RequiredAndOptionalClient {
      */
     @Metadata(generated = true)
     public Response<RequiredAndOptionalProperty> getAllWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getAllWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Property.Optional.RequiredAndOptional.getAll", requestOptions,
+            updatedOptions -> this.serviceClient.getAllWithResponse(updatedOptions));
     }
 
     /**
@@ -69,7 +75,8 @@ public final class RequiredAndOptionalClient {
      */
     @Metadata(generated = true)
     public Response<RequiredAndOptionalProperty> getRequiredOnlyWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getRequiredOnlyWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Property.Optional.RequiredAndOptional.getRequiredOnly",
+            requestOptions, updatedOptions -> this.serviceClient.getRequiredOnlyWithResponse(updatedOptions));
     }
 
     /**
@@ -92,7 +99,8 @@ public final class RequiredAndOptionalClient {
      */
     @Metadata(generated = true)
     public Response<Void> putAllWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.putAllWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Type.Property.Optional.RequiredAndOptional.putAll", requestOptions,
+            updatedOptions -> this.serviceClient.putAllWithResponse(body, updatedOptions));
     }
 
     /**
@@ -115,7 +123,8 @@ public final class RequiredAndOptionalClient {
      */
     @Metadata(generated = true)
     public Response<Void> putRequiredOnlyWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.putRequiredOnlyWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Type.Property.Optional.RequiredAndOptional.putRequiredOnly",
+            requestOptions, updatedOptions -> this.serviceClient.putRequiredOnlyWithResponse(body, updatedOptions));
     }
 
     /**

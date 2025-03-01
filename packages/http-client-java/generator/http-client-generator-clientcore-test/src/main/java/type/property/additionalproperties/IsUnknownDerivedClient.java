@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import type.property.additionalproperties.implementation.IsUnknownDerivedsImpl;
 
@@ -18,14 +19,18 @@ public final class IsUnknownDerivedClient {
     @Metadata(generated = true)
     private final IsUnknownDerivedsImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of IsUnknownDerivedClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    IsUnknownDerivedClient(IsUnknownDerivedsImpl serviceClient) {
+    IsUnknownDerivedClient(IsUnknownDerivedsImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -51,7 +56,8 @@ public final class IsUnknownDerivedClient {
      */
     @Metadata(generated = true)
     public Response<IsUnknownAdditionalPropertiesDerived> getWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Property.AdditionalProperties.IsUnknownDerived.get",
+            requestOptions, updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
     /**
@@ -78,7 +84,8 @@ public final class IsUnknownDerivedClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.putWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Type.Property.AdditionalProperties.IsUnknownDerived.put",
+            requestOptions, updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 
     /**

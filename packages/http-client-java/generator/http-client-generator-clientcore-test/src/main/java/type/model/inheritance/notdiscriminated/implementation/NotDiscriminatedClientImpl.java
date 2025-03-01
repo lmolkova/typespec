@@ -15,6 +15,8 @@ import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
 import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 import type.model.inheritance.notdiscriminated.Siamese;
 
 /**
@@ -72,21 +74,62 @@ public final class NotDiscriminatedClientImpl {
      */
     @ServiceInterface(name = "NotDiscriminatedClie", host = "{endpoint}")
     public interface NotDiscriminatedClientService {
+        static NotDiscriminatedClientService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer,
+            @HostParam("endpoint") String endpoint) {
+            try {
+                Class<?> clazz = Class.forName(
+                    "type.model.inheritance.notdiscriminated.implementation.NotDiscriminatedClientServiceImpl");
+                return (NotDiscriminatedClientService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class, String.class)
+                    .invoke(null, pipeline, serializer, endpoint);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.POST,
             path = "/type/model/inheritance/not-discriminated/valid",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> postValidSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Content-Type") String contentType, @BodyParam("application/json") BinaryData input,
-            RequestOptions requestOptions);
+        Response<Void> postValid(@HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData input, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/type/model/inheritance/not-discriminated/valid",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void postValid(@HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData input) {
+            postValid(contentType, input, null);
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/type/model/inheritance/not-discriminated/valid",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Siamese> getValidSync(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
+        Response<Siamese> getValid(@HeaderParam("Accept") String accept, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/type/model/inheritance/not-discriminated/valid",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default Siamese getValid(@HeaderParam("Accept") String accept) {
+            return getValid(accept, null).getValue();
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.PUT,
+            path = "/type/model/inheritance/not-discriminated/valid",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        Response<Siamese> putValid(@HeaderParam("Content-Type") String contentType,
+            @HeaderParam("Accept") String accept, @BodyParam("application/json") BinaryData input,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -94,9 +137,10 @@ public final class NotDiscriminatedClientImpl {
             path = "/type/model/inheritance/not-discriminated/valid",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Siamese> putValidSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
-            @BodyParam("application/json") BinaryData input, RequestOptions requestOptions);
+        default Siamese putValid(@HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
+            @BodyParam("application/json") BinaryData input) {
+            return putValid(contentType, accept, input, null).getValue();
+        }
     }
 
     /**
@@ -120,7 +164,7 @@ public final class NotDiscriminatedClientImpl {
      */
     public Response<Void> postValidWithResponse(BinaryData input, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.postValidSync(this.getEndpoint(), contentType, input, requestOptions);
+        return service.postValid(contentType, input, requestOptions);
     }
 
     /**
@@ -143,7 +187,7 @@ public final class NotDiscriminatedClientImpl {
      */
     public Response<Siamese> getValidWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.getValidSync(this.getEndpoint(), accept, requestOptions);
+        return service.getValid(accept, requestOptions);
     }
 
     /**
@@ -180,6 +224,6 @@ public final class NotDiscriminatedClientImpl {
     public Response<Siamese> putValidWithResponse(BinaryData input, RequestOptions requestOptions) {
         final String contentType = "application/json";
         final String accept = "application/json";
-        return service.putValidSync(this.getEndpoint(), contentType, accept, input, requestOptions);
+        return service.putValid(contentType, accept, input, requestOptions);
     }
 }

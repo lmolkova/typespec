@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import type.enums.fixed.implementation.StringOperationsImpl;
 
@@ -18,14 +19,18 @@ public final class FixedClient {
     @Metadata(generated = true)
     private final StringOperationsImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of FixedClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    FixedClient(StringOperationsImpl serviceClient) {
+    FixedClient(StringOperationsImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -44,7 +49,8 @@ public final class FixedClient {
      */
     @Metadata(generated = true)
     public Response<DaysOfWeekEnum> getKnownValueWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getKnownValueWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Enum.Fixed.String.getKnownValue", requestOptions,
+            updatedOptions -> this.serviceClient.getKnownValueWithResponse(updatedOptions));
     }
 
     /**
@@ -64,7 +70,8 @@ public final class FixedClient {
      */
     @Metadata(generated = true)
     public Response<Void> putKnownValueWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.putKnownValueWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Type.Enum.Fixed.String.putKnownValue", requestOptions,
+            updatedOptions -> this.serviceClient.putKnownValueWithResponse(body, updatedOptions));
     }
 
     /**
@@ -84,7 +91,8 @@ public final class FixedClient {
      */
     @Metadata(generated = true)
     public Response<Void> putUnknownValueWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.putUnknownValueWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Type.Enum.Fixed.String.putUnknownValue", requestOptions,
+            updatedOptions -> this.serviceClient.putUnknownValueWithResponse(body, updatedOptions));
     }
 
     /**

@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import payload.mediatype.implementation.StringBodiesImpl;
 
@@ -18,14 +19,18 @@ public final class MediaTypeClient {
     @Metadata(generated = true)
     private final StringBodiesImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of MediaTypeClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    MediaTypeClient(StringBodiesImpl serviceClient) {
+    MediaTypeClient(StringBodiesImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -45,7 +50,8 @@ public final class MediaTypeClient {
      */
     @Metadata(generated = true)
     public Response<Void> sendAsTextWithResponse(BinaryData text, RequestOptions requestOptions) {
-        return this.serviceClient.sendAsTextWithResponse(text, requestOptions);
+        return this.instrumentation.instrument("Payload.MediaType.StringBody.sendAsText", requestOptions,
+            updatedOptions -> this.serviceClient.sendAsTextWithResponse(text, updatedOptions));
     }
 
     /**
@@ -64,7 +70,8 @@ public final class MediaTypeClient {
      */
     @Metadata(generated = true)
     public Response<String> getAsTextWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getAsTextWithResponse(requestOptions);
+        return this.instrumentation.instrument("Payload.MediaType.StringBody.getAsText", requestOptions,
+            updatedOptions -> this.serviceClient.getAsTextWithResponse(updatedOptions));
     }
 
     /**
@@ -84,7 +91,8 @@ public final class MediaTypeClient {
      */
     @Metadata(generated = true)
     public Response<Void> sendAsJsonWithResponse(BinaryData text, RequestOptions requestOptions) {
-        return this.serviceClient.sendAsJsonWithResponse(text, requestOptions);
+        return this.instrumentation.instrument("Payload.MediaType.StringBody.sendAsJson", requestOptions,
+            updatedOptions -> this.serviceClient.sendAsJsonWithResponse(text, updatedOptions));
     }
 
     /**
@@ -103,7 +111,8 @@ public final class MediaTypeClient {
      */
     @Metadata(generated = true)
     public Response<String> getAsJsonWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getAsJsonWithResponse(requestOptions);
+        return this.instrumentation.instrument("Payload.MediaType.StringBody.getAsJson", requestOptions,
+            updatedOptions -> this.serviceClient.getAsJsonWithResponse(updatedOptions));
     }
 
     /**

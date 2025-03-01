@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import type.union.implementation.ModelsOnliesImpl;
 import type.union.implementation.SendRequest4;
@@ -19,14 +20,18 @@ public final class ModelsOnlyClient {
     @Metadata(generated = true)
     private final ModelsOnliesImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of ModelsOnlyClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    ModelsOnlyClient(ModelsOnliesImpl serviceClient) {
+    ModelsOnlyClient(ModelsOnliesImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -47,7 +52,8 @@ public final class ModelsOnlyClient {
      */
     @Metadata(generated = true)
     public Response<GetResponse4> getWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Union.ModelsOnly.get", requestOptions,
+            updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
     /**
@@ -69,7 +75,8 @@ public final class ModelsOnlyClient {
      */
     @Metadata(generated = true)
     public Response<Void> sendWithResponse(BinaryData sendRequest4, RequestOptions requestOptions) {
-        return this.serviceClient.sendWithResponse(sendRequest4, requestOptions);
+        return this.instrumentation.instrument("Type.Union.ModelsOnly.send", requestOptions,
+            updatedOptions -> this.serviceClient.sendWithResponse(sendRequest4, updatedOptions));
     }
 
     /**

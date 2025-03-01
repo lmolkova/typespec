@@ -13,7 +13,10 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -47,22 +50,54 @@ public final class Decimal128VerifiesImpl {
      */
     @ServiceInterface(name = "ScalarClientDecimal1", host = "{endpoint}")
     public interface Decimal128VerifiesService {
+        static Decimal128VerifiesService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("type.scalar.implementation.Decimal128VerifiesServiceImpl");
+                return (Decimal128VerifiesService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/type/scalar/decimal128/prepare_verify",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<List<BigDecimal>> prepareVerifySync(@HostParam("endpoint") String endpoint,
+        Response<List<BigDecimal>> prepareVerify(@HostParam("endpoint") String endpoint,
             @HeaderParam("Accept") String accept, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/type/scalar/decimal128/prepare_verify",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default List<BigDecimal> prepareVerify(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Accept") String accept) {
+            return prepareVerify(endpoint, accept, null).getValue();
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.POST,
             path = "/type/scalar/decimal128/verify",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> verifySync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Content-Type") String contentType, @BodyParam("application/json") BinaryData body,
-            RequestOptions requestOptions);
+        Response<Void> verify(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData body, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/type/scalar/decimal128/verify",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void verify(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData body) {
+            verify(endpoint, contentType, body, null);
+        }
     }
 
     /**
@@ -83,7 +118,7 @@ public final class Decimal128VerifiesImpl {
      */
     public Response<List<BigDecimal>> prepareVerifyWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.prepareVerifySync(this.client.getEndpoint(), accept, requestOptions);
+        return service.prepareVerify(this.client.getEndpoint(), accept, requestOptions);
     }
 
     /**
@@ -103,6 +138,6 @@ public final class Decimal128VerifiesImpl {
      */
     public Response<Void> verifyWithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.verifySync(this.client.getEndpoint(), contentType, body, requestOptions);
+        return service.verify(this.client.getEndpoint(), contentType, body, requestOptions);
     }
 }

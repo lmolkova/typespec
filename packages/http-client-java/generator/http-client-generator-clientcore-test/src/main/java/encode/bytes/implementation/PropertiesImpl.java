@@ -17,7 +17,10 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * An instance of this class provides access to all the operations defined in Properties.
@@ -49,12 +52,44 @@ public final class PropertiesImpl {
      */
     @ServiceInterface(name = "BytesClientPropertie", host = "{endpoint}")
     public interface PropertiesService {
+        static PropertiesService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("encode.bytes.implementation.PropertiesServiceImpl");
+                return (PropertiesService) clazz.getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.POST,
             path = "/encode/bytes/property/default",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<DefaultBytesProperty> defaultMethodSync(@HostParam("endpoint") String endpoint,
+        Response<DefaultBytesProperty> defaultMethod(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
+            @BodyParam("application/json") BinaryData body, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/encode/bytes/property/default",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default DefaultBytesProperty defaultMethod(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
+            @BodyParam("application/json") BinaryData body) {
+            return defaultMethod(endpoint, contentType, accept, body, null).getValue();
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/encode/bytes/property/base64",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        Response<Base64BytesProperty> base64(@HostParam("endpoint") String endpoint,
             @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
             @BodyParam("application/json") BinaryData body, RequestOptions requestOptions);
 
@@ -63,7 +98,18 @@ public final class PropertiesImpl {
             path = "/encode/bytes/property/base64",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Base64BytesProperty> base64Sync(@HostParam("endpoint") String endpoint,
+        default Base64BytesProperty base64(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
+            @BodyParam("application/json") BinaryData body) {
+            return base64(endpoint, contentType, accept, body, null).getValue();
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/encode/bytes/property/base64url",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        Response<Base64urlBytesProperty> base64url(@HostParam("endpoint") String endpoint,
             @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
             @BodyParam("application/json") BinaryData body, RequestOptions requestOptions);
 
@@ -72,7 +118,18 @@ public final class PropertiesImpl {
             path = "/encode/bytes/property/base64url",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Base64urlBytesProperty> base64urlSync(@HostParam("endpoint") String endpoint,
+        default Base64urlBytesProperty base64url(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
+            @BodyParam("application/json") BinaryData body) {
+            return base64url(endpoint, contentType, accept, body, null).getValue();
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/encode/bytes/property/base64url-array",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        Response<Base64urlArrayBytesProperty> base64urlArray(@HostParam("endpoint") String endpoint,
             @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
             @BodyParam("application/json") BinaryData body, RequestOptions requestOptions);
 
@@ -81,9 +138,11 @@ public final class PropertiesImpl {
             path = "/encode/bytes/property/base64url-array",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Base64urlArrayBytesProperty> base64urlArraySync(@HostParam("endpoint") String endpoint,
+        default Base64urlArrayBytesProperty base64urlArray(@HostParam("endpoint") String endpoint,
             @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
-            @BodyParam("application/json") BinaryData body, RequestOptions requestOptions);
+            @BodyParam("application/json") BinaryData body) {
+            return base64urlArray(endpoint, contentType, accept, body, null).getValue();
+        }
     }
 
     /**
@@ -116,7 +175,7 @@ public final class PropertiesImpl {
     public Response<DefaultBytesProperty> defaultMethodWithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "application/json";
         final String accept = "application/json";
-        return service.defaultMethodSync(this.client.getEndpoint(), contentType, accept, body, requestOptions);
+        return service.defaultMethod(this.client.getEndpoint(), contentType, accept, body, requestOptions);
     }
 
     /**
@@ -149,7 +208,7 @@ public final class PropertiesImpl {
     public Response<Base64BytesProperty> base64WithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "application/json";
         final String accept = "application/json";
-        return service.base64Sync(this.client.getEndpoint(), contentType, accept, body, requestOptions);
+        return service.base64(this.client.getEndpoint(), contentType, accept, body, requestOptions);
     }
 
     /**
@@ -159,7 +218,7 @@ public final class PropertiesImpl {
      * <pre>
      * {@code
      * {
-     *     value: Base64Uri (Required)
+     *     value: Base64Url (Required)
      * }
      * }
      * </pre>
@@ -169,7 +228,7 @@ public final class PropertiesImpl {
      * <pre>
      * {@code
      * {
-     *     value: Base64Uri (Required)
+     *     value: Base64Url (Required)
      * }
      * }
      * </pre>
@@ -182,7 +241,7 @@ public final class PropertiesImpl {
     public Response<Base64urlBytesProperty> base64urlWithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "application/json";
         final String accept = "application/json";
-        return service.base64urlSync(this.client.getEndpoint(), contentType, accept, body, requestOptions);
+        return service.base64url(this.client.getEndpoint(), contentType, accept, body, requestOptions);
     }
 
     /**
@@ -193,7 +252,7 @@ public final class PropertiesImpl {
      * {@code
      * {
      *     value (Required): [
-     *         Base64Uri (Required)
+     *         Base64Url (Required)
      *     ]
      * }
      * }
@@ -205,7 +264,7 @@ public final class PropertiesImpl {
      * {@code
      * {
      *     value (Required): [
-     *         Base64Uri (Required)
+     *         Base64Url (Required)
      *     ]
      * }
      * }
@@ -220,6 +279,6 @@ public final class PropertiesImpl {
         RequestOptions requestOptions) {
         final String contentType = "application/json";
         final String accept = "application/json";
-        return service.base64urlArraySync(this.client.getEndpoint(), contentType, accept, body, requestOptions);
+        return service.base64urlArray(this.client.getEndpoint(), contentType, accept, body, requestOptions);
     }
 }

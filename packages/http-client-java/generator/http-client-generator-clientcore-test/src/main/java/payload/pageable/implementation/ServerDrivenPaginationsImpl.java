@@ -15,7 +15,10 @@ import io.clientcore.core.http.models.PagedIterable;
 import io.clientcore.core.http.models.PagedResponse;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
+import io.clientcore.core.serialization.ObjectSerializer;
 import io.clientcore.core.utils.Context;
+import java.lang.reflect.InvocationTargetException;
 import payload.pageable.Pet;
 import payload.pageable.serverdrivenpagination.implementation.LinkResponse;
 
@@ -49,19 +52,48 @@ public final class ServerDrivenPaginationsImpl {
      */
     @ServiceInterface(name = "PageableClientServer", host = "{endpoint}")
     public interface ServerDrivenPaginationsService {
+        static ServerDrivenPaginationsService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("payload.pageable.implementation.ServerDrivenPaginationsServiceImpl");
+                return (ServerDrivenPaginationsService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/payload/pageable/server-driven-pagination/link",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<LinkResponse> linkSync(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
+        Response<LinkResponse> link(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
+            RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/payload/pageable/server-driven-pagination/link",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default LinkResponse link(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept) {
+            return link(endpoint, accept, null).getValue();
+        }
+
+        @HttpRequestInformation(method = HttpMethod.GET, path = "{nextLink}", expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        Response<LinkResponse> linkNext(@PathParam(value = "nextLink", encoded = true) String nextLink,
+            @HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(method = HttpMethod.GET, path = "{nextLink}", expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<LinkResponse> linkNextSync(@PathParam(value = "nextLink", encoded = true) String nextLink,
-            @HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
-            RequestOptions requestOptions);
+        default LinkResponse linkNext(@PathParam(value = "nextLink", encoded = true) String nextLink,
+            @HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept) {
+            return linkNext(nextLink, endpoint, accept, null).getValue();
+        }
     }
 
     /**
@@ -88,7 +120,7 @@ public final class ServerDrivenPaginationsImpl {
      */
     private PagedResponse<Pet> linkSinglePage(RequestOptions requestOptions) {
         final String accept = "application/json";
-        Response<LinkResponse> res = service.linkSync(this.client.getEndpoint(), accept, requestOptions);
+        Response<LinkResponse> res = service.link(this.client.getEndpoint(), accept, requestOptions);
         return new PagedResponse<>(res.getRequest(), res.getStatusCode(), res.getHeaders(), res.getBody(),
             res.getValue().getPets(), null, res.getValue().getNext(), null, null, null);
     }
@@ -149,7 +181,7 @@ public final class ServerDrivenPaginationsImpl {
      */
     private PagedResponse<Pet> linkNextSinglePage(String nextLink, RequestOptions requestOptions) {
         final String accept = "application/json";
-        Response<LinkResponse> res = service.linkNextSync(nextLink, this.client.getEndpoint(), accept, requestOptions);
+        Response<LinkResponse> res = service.linkNext(nextLink, this.client.getEndpoint(), accept, requestOptions);
         return new PagedResponse<>(res.getRequest(), res.getStatusCode(), res.getHeaders(), res.getBody(),
             res.getValue().getPets(), null, res.getValue().getNext(), null, null, null);
     }

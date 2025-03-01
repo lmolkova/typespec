@@ -12,6 +12,8 @@ import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
 import io.clientcore.core.http.pipeline.HttpPipeline;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Initializes a new instance of the RoutesClient type.
@@ -307,9 +309,29 @@ public final class RoutesClientImpl {
      */
     @ServiceInterface(name = "RoutesClient", host = "{endpoint}")
     public interface RoutesClientService {
+        static RoutesClientService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer,
+            @HostParam("endpoint") String endpoint) {
+            try {
+                Class<?> clazz = Class.forName("routes.implementation.RoutesClientServiceImpl");
+                return (RoutesClientService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class, String.class)
+                    .invoke(null, pipeline, serializer, endpoint);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(method = HttpMethod.GET, path = "/routes/fixed", expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> fixedSync(@HostParam("endpoint") String endpoint, RequestOptions requestOptions);
+        Response<Void> fixed(RequestOptions requestOptions);
+
+        @HttpRequestInformation(method = HttpMethod.GET, path = "/routes/fixed", expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void fixed() {
+            fixed(null);
+        }
     }
 
     /**
@@ -320,6 +342,6 @@ public final class RoutesClientImpl {
      * @return the response.
      */
     public Response<Void> fixedWithResponse(RequestOptions requestOptions) {
-        return service.fixedSync(this.getEndpoint(), requestOptions);
+        return service.fixed(requestOptions);
     }
 }

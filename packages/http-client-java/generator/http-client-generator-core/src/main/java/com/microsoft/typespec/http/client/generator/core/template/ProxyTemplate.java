@@ -205,13 +205,15 @@ public class ProxyTemplate implements IJavaTemplate<Proxy, JavaClass> {
                 break;
 
             case BODY:
-                if (ContentType.APPLICATION_X_WWW_FORM_URLENCODED.equals(restAPIMethod.getRequestContentType())) {
+                if (restAPIMethod != null) {
+                    if (ContentType.APPLICATION_X_WWW_FORM_URLENCODED.equals(restAPIMethod.getRequestContentType())) {
+                        parameterDeclarationBuilder
+                            .append(String.format("@FormParam(\"%1$s\") ", parameter.getRequestParameterName()));
+                        break;
+                    }
                     parameterDeclarationBuilder
-                        .append(String.format("@FormParam(\"%1$s\") ", parameter.getRequestParameterName()));
-                    break;
+                        .append(String.format("@BodyParam(\"%1$s\") ", restAPIMethod.getRequestContentType()));
                 }
-                parameterDeclarationBuilder
-                    .append(String.format("@BodyParam(\"%1$s\") ", restAPIMethod.getRequestContentType()));
                 break;
 
             // case FormData:

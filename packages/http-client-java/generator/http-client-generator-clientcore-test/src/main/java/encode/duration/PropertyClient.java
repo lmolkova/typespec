@@ -14,6 +14,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 
 /**
@@ -24,14 +25,18 @@ public final class PropertyClient {
     @Metadata(generated = true)
     private final PropertiesImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of PropertyClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    PropertyClient(PropertiesImpl serviceClient) {
+    PropertyClient(PropertiesImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -63,7 +68,8 @@ public final class PropertyClient {
      */
     @Metadata(generated = true)
     public Response<DefaultDurationProperty> defaultMethodWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.defaultMethodWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Encode.Duration.Property.default", requestOptions,
+            updatedOptions -> this.serviceClient.defaultMethodWithResponse(body, updatedOptions));
     }
 
     /**
@@ -95,7 +101,8 @@ public final class PropertyClient {
      */
     @Metadata(generated = true)
     public Response<ISO8601DurationProperty> iso8601WithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.iso8601WithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Encode.Duration.Property.iso8601", requestOptions,
+            updatedOptions -> this.serviceClient.iso8601WithResponse(body, updatedOptions));
     }
 
     /**
@@ -128,7 +135,8 @@ public final class PropertyClient {
     @Metadata(generated = true)
     public Response<Int32SecondsDurationProperty> int32SecondsWithResponse(BinaryData body,
         RequestOptions requestOptions) {
-        return this.serviceClient.int32SecondsWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Encode.Duration.Property.int32Seconds", requestOptions,
+            updatedOptions -> this.serviceClient.int32SecondsWithResponse(body, updatedOptions));
     }
 
     /**
@@ -161,7 +169,8 @@ public final class PropertyClient {
     @Metadata(generated = true)
     public Response<FloatSecondsDurationProperty> floatSecondsWithResponse(BinaryData body,
         RequestOptions requestOptions) {
-        return this.serviceClient.floatSecondsWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Encode.Duration.Property.floatSeconds", requestOptions,
+            updatedOptions -> this.serviceClient.floatSecondsWithResponse(body, updatedOptions));
     }
 
     /**
@@ -194,7 +203,8 @@ public final class PropertyClient {
     @Metadata(generated = true)
     public Response<Float64SecondsDurationProperty> float64SecondsWithResponse(BinaryData body,
         RequestOptions requestOptions) {
-        return this.serviceClient.float64SecondsWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Encode.Duration.Property.float64Seconds", requestOptions,
+            updatedOptions -> this.serviceClient.float64SecondsWithResponse(body, updatedOptions));
     }
 
     /**
@@ -231,7 +241,8 @@ public final class PropertyClient {
     @Metadata(generated = true)
     public Response<FloatSecondsDurationArrayProperty> floatSecondsArrayWithResponse(BinaryData body,
         RequestOptions requestOptions) {
-        return this.serviceClient.floatSecondsArrayWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Encode.Duration.Property.floatSecondsArray", requestOptions,
+            updatedOptions -> this.serviceClient.floatSecondsArrayWithResponse(body, updatedOptions));
     }
 
     /**

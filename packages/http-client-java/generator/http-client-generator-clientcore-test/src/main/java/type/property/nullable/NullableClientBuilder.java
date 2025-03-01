@@ -15,6 +15,7 @@ import io.clientcore.core.http.pipeline.HttpRedirectOptions;
 import io.clientcore.core.http.pipeline.HttpRedirectPolicy;
 import io.clientcore.core.http.pipeline.HttpRetryOptions;
 import io.clientcore.core.http.pipeline.HttpRetryPolicy;
+import io.clientcore.core.instrumentation.LibraryInstrumentationOptions;
 import io.clientcore.core.instrumentation.logging.ClientLogger;
 import io.clientcore.core.traits.ConfigurationTrait;
 import io.clientcore.core.traits.EndpointTrait;
@@ -45,6 +46,10 @@ public final class NullableClientBuilder implements HttpTrait<NullableClientBuil
 
     @Metadata(generated = true)
     private static final String SDK_VERSION = "version";
+
+    @Metadata(generated = true)
+    private static final LibraryInstrumentationOptions LIBRARY_INSTRUMENTATION_OPTIONS
+        = new LibraryInstrumentationOptions("");
 
     @Metadata(generated = true)
     private final List<HttpPipelinePolicy> pipelinePolicies;
@@ -93,22 +98,6 @@ public final class NullableClientBuilder implements HttpTrait<NullableClientBuil
     }
 
     /*
-     * The logging configuration for HTTP requests and responses.
-     */
-    @Metadata(generated = true)
-    private HttpInstrumentationOptions httpInstrumentationOptions;
-
-    /**
-     * {@inheritDoc}.
-     */
-    @Metadata(generated = true)
-    @Override
-    public NullableClientBuilder httpInstrumentationOptions(HttpInstrumentationOptions httpInstrumentationOptions) {
-        this.httpInstrumentationOptions = httpInstrumentationOptions;
-        return this;
-    }
-
-    /*
      * The retry options to configure retry policy for failed requests.
      */
     @Metadata(generated = true)
@@ -148,6 +137,22 @@ public final class NullableClientBuilder implements HttpTrait<NullableClientBuil
     @Override
     public NullableClientBuilder httpRedirectOptions(HttpRedirectOptions redirectOptions) {
         this.redirectOptions = redirectOptions;
+        return this;
+    }
+
+    /*
+     * The instrumentation configuration for HTTP requests and responses.
+     */
+    @Metadata(generated = true)
+    private HttpInstrumentationOptions httpInstrumentationOptions;
+
+    /**
+     * {@inheritDoc}.
+     */
+    @Metadata(generated = true)
+    @Override
+    public NullableClientBuilder httpInstrumentationOptions(HttpInstrumentationOptions httpInstrumentationOptions) {
+        this.httpInstrumentationOptions = httpInstrumentationOptions;
         return this;
     }
 

@@ -8,6 +8,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 
 /**
@@ -18,14 +19,18 @@ public final class PropertyClient {
     @Metadata(generated = true)
     private final PropertiesImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of PropertyClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    PropertyClient(PropertiesImpl serviceClient) {
+    PropertyClient(PropertiesImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -57,7 +62,8 @@ public final class PropertyClient {
      */
     @Metadata(generated = true)
     public Response<DefaultBytesProperty> defaultMethodWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.defaultMethodWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Encode.Bytes.Property.default", requestOptions,
+            updatedOptions -> this.serviceClient.defaultMethodWithResponse(body, updatedOptions));
     }
 
     /**
@@ -89,7 +95,8 @@ public final class PropertyClient {
      */
     @Metadata(generated = true)
     public Response<Base64BytesProperty> base64WithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.base64WithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Encode.Bytes.Property.base64", requestOptions,
+            updatedOptions -> this.serviceClient.base64WithResponse(body, updatedOptions));
     }
 
     /**
@@ -99,7 +106,7 @@ public final class PropertyClient {
      * <pre>
      * {@code
      * {
-     *     value: Base64Uri (Required)
+     *     value: Base64Url (Required)
      * }
      * }
      * </pre>
@@ -109,7 +116,7 @@ public final class PropertyClient {
      * <pre>
      * {@code
      * {
-     *     value: Base64Uri (Required)
+     *     value: Base64Url (Required)
      * }
      * }
      * </pre>
@@ -121,7 +128,8 @@ public final class PropertyClient {
      */
     @Metadata(generated = true)
     public Response<Base64urlBytesProperty> base64urlWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.base64urlWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Encode.Bytes.Property.base64url", requestOptions,
+            updatedOptions -> this.serviceClient.base64urlWithResponse(body, updatedOptions));
     }
 
     /**
@@ -132,7 +140,7 @@ public final class PropertyClient {
      * {@code
      * {
      *     value (Required): [
-     *         Base64Uri (Required)
+     *         Base64Url (Required)
      *     ]
      * }
      * }
@@ -144,7 +152,7 @@ public final class PropertyClient {
      * {@code
      * {
      *     value (Required): [
-     *         Base64Uri (Required)
+     *         Base64Url (Required)
      *     ]
      * }
      * }
@@ -158,7 +166,8 @@ public final class PropertyClient {
     @Metadata(generated = true)
     public Response<Base64urlArrayBytesProperty> base64urlArrayWithResponse(BinaryData body,
         RequestOptions requestOptions) {
-        return this.serviceClient.base64urlArrayWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Encode.Bytes.Property.base64urlArray", requestOptions,
+            updatedOptions -> this.serviceClient.base64urlArrayWithResponse(body, updatedOptions));
     }
 
     /**

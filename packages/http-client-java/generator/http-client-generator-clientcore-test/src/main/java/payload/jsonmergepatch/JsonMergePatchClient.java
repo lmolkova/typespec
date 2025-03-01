@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import payload.jsonmergepatch.implementation.JsonMergePatchClientImpl;
 import payload.jsonmergepatch.implementation.JsonMergePatchHelper;
@@ -19,14 +20,18 @@ public final class JsonMergePatchClient {
     @Metadata(generated = true)
     private final JsonMergePatchClientImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of JsonMergePatchClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    JsonMergePatchClient(JsonMergePatchClientImpl serviceClient) {
+    JsonMergePatchClient(JsonMergePatchClientImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -90,7 +95,8 @@ public final class JsonMergePatchClient {
      */
     @Metadata(generated = true)
     public Response<Resource> createResourceWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.createResourceWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Payload.JsonMergePatch.createResource", requestOptions,
+            updatedOptions -> this.serviceClient.createResourceWithResponse(body, updatedOptions));
     }
 
     /**
@@ -153,7 +159,8 @@ public final class JsonMergePatchClient {
      */
     @Metadata(generated = true)
     public Response<Resource> updateResourceWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.updateResourceWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Payload.JsonMergePatch.updateResource", requestOptions,
+            updatedOptions -> this.serviceClient.updateResourceWithResponse(body, updatedOptions));
     }
 
     /**
@@ -223,7 +230,8 @@ public final class JsonMergePatchClient {
      */
     @Metadata(generated = true)
     public Response<Resource> updateOptionalResourceWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.updateOptionalResourceWithResponse(requestOptions);
+        return this.instrumentation.instrument("Payload.JsonMergePatch.updateOptionalResource", requestOptions,
+            updatedOptions -> this.serviceClient.updateOptionalResourceWithResponse(updatedOptions));
     }
 
     /**

@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import routes.implementation.PathParametersReservedExpansionsImpl;
 
 /**
@@ -17,14 +18,19 @@ public final class PathParametersReservedExpansionClient {
     @Metadata(generated = true)
     private final PathParametersReservedExpansionsImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of PathParametersReservedExpansionClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    PathParametersReservedExpansionClient(PathParametersReservedExpansionsImpl serviceClient) {
+    PathParametersReservedExpansionClient(PathParametersReservedExpansionsImpl serviceClient,
+        Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -37,7 +43,8 @@ public final class PathParametersReservedExpansionClient {
      */
     @Metadata(generated = true)
     public Response<Void> templateWithResponse(String param, RequestOptions requestOptions) {
-        return this.serviceClient.templateWithResponse(param, requestOptions);
+        return this.instrumentation.instrument("Routes.PathParameters.ReservedExpansion.template", requestOptions,
+            updatedOptions -> this.serviceClient.templateWithResponse(param, updatedOptions));
     }
 
     /**
@@ -50,7 +57,8 @@ public final class PathParametersReservedExpansionClient {
      */
     @Metadata(generated = true)
     public Response<Void> annotationWithResponse(String param, RequestOptions requestOptions) {
-        return this.serviceClient.annotationWithResponse(param, requestOptions);
+        return this.instrumentation.instrument("Routes.PathParameters.ReservedExpansion.annotation", requestOptions,
+            updatedOptions -> this.serviceClient.annotationWithResponse(param, updatedOptions));
     }
 
     /**

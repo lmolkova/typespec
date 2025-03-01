@@ -12,7 +12,10 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * An instance of this class provides access to all the operations defined in SameBodies.
@@ -44,12 +47,24 @@ public final class SameBodiesImpl {
      */
     @ServiceInterface(name = "ContentNegotiationCl", host = "{endpoint}")
     public interface SameBodiesService {
+        static SameBodiesService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("payload.contentnegotiation.implementation.SameBodiesServiceImpl");
+                return (SameBodiesService) clazz.getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/content-negotiation/same-body",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<BinaryData> getAvatarAsPngSync(@HostParam("endpoint") String endpoint,
+        Response<BinaryData> getAvatarAsPng(@HostParam("endpoint") String endpoint,
             @HeaderParam("accept") String accept, RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -57,8 +72,28 @@ public final class SameBodiesImpl {
             path = "/content-negotiation/same-body",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<BinaryData> getAvatarAsJpegSync(@HostParam("endpoint") String endpoint,
+        default BinaryData getAvatarAsPng(@HostParam("endpoint") String endpoint,
+            @HeaderParam("accept") String accept) {
+            return getAvatarAsPng(endpoint, accept, null).getValue();
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/content-negotiation/same-body",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        Response<BinaryData> getAvatarAsJpeg(@HostParam("endpoint") String endpoint,
             @HeaderParam("accept") String accept, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/content-negotiation/same-body",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default BinaryData getAvatarAsJpeg(@HostParam("endpoint") String endpoint,
+            @HeaderParam("accept") String accept) {
+            return getAvatarAsJpeg(endpoint, accept, null).getValue();
+        }
     }
 
     /**
@@ -77,7 +112,7 @@ public final class SameBodiesImpl {
      */
     public Response<BinaryData> getAvatarAsPngWithResponse(RequestOptions requestOptions) {
         final String accept = "image/png";
-        return service.getAvatarAsPngSync(this.client.getEndpoint(), accept, requestOptions);
+        return service.getAvatarAsPng(this.client.getEndpoint(), accept, requestOptions);
     }
 
     /**
@@ -96,6 +131,6 @@ public final class SameBodiesImpl {
      */
     public Response<BinaryData> getAvatarAsJpegWithResponse(RequestOptions requestOptions) {
         final String accept = "image/jpeg";
-        return service.getAvatarAsJpegSync(this.client.getEndpoint(), accept, requestOptions);
+        return service.getAvatarAsJpeg(this.client.getEndpoint(), accept, requestOptions);
     }
 }

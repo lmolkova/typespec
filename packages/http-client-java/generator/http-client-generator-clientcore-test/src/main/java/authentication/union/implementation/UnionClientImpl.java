@@ -12,6 +12,8 @@ import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
 import io.clientcore.core.http.pipeline.HttpPipeline;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Initializes a new instance of the UnionClient type.
@@ -67,19 +69,51 @@ public final class UnionClientImpl {
      */
     @ServiceInterface(name = "UnionClient", host = "{endpoint}")
     public interface UnionClientService {
+        static UnionClientService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer,
+            @HostParam("endpoint") String endpoint) {
+            try {
+                Class<?> clazz = Class.forName("authentication.union.implementation.UnionClientServiceImpl");
+                return (UnionClientService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class, String.class)
+                    .invoke(null, pipeline, serializer, endpoint);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/authentication/union/validkey",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> validKeySync(@HostParam("endpoint") String endpoint, RequestOptions requestOptions);
+        Response<Void> validKey(RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/authentication/union/validkey",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void validKey() {
+            validKey(null);
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/authentication/union/validtoken",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> validTokenSync(@HostParam("endpoint") String endpoint, RequestOptions requestOptions);
+        Response<Void> validToken(RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/authentication/union/validtoken",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void validToken() {
+            validToken(null);
+        }
     }
 
     /**
@@ -90,7 +124,7 @@ public final class UnionClientImpl {
      * @return the response.
      */
     public Response<Void> validKeyWithResponse(RequestOptions requestOptions) {
-        return service.validKeySync(this.getEndpoint(), requestOptions);
+        return service.validKey(requestOptions);
     }
 
     /**
@@ -101,6 +135,6 @@ public final class UnionClientImpl {
      * @return the response.
      */
     public Response<Void> validTokenWithResponse(RequestOptions requestOptions) {
-        return service.validTokenSync(this.getEndpoint(), requestOptions);
+        return service.validToken(requestOptions);
     }
 }

@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import java.math.BigDecimal;
 import java.util.List;
@@ -20,14 +21,18 @@ public final class Decimal128VerifyClient {
     @Metadata(generated = true)
     private final Decimal128VerifiesImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of Decimal128VerifyClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    Decimal128VerifyClient(Decimal128VerifiesImpl serviceClient) {
+    Decimal128VerifyClient(Decimal128VerifiesImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -48,7 +53,8 @@ public final class Decimal128VerifyClient {
      */
     @Metadata(generated = true)
     public Response<List<BigDecimal>> prepareVerifyWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.prepareVerifyWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Scalar.Decimal128Verify.prepareVerify", requestOptions,
+            updatedOptions -> this.serviceClient.prepareVerifyWithResponse(updatedOptions));
     }
 
     /**
@@ -68,7 +74,8 @@ public final class Decimal128VerifyClient {
      */
     @Metadata(generated = true)
     public Response<Void> verifyWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.verifyWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Type.Scalar.Decimal128Verify.verify", requestOptions,
+            updatedOptions -> this.serviceClient.verifyWithResponse(body, updatedOptions));
     }
 
     /**

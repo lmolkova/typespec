@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import type.model.inheritance.singlediscriminator.implementation.SingleDiscriminatorClientImpl;
 
@@ -18,14 +19,18 @@ public final class SingleDiscriminatorClient {
     @Metadata(generated = true)
     private final SingleDiscriminatorClientImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of SingleDiscriminatorClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    SingleDiscriminatorClient(SingleDiscriminatorClientImpl serviceClient) {
+    SingleDiscriminatorClient(SingleDiscriminatorClientImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -47,7 +52,8 @@ public final class SingleDiscriminatorClient {
      */
     @Metadata(generated = true)
     public Response<Bird> getModelWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getModelWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Model.Inheritance.SingleDiscriminator.getModel", requestOptions,
+            updatedOptions -> this.serviceClient.getModelWithResponse(updatedOptions));
     }
 
     /**
@@ -70,7 +76,8 @@ public final class SingleDiscriminatorClient {
      */
     @Metadata(generated = true)
     public Response<Void> putModelWithResponse(BinaryData input, RequestOptions requestOptions) {
-        return this.serviceClient.putModelWithResponse(input, requestOptions);
+        return this.instrumentation.instrument("Type.Model.Inheritance.SingleDiscriminator.putModel", requestOptions,
+            updatedOptions -> this.serviceClient.putModelWithResponse(input, updatedOptions));
     }
 
     /**
@@ -92,7 +99,8 @@ public final class SingleDiscriminatorClient {
      */
     @Metadata(generated = true)
     public Response<Bird> getRecursiveModelWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getRecursiveModelWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Model.Inheritance.SingleDiscriminator.getRecursiveModel",
+            requestOptions, updatedOptions -> this.serviceClient.getRecursiveModelWithResponse(updatedOptions));
     }
 
     /**
@@ -115,7 +123,8 @@ public final class SingleDiscriminatorClient {
      */
     @Metadata(generated = true)
     public Response<Void> putRecursiveModelWithResponse(BinaryData input, RequestOptions requestOptions) {
-        return this.serviceClient.putRecursiveModelWithResponse(input, requestOptions);
+        return this.instrumentation.instrument("Type.Model.Inheritance.SingleDiscriminator.putRecursiveModel",
+            requestOptions, updatedOptions -> this.serviceClient.putRecursiveModelWithResponse(input, updatedOptions));
     }
 
     /**
@@ -137,7 +146,8 @@ public final class SingleDiscriminatorClient {
      */
     @Metadata(generated = true)
     public Response<Bird> getMissingDiscriminatorWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getMissingDiscriminatorWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Model.Inheritance.SingleDiscriminator.getMissingDiscriminator",
+            requestOptions, updatedOptions -> this.serviceClient.getMissingDiscriminatorWithResponse(updatedOptions));
     }
 
     /**
@@ -159,7 +169,8 @@ public final class SingleDiscriminatorClient {
      */
     @Metadata(generated = true)
     public Response<Bird> getWrongDiscriminatorWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getWrongDiscriminatorWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Model.Inheritance.SingleDiscriminator.getWrongDiscriminator",
+            requestOptions, updatedOptions -> this.serviceClient.getWrongDiscriminatorWithResponse(updatedOptions));
     }
 
     /**
@@ -181,7 +192,8 @@ public final class SingleDiscriminatorClient {
      */
     @Metadata(generated = true)
     public Response<Dinosaur> getLegacyModelWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getLegacyModelWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Model.Inheritance.SingleDiscriminator.getLegacyModel",
+            requestOptions, updatedOptions -> this.serviceClient.getLegacyModelWithResponse(updatedOptions));
     }
 
     /**

@@ -13,7 +13,10 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * An instance of this class provides access to all the operations defined in FormDatas.
@@ -45,13 +48,45 @@ public final class FormDatasImpl {
      */
     @ServiceInterface(name = "MultiPartClientFormD", host = "{endpoint}")
     public interface FormDatasService {
+        static FormDatasService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("payload.multipart.implementation.FormDatasServiceImpl");
+                return (FormDatasService) clazz.getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         // @Multipart not supported by RestProxy
         @HttpRequestInformation(
             method = HttpMethod.POST,
             path = "/multipart/form-data/mixed-parts",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> basicSync(@HostParam("endpoint") String endpoint,
+        Response<Void> basic(@HostParam("endpoint") String endpoint, @HeaderParam("content-type") String contentType,
+            @BodyParam("multipart/form-data") BinaryData body, RequestOptions requestOptions);
+
+        // @Multipart not supported by RestProxy
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/multipart/form-data/mixed-parts",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void basic(@HostParam("endpoint") String endpoint, @HeaderParam("content-type") String contentType,
+            @BodyParam("multipart/form-data") BinaryData body) {
+            basic(endpoint, contentType, body, null);
+        }
+
+        // @Multipart not supported by RestProxy
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/multipart/form-data/complex-parts",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> fileArrayAndBasic(@HostParam("endpoint") String endpoint,
             @HeaderParam("content-type") String contentType, @BodyParam("multipart/form-data") BinaryData body,
             RequestOptions requestOptions);
 
@@ -61,9 +96,10 @@ public final class FormDatasImpl {
             path = "/multipart/form-data/complex-parts",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> fileArrayAndBasicSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("content-type") String contentType, @BodyParam("multipart/form-data") BinaryData body,
-            RequestOptions requestOptions);
+        default void fileArrayAndBasic(@HostParam("endpoint") String endpoint,
+            @HeaderParam("content-type") String contentType, @BodyParam("multipart/form-data") BinaryData body) {
+            fileArrayAndBasic(endpoint, contentType, body, null);
+        }
 
         // @Multipart not supported by RestProxy
         @HttpRequestInformation(
@@ -71,7 +107,27 @@ public final class FormDatasImpl {
             path = "/multipart/form-data/json-part",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> jsonPartSync(@HostParam("endpoint") String endpoint,
+        Response<Void> jsonPart(@HostParam("endpoint") String endpoint, @HeaderParam("content-type") String contentType,
+            @BodyParam("multipart/form-data") BinaryData body, RequestOptions requestOptions);
+
+        // @Multipart not supported by RestProxy
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/multipart/form-data/json-part",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void jsonPart(@HostParam("endpoint") String endpoint, @HeaderParam("content-type") String contentType,
+            @BodyParam("multipart/form-data") BinaryData body) {
+            jsonPart(endpoint, contentType, body, null);
+        }
+
+        // @Multipart not supported by RestProxy
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/multipart/form-data/binary-array-parts",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> binaryArrayParts(@HostParam("endpoint") String endpoint,
             @HeaderParam("content-type") String contentType, @BodyParam("multipart/form-data") BinaryData body,
             RequestOptions requestOptions);
 
@@ -81,7 +137,18 @@ public final class FormDatasImpl {
             path = "/multipart/form-data/binary-array-parts",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> binaryArrayPartsSync(@HostParam("endpoint") String endpoint,
+        default void binaryArrayParts(@HostParam("endpoint") String endpoint,
+            @HeaderParam("content-type") String contentType, @BodyParam("multipart/form-data") BinaryData body) {
+            binaryArrayParts(endpoint, contentType, body, null);
+        }
+
+        // @Multipart not supported by RestProxy
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/multipart/form-data/multi-binary-parts",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> multiBinaryParts(@HostParam("endpoint") String endpoint,
             @HeaderParam("content-type") String contentType, @BodyParam("multipart/form-data") BinaryData body,
             RequestOptions requestOptions);
 
@@ -91,7 +158,18 @@ public final class FormDatasImpl {
             path = "/multipart/form-data/multi-binary-parts",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> multiBinaryPartsSync(@HostParam("endpoint") String endpoint,
+        default void multiBinaryParts(@HostParam("endpoint") String endpoint,
+            @HeaderParam("content-type") String contentType, @BodyParam("multipart/form-data") BinaryData body) {
+            multiBinaryParts(endpoint, contentType, body, null);
+        }
+
+        // @Multipart not supported by RestProxy
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/multipart/form-data/check-filename-and-content-type",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> checkFileNameAndContentType(@HostParam("endpoint") String endpoint,
             @HeaderParam("content-type") String contentType, @BodyParam("multipart/form-data") BinaryData body,
             RequestOptions requestOptions);
 
@@ -101,9 +179,10 @@ public final class FormDatasImpl {
             path = "/multipart/form-data/check-filename-and-content-type",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> checkFileNameAndContentTypeSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("content-type") String contentType, @BodyParam("multipart/form-data") BinaryData body,
-            RequestOptions requestOptions);
+        default void checkFileNameAndContentType(@HostParam("endpoint") String endpoint,
+            @HeaderParam("content-type") String contentType, @BodyParam("multipart/form-data") BinaryData body) {
+            checkFileNameAndContentType(endpoint, contentType, body, null);
+        }
 
         // @Multipart not supported by RestProxy
         @HttpRequestInformation(
@@ -111,9 +190,21 @@ public final class FormDatasImpl {
             path = "/multipart/form-data/anonymous-model",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> anonymousModelSync(@HostParam("endpoint") String endpoint,
+        Response<Void> anonymousModel(@HostParam("endpoint") String endpoint,
             @HeaderParam("content-type") String contentType,
             @BodyParam("multipart/form-data") BinaryData anonymousModelRequest, RequestOptions requestOptions);
+
+        // @Multipart not supported by RestProxy
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/multipart/form-data/anonymous-model",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void anonymousModel(@HostParam("endpoint") String endpoint,
+            @HeaderParam("content-type") String contentType,
+            @BodyParam("multipart/form-data") BinaryData anonymousModelRequest) {
+            anonymousModel(endpoint, contentType, anonymousModelRequest, null);
+        }
     }
 
     /**
@@ -126,7 +217,7 @@ public final class FormDatasImpl {
      */
     public Response<Void> basicWithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "multipart/form-data";
-        return service.basicSync(this.client.getEndpoint(), contentType, body, requestOptions);
+        return service.basic(this.client.getEndpoint(), contentType, body, requestOptions);
     }
 
     /**
@@ -139,7 +230,7 @@ public final class FormDatasImpl {
      */
     public Response<Void> fileArrayAndBasicWithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "multipart/form-data";
-        return service.fileArrayAndBasicSync(this.client.getEndpoint(), contentType, body, requestOptions);
+        return service.fileArrayAndBasic(this.client.getEndpoint(), contentType, body, requestOptions);
     }
 
     /**
@@ -152,7 +243,7 @@ public final class FormDatasImpl {
      */
     public Response<Void> jsonPartWithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "multipart/form-data";
-        return service.jsonPartSync(this.client.getEndpoint(), contentType, body, requestOptions);
+        return service.jsonPart(this.client.getEndpoint(), contentType, body, requestOptions);
     }
 
     /**
@@ -165,7 +256,7 @@ public final class FormDatasImpl {
      */
     public Response<Void> binaryArrayPartsWithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "multipart/form-data";
-        return service.binaryArrayPartsSync(this.client.getEndpoint(), contentType, body, requestOptions);
+        return service.binaryArrayParts(this.client.getEndpoint(), contentType, body, requestOptions);
     }
 
     /**
@@ -178,7 +269,7 @@ public final class FormDatasImpl {
      */
     public Response<Void> multiBinaryPartsWithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "multipart/form-data";
-        return service.multiBinaryPartsSync(this.client.getEndpoint(), contentType, body, requestOptions);
+        return service.multiBinaryParts(this.client.getEndpoint(), contentType, body, requestOptions);
     }
 
     /**
@@ -191,7 +282,7 @@ public final class FormDatasImpl {
      */
     public Response<Void> checkFileNameAndContentTypeWithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "multipart/form-data";
-        return service.checkFileNameAndContentTypeSync(this.client.getEndpoint(), contentType, body, requestOptions);
+        return service.checkFileNameAndContentType(this.client.getEndpoint(), contentType, body, requestOptions);
     }
 
     /**
@@ -204,7 +295,6 @@ public final class FormDatasImpl {
      */
     public Response<Void> anonymousModelWithResponse(BinaryData anonymousModelRequest, RequestOptions requestOptions) {
         final String contentType = "multipart/form-data";
-        return service.anonymousModelSync(this.client.getEndpoint(), contentType, anonymousModelRequest,
-            requestOptions);
+        return service.anonymousModel(this.client.getEndpoint(), contentType, anonymousModelRequest, requestOptions);
     }
 }

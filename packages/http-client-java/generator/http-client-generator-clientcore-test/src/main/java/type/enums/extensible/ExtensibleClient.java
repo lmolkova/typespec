@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import type.enums.extensible.implementation.StringOperationsImpl;
 
@@ -18,14 +19,18 @@ public final class ExtensibleClient {
     @Metadata(generated = true)
     private final StringOperationsImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of ExtensibleClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    ExtensibleClient(StringOperationsImpl serviceClient) {
+    ExtensibleClient(StringOperationsImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -44,7 +49,8 @@ public final class ExtensibleClient {
      */
     @Metadata(generated = true)
     public Response<DaysOfWeekExtensibleEnum> getKnownValueWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getKnownValueWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Enum.Extensible.String.getKnownValue", requestOptions,
+            updatedOptions -> this.serviceClient.getKnownValueWithResponse(updatedOptions));
     }
 
     /**
@@ -63,7 +69,8 @@ public final class ExtensibleClient {
      */
     @Metadata(generated = true)
     public Response<DaysOfWeekExtensibleEnum> getUnknownValueWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getUnknownValueWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Enum.Extensible.String.getUnknownValue", requestOptions,
+            updatedOptions -> this.serviceClient.getUnknownValueWithResponse(updatedOptions));
     }
 
     /**
@@ -83,7 +90,8 @@ public final class ExtensibleClient {
      */
     @Metadata(generated = true)
     public Response<Void> putKnownValueWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.putKnownValueWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Type.Enum.Extensible.String.putKnownValue", requestOptions,
+            updatedOptions -> this.serviceClient.putKnownValueWithResponse(body, updatedOptions));
     }
 
     /**
@@ -103,7 +111,8 @@ public final class ExtensibleClient {
      */
     @Metadata(generated = true)
     public Response<Void> putUnknownValueWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.putUnknownValueWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Type.Enum.Extensible.String.putUnknownValue", requestOptions,
+            updatedOptions -> this.serviceClient.putUnknownValueWithResponse(body, updatedOptions));
     }
 
     /**

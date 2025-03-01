@@ -11,6 +11,9 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * An instance of this class provides access to all the operations defined in ResponseHeaders.
@@ -42,33 +45,82 @@ public final class ResponseHeadersImpl {
      */
     @ServiceInterface(name = "DatetimeClientRespon", host = "{endpoint}")
     public interface ResponseHeadersService {
+        static ResponseHeadersService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("encode.datetime.implementation.ResponseHeadersServiceImpl");
+                return (ResponseHeadersService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/encode/datetime/responseheader/default",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> defaultMethodSync(@HostParam("endpoint") String endpoint, RequestOptions requestOptions);
+        Response<Void> defaultMethod(@HostParam("endpoint") String endpoint, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/encode/datetime/responseheader/default",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void defaultMethod(@HostParam("endpoint") String endpoint) {
+            defaultMethod(endpoint, null);
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/encode/datetime/responseheader/rfc3339",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> rfc3339Sync(@HostParam("endpoint") String endpoint, RequestOptions requestOptions);
+        Response<Void> rfc3339(@HostParam("endpoint") String endpoint, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/encode/datetime/responseheader/rfc3339",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void rfc3339(@HostParam("endpoint") String endpoint) {
+            rfc3339(endpoint, null);
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/encode/datetime/responseheader/rfc7231",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> rfc7231Sync(@HostParam("endpoint") String endpoint, RequestOptions requestOptions);
+        Response<Void> rfc7231(@HostParam("endpoint") String endpoint, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/encode/datetime/responseheader/rfc7231",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void rfc7231(@HostParam("endpoint") String endpoint) {
+            rfc7231(endpoint, null);
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/encode/datetime/responseheader/unix-timestamp",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> unixTimestampSync(@HostParam("endpoint") String endpoint, RequestOptions requestOptions);
+        Response<Void> unixTimestamp(@HostParam("endpoint") String endpoint, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/encode/datetime/responseheader/unix-timestamp",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void unixTimestamp(@HostParam("endpoint") String endpoint) {
+            unixTimestamp(endpoint, null);
+        }
     }
 
     /**
@@ -79,7 +131,7 @@ public final class ResponseHeadersImpl {
      * @return the response.
      */
     public Response<Void> defaultMethodWithResponse(RequestOptions requestOptions) {
-        return service.defaultMethodSync(this.client.getEndpoint(), requestOptions);
+        return service.defaultMethod(this.client.getEndpoint(), requestOptions);
     }
 
     /**
@@ -90,7 +142,7 @@ public final class ResponseHeadersImpl {
      * @return the response.
      */
     public Response<Void> rfc3339WithResponse(RequestOptions requestOptions) {
-        return service.rfc3339Sync(this.client.getEndpoint(), requestOptions);
+        return service.rfc3339(this.client.getEndpoint(), requestOptions);
     }
 
     /**
@@ -101,7 +153,7 @@ public final class ResponseHeadersImpl {
      * @return the response.
      */
     public Response<Void> rfc7231WithResponse(RequestOptions requestOptions) {
-        return service.rfc7231Sync(this.client.getEndpoint(), requestOptions);
+        return service.rfc7231(this.client.getEndpoint(), requestOptions);
     }
 
     /**
@@ -112,6 +164,6 @@ public final class ResponseHeadersImpl {
      * @return the response.
      */
     public Response<Void> unixTimestampWithResponse(RequestOptions requestOptions) {
-        return service.unixTimestampSync(this.client.getEndpoint(), requestOptions);
+        return service.unixTimestamp(this.client.getEndpoint(), requestOptions);
     }
 }

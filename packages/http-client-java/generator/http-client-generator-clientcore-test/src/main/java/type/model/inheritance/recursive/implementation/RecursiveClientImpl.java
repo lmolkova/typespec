@@ -15,6 +15,8 @@ import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
 import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 import type.model.inheritance.recursive.Extension;
 
 /**
@@ -72,21 +74,54 @@ public final class RecursiveClientImpl {
      */
     @ServiceInterface(name = "RecursiveClient", host = "{endpoint}")
     public interface RecursiveClientService {
+        static RecursiveClientService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer,
+            @HostParam("endpoint") String endpoint) {
+            try {
+                Class<?> clazz
+                    = Class.forName("type.model.inheritance.recursive.implementation.RecursiveClientServiceImpl");
+                return (RecursiveClientService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class, String.class)
+                    .invoke(null, pipeline, serializer, endpoint);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.PUT,
             path = "/type/model/inheritance/recursive",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> putSync(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
+        Response<Void> put(@HeaderParam("Content-Type") String contentType,
             @BodyParam("application/json") BinaryData input, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.PUT,
+            path = "/type/model/inheritance/recursive",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void put(@HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData input) {
+            put(contentType, input, null);
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/type/model/inheritance/recursive",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Extension> getSync(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
-            RequestOptions requestOptions);
+        Response<Extension> get(@HeaderParam("Accept") String accept, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/type/model/inheritance/recursive",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default Extension get(@HeaderParam("Accept") String accept) {
+            return get(accept, null).getValue();
+        }
     }
 
     /**
@@ -111,7 +146,7 @@ public final class RecursiveClientImpl {
      */
     public Response<Void> putWithResponse(BinaryData input, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.putSync(this.getEndpoint(), contentType, input, requestOptions);
+        return service.put(contentType, input, requestOptions);
     }
 
     /**
@@ -135,6 +170,6 @@ public final class RecursiveClientImpl {
      */
     public Response<Extension> getWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.getSync(this.getEndpoint(), accept, requestOptions);
+        return service.get(accept, requestOptions);
     }
 }

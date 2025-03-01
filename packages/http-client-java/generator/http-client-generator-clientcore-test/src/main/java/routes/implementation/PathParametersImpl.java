@@ -12,6 +12,9 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * An instance of this class provides access to all the operations defined in PathParameters.
@@ -43,12 +46,42 @@ public final class PathParametersImpl {
      */
     @ServiceInterface(name = "RoutesClientPathPara", host = "{endpoint}")
     public interface PathParametersService {
+        static PathParametersService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("routes.implementation.PathParametersServiceImpl");
+                return (PathParametersService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/routes/path/template-only/{param}",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> templateOnlySync(@HostParam("endpoint") String endpoint, @PathParam("param") String param,
+        Response<Void> templateOnly(@HostParam("endpoint") String endpoint, @PathParam("param") String param,
+            RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/routes/path/template-only/{param}",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void templateOnly(@HostParam("endpoint") String endpoint, @PathParam("param") String param) {
+            templateOnly(endpoint, param, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/routes/path/explicit/{param}",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> explicit(@HostParam("endpoint") String endpoint, @PathParam("param") String param,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -56,7 +89,16 @@ public final class PathParametersImpl {
             path = "/routes/path/explicit/{param}",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> explicitSync(@HostParam("endpoint") String endpoint, @PathParam("param") String param,
+        default void explicit(@HostParam("endpoint") String endpoint, @PathParam("param") String param) {
+            explicit(endpoint, param, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/routes/path/annotation-only/{param}",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> annotationOnly(@HostParam("endpoint") String endpoint, @PathParam("param") String param,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -64,8 +106,9 @@ public final class PathParametersImpl {
             path = "/routes/path/annotation-only/{param}",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> annotationOnlySync(@HostParam("endpoint") String endpoint, @PathParam("param") String param,
-            RequestOptions requestOptions);
+        default void annotationOnly(@HostParam("endpoint") String endpoint, @PathParam("param") String param) {
+            annotationOnly(endpoint, param, null);
+        }
     }
 
     /**
@@ -77,7 +120,7 @@ public final class PathParametersImpl {
      * @return the response.
      */
     public Response<Void> templateOnlyWithResponse(String param, RequestOptions requestOptions) {
-        return service.templateOnlySync(this.client.getEndpoint(), param, requestOptions);
+        return service.templateOnly(this.client.getEndpoint(), param, requestOptions);
     }
 
     /**
@@ -89,7 +132,7 @@ public final class PathParametersImpl {
      * @return the response.
      */
     public Response<Void> explicitWithResponse(String param, RequestOptions requestOptions) {
-        return service.explicitSync(this.client.getEndpoint(), param, requestOptions);
+        return service.explicit(this.client.getEndpoint(), param, requestOptions);
     }
 
     /**
@@ -101,6 +144,6 @@ public final class PathParametersImpl {
      * @return the response.
      */
     public Response<Void> annotationOnlyWithResponse(String param, RequestOptions requestOptions) {
-        return service.annotationOnlySync(this.client.getEndpoint(), param, requestOptions);
+        return service.annotationOnly(this.client.getEndpoint(), param, requestOptions);
     }
 }

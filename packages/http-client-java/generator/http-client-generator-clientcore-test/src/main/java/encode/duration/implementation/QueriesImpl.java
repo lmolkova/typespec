@@ -12,7 +12,10 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,12 +50,41 @@ public final class QueriesImpl {
      */
     @ServiceInterface(name = "DurationClientQuerie", host = "{endpoint}")
     public interface QueriesService {
+        static QueriesService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("encode.duration.implementation.QueriesServiceImpl");
+                return (QueriesService) clazz.getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/encode/duration/query/default",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> defaultMethodSync(@HostParam("endpoint") String endpoint, @QueryParam("input") Duration input,
+        Response<Void> defaultMethod(@HostParam("endpoint") String endpoint, @QueryParam("input") Duration input,
+            RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/encode/duration/query/default",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void defaultMethod(@HostParam("endpoint") String endpoint, @QueryParam("input") Duration input) {
+            defaultMethod(endpoint, input, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/encode/duration/query/iso8601",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> iso8601(@HostParam("endpoint") String endpoint, @QueryParam("input") Duration input,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -60,7 +92,16 @@ public final class QueriesImpl {
             path = "/encode/duration/query/iso8601",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> iso8601Sync(@HostParam("endpoint") String endpoint, @QueryParam("input") Duration input,
+        default void iso8601(@HostParam("endpoint") String endpoint, @QueryParam("input") Duration input) {
+            iso8601(endpoint, input, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/encode/duration/query/int32-seconds",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> int32Seconds(@HostParam("endpoint") String endpoint, @QueryParam("input") long input,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -68,7 +109,16 @@ public final class QueriesImpl {
             path = "/encode/duration/query/int32-seconds",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> int32SecondsSync(@HostParam("endpoint") String endpoint, @QueryParam("input") long input,
+        default void int32Seconds(@HostParam("endpoint") String endpoint, @QueryParam("input") long input) {
+            int32Seconds(endpoint, input, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/encode/duration/query/float-seconds",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> floatSeconds(@HostParam("endpoint") String endpoint, @QueryParam("input") double input,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -76,7 +126,16 @@ public final class QueriesImpl {
             path = "/encode/duration/query/float-seconds",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> floatSecondsSync(@HostParam("endpoint") String endpoint, @QueryParam("input") double input,
+        default void floatSeconds(@HostParam("endpoint") String endpoint, @QueryParam("input") double input) {
+            floatSeconds(endpoint, input, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/encode/duration/query/float64-seconds",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> float64Seconds(@HostParam("endpoint") String endpoint, @QueryParam("input") double input,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -84,7 +143,16 @@ public final class QueriesImpl {
             path = "/encode/duration/query/float64-seconds",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> float64SecondsSync(@HostParam("endpoint") String endpoint, @QueryParam("input") double input,
+        default void float64Seconds(@HostParam("endpoint") String endpoint, @QueryParam("input") double input) {
+            float64Seconds(endpoint, input, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/encode/duration/query/int32-seconds-array",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> int32SecondsArray(@HostParam("endpoint") String endpoint, @QueryParam("input") String input,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -92,8 +160,9 @@ public final class QueriesImpl {
             path = "/encode/duration/query/int32-seconds-array",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> int32SecondsArraySync(@HostParam("endpoint") String endpoint, @QueryParam("input") String input,
-            RequestOptions requestOptions);
+        default void int32SecondsArray(@HostParam("endpoint") String endpoint, @QueryParam("input") String input) {
+            int32SecondsArray(endpoint, input, null);
+        }
     }
 
     /**
@@ -105,7 +174,7 @@ public final class QueriesImpl {
      * @return the response.
      */
     public Response<Void> defaultMethodWithResponse(Duration input, RequestOptions requestOptions) {
-        return service.defaultMethodSync(this.client.getEndpoint(), input, requestOptions);
+        return service.defaultMethod(this.client.getEndpoint(), input, requestOptions);
     }
 
     /**
@@ -117,7 +186,7 @@ public final class QueriesImpl {
      * @return the response.
      */
     public Response<Void> iso8601WithResponse(Duration input, RequestOptions requestOptions) {
-        return service.iso8601Sync(this.client.getEndpoint(), input, requestOptions);
+        return service.iso8601(this.client.getEndpoint(), input, requestOptions);
     }
 
     /**
@@ -130,7 +199,7 @@ public final class QueriesImpl {
      */
     public Response<Void> int32SecondsWithResponse(Duration input, RequestOptions requestOptions) {
         long inputConverted = input.getSeconds();
-        return service.int32SecondsSync(this.client.getEndpoint(), inputConverted, requestOptions);
+        return service.int32Seconds(this.client.getEndpoint(), inputConverted, requestOptions);
     }
 
     /**
@@ -143,7 +212,7 @@ public final class QueriesImpl {
      */
     public Response<Void> floatSecondsWithResponse(Duration input, RequestOptions requestOptions) {
         double inputConverted = (double) input.toNanos() / 1000_000_000L;
-        return service.floatSecondsSync(this.client.getEndpoint(), inputConverted, requestOptions);
+        return service.floatSeconds(this.client.getEndpoint(), inputConverted, requestOptions);
     }
 
     /**
@@ -156,7 +225,7 @@ public final class QueriesImpl {
      */
     public Response<Void> float64SecondsWithResponse(Duration input, RequestOptions requestOptions) {
         double inputConverted = (double) input.toNanos() / 1000_000_000L;
-        return service.float64SecondsSync(this.client.getEndpoint(), inputConverted, requestOptions);
+        return service.float64Seconds(this.client.getEndpoint(), inputConverted, requestOptions);
     }
 
     /**
@@ -200,6 +269,6 @@ public final class QueriesImpl {
                 }
             })
             .collect(Collectors.joining(","));
-        return service.int32SecondsArraySync(this.client.getEndpoint(), inputConverted, requestOptions);
+        return service.int32SecondsArray(this.client.getEndpoint(), inputConverted, requestOptions);
     }
 }

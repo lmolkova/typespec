@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import type.property.optional.implementation.BooleanLiteralsImpl;
 
@@ -18,14 +19,18 @@ public final class BooleanLiteralClient {
     @Metadata(generated = true)
     private final BooleanLiteralsImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of BooleanLiteralClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    BooleanLiteralClient(BooleanLiteralsImpl serviceClient) {
+    BooleanLiteralClient(BooleanLiteralsImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -46,7 +51,8 @@ public final class BooleanLiteralClient {
      */
     @Metadata(generated = true)
     public Response<BooleanLiteralProperty> getAllWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getAllWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Property.Optional.BooleanLiteral.getAll", requestOptions,
+            updatedOptions -> this.serviceClient.getAllWithResponse(updatedOptions));
     }
 
     /**
@@ -67,7 +73,8 @@ public final class BooleanLiteralClient {
      */
     @Metadata(generated = true)
     public Response<BooleanLiteralProperty> getDefaultWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getDefaultWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Property.Optional.BooleanLiteral.getDefault", requestOptions,
+            updatedOptions -> this.serviceClient.getDefaultWithResponse(updatedOptions));
     }
 
     /**
@@ -89,7 +96,8 @@ public final class BooleanLiteralClient {
      */
     @Metadata(generated = true)
     public Response<Void> putAllWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.putAllWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Type.Property.Optional.BooleanLiteral.putAll", requestOptions,
+            updatedOptions -> this.serviceClient.putAllWithResponse(body, updatedOptions));
     }
 
     /**
@@ -111,7 +119,8 @@ public final class BooleanLiteralClient {
      */
     @Metadata(generated = true)
     public Response<Void> putDefaultWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.putDefaultWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Type.Property.Optional.BooleanLiteral.putDefault", requestOptions,
+            updatedOptions -> this.serviceClient.putDefaultWithResponse(body, updatedOptions));
     }
 
     /**

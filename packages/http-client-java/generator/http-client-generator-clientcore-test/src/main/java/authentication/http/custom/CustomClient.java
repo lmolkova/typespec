@@ -8,6 +8,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 
 /**
  * Initializes a new instance of the synchronous CustomClient type.
@@ -17,14 +18,18 @@ public final class CustomClient {
     @Metadata(generated = true)
     private final CustomClientImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of CustomClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    CustomClient(CustomClientImpl serviceClient) {
+    CustomClient(CustomClientImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -36,7 +41,8 @@ public final class CustomClient {
      */
     @Metadata(generated = true)
     public Response<Void> validWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.validWithResponse(requestOptions);
+        return this.instrumentation.instrument("Authentication.Http.Custom.valid", requestOptions,
+            updatedOptions -> this.serviceClient.validWithResponse(updatedOptions));
     }
 
     /**
@@ -48,7 +54,8 @@ public final class CustomClient {
      */
     @Metadata(generated = true)
     public Response<Void> invalidWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.invalidWithResponse(requestOptions);
+        return this.instrumentation.instrument("Authentication.Http.Custom.invalid", requestOptions,
+            updatedOptions -> this.serviceClient.invalidWithResponse(updatedOptions));
     }
 
     /**

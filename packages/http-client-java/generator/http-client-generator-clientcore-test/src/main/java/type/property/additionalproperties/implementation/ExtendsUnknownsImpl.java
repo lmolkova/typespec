@@ -13,7 +13,10 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 import type.property.additionalproperties.ExtendsUnknownAdditionalProperties;
 
 /**
@@ -46,21 +49,55 @@ public final class ExtendsUnknownsImpl {
      */
     @ServiceInterface(name = "AdditionalProperties", host = "{endpoint}")
     public interface ExtendsUnknownsService {
+        static ExtendsUnknownsService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz
+                    = Class.forName("type.property.additionalproperties.implementation.ExtendsUnknownsServiceImpl");
+                return (ExtendsUnknownsService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/type/property/additionalProperties/extendsRecordUnknown",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<ExtendsUnknownAdditionalProperties> getSync(@HostParam("endpoint") String endpoint,
+        Response<ExtendsUnknownAdditionalProperties> get(@HostParam("endpoint") String endpoint,
             @HeaderParam("Accept") String accept, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/type/property/additionalProperties/extendsRecordUnknown",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default ExtendsUnknownAdditionalProperties get(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Accept") String accept) {
+            return get(endpoint, accept, null).getValue();
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.PUT,
             path = "/type/property/additionalProperties/extendsRecordUnknown",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> putSync(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
+        Response<Void> put(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
             @BodyParam("application/json") BinaryData body, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.PUT,
+            path = "/type/property/additionalProperties/extendsRecordUnknown",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void put(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData body) {
+            put(endpoint, contentType, body, null);
+        }
     }
 
     /**
@@ -84,7 +121,7 @@ public final class ExtendsUnknownsImpl {
      */
     public Response<ExtendsUnknownAdditionalProperties> getWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.getSync(this.client.getEndpoint(), accept, requestOptions);
+        return service.get(this.client.getEndpoint(), accept, requestOptions);
     }
 
     /**
@@ -109,6 +146,6 @@ public final class ExtendsUnknownsImpl {
      */
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.putSync(this.client.getEndpoint(), contentType, body, requestOptions);
+        return service.put(this.client.getEndpoint(), contentType, body, requestOptions);
     }
 }

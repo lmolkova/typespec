@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import parameters.bodyoptionality.implementation.BodyOptionalityClientImpl;
 
@@ -18,14 +19,18 @@ public final class BodyOptionalityClient {
     @Metadata(generated = true)
     private final BodyOptionalityClientImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of BodyOptionalityClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    BodyOptionalityClient(BodyOptionalityClientImpl serviceClient) {
+    BodyOptionalityClient(BodyOptionalityClientImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -47,7 +52,8 @@ public final class BodyOptionalityClient {
      */
     @Metadata(generated = true)
     public Response<Void> requiredExplicitWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.requiredExplicitWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Parameters.BodyOptionality.requiredExplicit", requestOptions,
+            updatedOptions -> this.serviceClient.requiredExplicitWithResponse(body, updatedOptions));
     }
 
     /**
@@ -69,7 +75,8 @@ public final class BodyOptionalityClient {
      */
     @Metadata(generated = true)
     public Response<Void> requiredImplicitWithResponse(BinaryData bodyModel, RequestOptions requestOptions) {
-        return this.serviceClient.requiredImplicitWithResponse(bodyModel, requestOptions);
+        return this.instrumentation.instrument("Parameters.BodyOptionality.requiredImplicit", requestOptions,
+            updatedOptions -> this.serviceClient.requiredImplicitWithResponse(bodyModel, updatedOptions));
     }
 
     /**

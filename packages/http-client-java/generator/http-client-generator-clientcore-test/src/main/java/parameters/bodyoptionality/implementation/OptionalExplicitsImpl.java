@@ -12,6 +12,9 @@ import io.clientcore.core.http.models.HttpHeaderName;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * An instance of this class provides access to all the operations defined in OptionalExplicits.
@@ -43,19 +46,51 @@ public final class OptionalExplicitsImpl {
      */
     @ServiceInterface(name = "BodyOptionalityClien", host = "{endpoint}")
     public interface OptionalExplicitsService {
+        static OptionalExplicitsService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz
+                    = Class.forName("parameters.bodyoptionality.implementation.OptionalExplicitsServiceImpl");
+                return (OptionalExplicitsService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.POST,
             path = "/parameters/body-optionality/optional-explicit/set",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> setSync(@HostParam("endpoint") String endpoint, RequestOptions requestOptions);
+        Response<Void> set(@HostParam("endpoint") String endpoint, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/parameters/body-optionality/optional-explicit/set",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void set(@HostParam("endpoint") String endpoint) {
+            set(null, endpoint, null, null);
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.POST,
             path = "/parameters/body-optionality/optional-explicit/omit",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> omitSync(@HostParam("endpoint") String endpoint, RequestOptions requestOptions);
+        Response<Void> omit(@HostParam("endpoint") String endpoint, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/parameters/body-optionality/optional-explicit/omit",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void omit(@HostParam("endpoint") String endpoint) {
+            omit(null, endpoint, null, null);
+        }
     }
 
     /**
@@ -89,7 +124,7 @@ public final class OptionalExplicitsImpl {
                 requestLocal.getHeaders().set(HttpHeaderName.CONTENT_TYPE, "application/json");
             }
         });
-        return service.setSync(this.client.getEndpoint(), requestOptionsLocal);
+        return service.set(this.client.getEndpoint(), requestOptionsLocal);
     }
 
     /**
@@ -123,6 +158,6 @@ public final class OptionalExplicitsImpl {
                 requestLocal.getHeaders().set(HttpHeaderName.CONTENT_TYPE, "application/json");
             }
         });
-        return service.omitSync(this.client.getEndpoint(), requestOptionsLocal);
+        return service.omit(this.client.getEndpoint(), requestOptionsLocal);
     }
 }

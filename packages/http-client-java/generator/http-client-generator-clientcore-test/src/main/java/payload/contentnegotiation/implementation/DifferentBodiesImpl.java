@@ -12,7 +12,10 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 import payload.contentnegotiation.differentbody.PngImageAsJson;
 
 /**
@@ -45,12 +48,25 @@ public final class DifferentBodiesImpl {
      */
     @ServiceInterface(name = "ContentNegotiationCl", host = "{endpoint}")
     public interface DifferentBodiesService {
+        static DifferentBodiesService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("payload.contentnegotiation.implementation.DifferentBodiesServiceImpl");
+                return (DifferentBodiesService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/content-negotiation/different-body",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<BinaryData> getAvatarAsPngSync(@HostParam("endpoint") String endpoint,
+        Response<BinaryData> getAvatarAsPng(@HostParam("endpoint") String endpoint,
             @HeaderParam("accept") String accept, RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -58,8 +74,28 @@ public final class DifferentBodiesImpl {
             path = "/content-negotiation/different-body",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<PngImageAsJson> getAvatarAsJsonSync(@HostParam("endpoint") String endpoint,
+        default BinaryData getAvatarAsPng(@HostParam("endpoint") String endpoint,
+            @HeaderParam("accept") String accept) {
+            return getAvatarAsPng(endpoint, accept, null).getValue();
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/content-negotiation/different-body",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        Response<PngImageAsJson> getAvatarAsJson(@HostParam("endpoint") String endpoint,
             @HeaderParam("accept") String accept, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/content-negotiation/different-body",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default PngImageAsJson getAvatarAsJson(@HostParam("endpoint") String endpoint,
+            @HeaderParam("accept") String accept) {
+            return getAvatarAsJson(endpoint, accept, null).getValue();
+        }
     }
 
     /**
@@ -78,7 +114,7 @@ public final class DifferentBodiesImpl {
      */
     public Response<BinaryData> getAvatarAsPngWithResponse(RequestOptions requestOptions) {
         final String accept = "image/png";
-        return service.getAvatarAsPngSync(this.client.getEndpoint(), accept, requestOptions);
+        return service.getAvatarAsPng(this.client.getEndpoint(), accept, requestOptions);
     }
 
     /**
@@ -99,6 +135,6 @@ public final class DifferentBodiesImpl {
      */
     public Response<PngImageAsJson> getAvatarAsJsonWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.getAvatarAsJsonSync(this.client.getEndpoint(), accept, requestOptions);
+        return service.getAvatarAsJson(this.client.getEndpoint(), accept, requestOptions);
     }
 }

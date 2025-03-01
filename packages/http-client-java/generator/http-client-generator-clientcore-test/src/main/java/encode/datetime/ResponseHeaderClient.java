@@ -8,6 +8,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 
 /**
  * Initializes a new instance of the synchronous DatetimeClient type.
@@ -17,14 +18,18 @@ public final class ResponseHeaderClient {
     @Metadata(generated = true)
     private final ResponseHeadersImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of ResponseHeaderClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    ResponseHeaderClient(ResponseHeadersImpl serviceClient) {
+    ResponseHeaderClient(ResponseHeadersImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -36,7 +41,8 @@ public final class ResponseHeaderClient {
      */
     @Metadata(generated = true)
     public Response<Void> defaultMethodWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.defaultMethodWithResponse(requestOptions);
+        return this.instrumentation.instrument("Encode.Datetime.ResponseHeader.default", requestOptions,
+            updatedOptions -> this.serviceClient.defaultMethodWithResponse(updatedOptions));
     }
 
     /**
@@ -48,7 +54,8 @@ public final class ResponseHeaderClient {
      */
     @Metadata(generated = true)
     public Response<Void> rfc3339WithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.rfc3339WithResponse(requestOptions);
+        return this.instrumentation.instrument("Encode.Datetime.ResponseHeader.rfc3339", requestOptions,
+            updatedOptions -> this.serviceClient.rfc3339WithResponse(updatedOptions));
     }
 
     /**
@@ -60,7 +67,8 @@ public final class ResponseHeaderClient {
      */
     @Metadata(generated = true)
     public Response<Void> rfc7231WithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.rfc7231WithResponse(requestOptions);
+        return this.instrumentation.instrument("Encode.Datetime.ResponseHeader.rfc7231", requestOptions,
+            updatedOptions -> this.serviceClient.rfc7231WithResponse(updatedOptions));
     }
 
     /**
@@ -72,7 +80,8 @@ public final class ResponseHeaderClient {
      */
     @Metadata(generated = true)
     public Response<Void> unixTimestampWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.unixTimestampWithResponse(requestOptions);
+        return this.instrumentation.instrument("Encode.Datetime.ResponseHeader.unixTimestamp", requestOptions,
+            updatedOptions -> this.serviceClient.unixTimestampWithResponse(updatedOptions));
     }
 
     /**

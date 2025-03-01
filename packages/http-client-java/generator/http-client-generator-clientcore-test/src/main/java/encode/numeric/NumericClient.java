@@ -11,6 +11,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 
 /**
@@ -21,14 +22,18 @@ public final class NumericClient {
     @Metadata(generated = true)
     private final PropertiesImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of NumericClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    NumericClient(PropertiesImpl serviceClient) {
+    NumericClient(PropertiesImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -61,7 +66,8 @@ public final class NumericClient {
     @Metadata(generated = true)
     public Response<SafeintAsStringProperty> safeintAsStringWithResponse(BinaryData value,
         RequestOptions requestOptions) {
-        return this.serviceClient.safeintAsStringWithResponse(value, requestOptions);
+        return this.instrumentation.instrument("Encode.Numeric.Property.safeintAsString", requestOptions,
+            updatedOptions -> this.serviceClient.safeintAsStringWithResponse(value, updatedOptions));
     }
 
     /**
@@ -94,7 +100,8 @@ public final class NumericClient {
     @Metadata(generated = true)
     public Response<Uint32AsStringProperty> uint32AsStringOptionalWithResponse(BinaryData value,
         RequestOptions requestOptions) {
-        return this.serviceClient.uint32AsStringOptionalWithResponse(value, requestOptions);
+        return this.instrumentation.instrument("Encode.Numeric.Property.uint32AsStringOptional", requestOptions,
+            updatedOptions -> this.serviceClient.uint32AsStringOptionalWithResponse(value, updatedOptions));
     }
 
     /**
@@ -126,7 +133,8 @@ public final class NumericClient {
      */
     @Metadata(generated = true)
     public Response<Uint8AsStringProperty> uint8AsStringWithResponse(BinaryData value, RequestOptions requestOptions) {
-        return this.serviceClient.uint8AsStringWithResponse(value, requestOptions);
+        return this.instrumentation.instrument("Encode.Numeric.Property.uint8AsString", requestOptions,
+            updatedOptions -> this.serviceClient.uint8AsStringWithResponse(value, updatedOptions));
     }
 
     /**

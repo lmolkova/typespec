@@ -13,7 +13,10 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * An instance of this class provides access to all the operations defined in BooleanOperations.
@@ -45,15 +48,41 @@ public final class BooleanOperationsImpl {
      */
     @ServiceInterface(name = "ScalarClientBooleanO", host = "{endpoint}")
     public interface BooleanOperationsService {
+        static BooleanOperationsService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("type.scalar.implementation.BooleanOperationsServiceImpl");
+                return (BooleanOperationsService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(method = HttpMethod.GET, path = "/type/scalar/boolean", expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Boolean> getSync(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
+        Response<Boolean> get(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
             RequestOptions requestOptions);
+
+        @HttpRequestInformation(method = HttpMethod.GET, path = "/type/scalar/boolean", expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default boolean get(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept) {
+            return get(endpoint, accept, null).getValue();
+        }
 
         @HttpRequestInformation(method = HttpMethod.PUT, path = "/type/scalar/boolean", expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> putSync(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
+        Response<Void> put(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
             @BodyParam("application/json") BinaryData body, RequestOptions requestOptions);
+
+        @HttpRequestInformation(method = HttpMethod.PUT, path = "/type/scalar/boolean", expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void put(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData body) {
+            put(endpoint, contentType, body, null);
+        }
     }
 
     /**
@@ -72,7 +101,7 @@ public final class BooleanOperationsImpl {
      */
     public Response<Boolean> getWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.getSync(this.client.getEndpoint(), accept, requestOptions);
+        return service.get(this.client.getEndpoint(), accept, requestOptions);
     }
 
     /**
@@ -92,6 +121,6 @@ public final class BooleanOperationsImpl {
      */
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.putSync(this.client.getEndpoint(), contentType, body, requestOptions);
+        return service.put(this.client.getEndpoint(), contentType, body, requestOptions);
     }
 }

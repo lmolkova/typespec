@@ -13,7 +13,10 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 import serialization.encodedname.json.property.JsonEncodedNameModel;
 
 /**
@@ -46,21 +49,52 @@ public final class PropertiesImpl {
      */
     @ServiceInterface(name = "JsonClientProperties", host = "{endpoint}")
     public interface PropertiesService {
+        static PropertiesService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("serialization.encodedname.json.implementation.PropertiesServiceImpl");
+                return (PropertiesService) clazz.getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.POST,
             path = "/serialization/encoded-name/json/property",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> sendSync(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
+        Response<Void> send(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
             @BodyParam("application/json") BinaryData body, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/serialization/encoded-name/json/property",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void send(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData body) {
+            send(endpoint, contentType, body, null);
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/serialization/encoded-name/json/property",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<JsonEncodedNameModel> getSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Accept") String accept, RequestOptions requestOptions);
+        Response<JsonEncodedNameModel> get(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
+            RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/serialization/encoded-name/json/property",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default JsonEncodedNameModel get(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept) {
+            return get(endpoint, accept, null).getValue();
+        }
     }
 
     /**
@@ -82,7 +116,7 @@ public final class PropertiesImpl {
      */
     public Response<Void> sendWithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.sendSync(this.client.getEndpoint(), contentType, body, requestOptions);
+        return service.send(this.client.getEndpoint(), contentType, body, requestOptions);
     }
 
     /**
@@ -103,6 +137,6 @@ public final class PropertiesImpl {
      */
     public Response<JsonEncodedNameModel> getWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.getSync(this.client.getEndpoint(), accept, requestOptions);
+        return service.get(this.client.getEndpoint(), accept, requestOptions);
     }
 }

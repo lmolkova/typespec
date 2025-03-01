@@ -15,6 +15,8 @@ import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
 import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Initializes a new instance of the BodyOptionalityClient type.
@@ -86,13 +88,43 @@ public final class BodyOptionalityClientImpl {
      */
     @ServiceInterface(name = "BodyOptionalityClien", host = "{endpoint}")
     public interface BodyOptionalityClientService {
+        static BodyOptionalityClientService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer,
+            @HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType) {
+            try {
+                Class<?> clazz
+                    = Class.forName("parameters.bodyoptionality.implementation.BodyOptionalityClientServiceImpl");
+                return (BodyOptionalityClientService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class, String.class, String.class)
+                    .invoke(null, pipeline, serializer, endpoint, contentType);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.POST,
             path = "/parameters/body-optionality/required-explicit",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> requiredExplicitSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Content-Type") String contentType, @BodyParam("application/json") BinaryData body,
+        Response<Void> requiredExplicit(@BodyParam("application/json") BinaryData body, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/parameters/body-optionality/required-explicit",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void requiredExplicit(@BodyParam("application/json") BinaryData body) {
+            requiredExplicit(body, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/parameters/body-optionality/required-implicit",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> requiredImplicit(@BodyParam("application/json") BinaryData bodyModel,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -100,9 +132,9 @@ public final class BodyOptionalityClientImpl {
             path = "/parameters/body-optionality/required-implicit",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> requiredImplicitSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Content-Type") String contentType, @BodyParam("application/json") BinaryData bodyModel,
-            RequestOptions requestOptions);
+        default void requiredImplicit(@BodyParam("application/json") BinaryData bodyModel) {
+            requiredImplicit(bodyModel, null);
+        }
     }
 
     /**
@@ -123,8 +155,7 @@ public final class BodyOptionalityClientImpl {
      * @return the response.
      */
     public Response<Void> requiredExplicitWithResponse(BinaryData body, RequestOptions requestOptions) {
-        final String contentType = "application/json";
-        return service.requiredExplicitSync(this.getEndpoint(), contentType, body, requestOptions);
+        return service.requiredExplicit(body, requestOptions);
     }
 
     /**
@@ -145,7 +176,6 @@ public final class BodyOptionalityClientImpl {
      * @return the response.
      */
     public Response<Void> requiredImplicitWithResponse(BinaryData bodyModel, RequestOptions requestOptions) {
-        final String contentType = "application/json";
-        return service.requiredImplicitSync(this.getEndpoint(), contentType, bodyModel, requestOptions);
+        return service.requiredImplicit(bodyModel, requestOptions);
     }
 }

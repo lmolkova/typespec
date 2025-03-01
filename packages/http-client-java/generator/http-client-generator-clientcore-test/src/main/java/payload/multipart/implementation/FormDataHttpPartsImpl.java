@@ -13,7 +13,10 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * An instance of this class provides access to all the operations defined in FormDataHttpParts.
@@ -45,15 +48,39 @@ public final class FormDataHttpPartsImpl {
      */
     @ServiceInterface(name = "MultiPartClientFormD", host = "{endpoint}")
     public interface FormDataHttpPartsService {
+        static FormDataHttpPartsService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("payload.multipart.implementation.FormDataHttpPartsServiceImpl");
+                return (FormDataHttpPartsService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         // @Multipart not supported by RestProxy
         @HttpRequestInformation(
             method = HttpMethod.POST,
             path = "/multipart/form-data/complex-parts-with-httppart",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> jsonArrayAndFileArraySync(@HostParam("endpoint") String endpoint,
+        Response<Void> jsonArrayAndFileArray(@HostParam("endpoint") String endpoint,
             @HeaderParam("content-type") String contentType, @BodyParam("multipart/form-data") BinaryData body,
             RequestOptions requestOptions);
+
+        // @Multipart not supported by RestProxy
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/multipart/form-data/complex-parts-with-httppart",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void jsonArrayAndFileArray(@HostParam("endpoint") String endpoint,
+            @HeaderParam("content-type") String contentType, @BodyParam("multipart/form-data") BinaryData body) {
+            jsonArrayAndFileArray(endpoint, contentType, body, null);
+        }
     }
 
     /**
@@ -66,6 +93,6 @@ public final class FormDataHttpPartsImpl {
      */
     public Response<Void> jsonArrayAndFileArrayWithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "multipart/form-data";
-        return service.jsonArrayAndFileArraySync(this.client.getEndpoint(), contentType, body, requestOptions);
+        return service.jsonArrayAndFileArray(this.client.getEndpoint(), contentType, body, requestOptions);
     }
 }

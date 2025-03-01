@@ -14,7 +14,10 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * An instance of this class provides access to all the operations defined in Models.
@@ -46,13 +49,44 @@ public final class ModelsImpl {
      */
     @ServiceInterface(name = "SpreadClientModels", host = "{endpoint}")
     public interface ModelsService {
+        static ModelsService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("parameters.spread.implementation.ModelsServiceImpl");
+                return (ModelsService) clazz.getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.PUT,
             path = "/parameters/spread/model/request-body",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> spreadAsRequestBodySync(@HostParam("endpoint") String endpoint,
+        Response<Void> spreadAsRequestBody(@HostParam("endpoint") String endpoint,
             @HeaderParam("Content-Type") String contentType, @BodyParam("application/json") BinaryData bodyParameter,
+            RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.PUT,
+            path = "/parameters/spread/model/request-body",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void spreadAsRequestBody(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Content-Type") String contentType, @BodyParam("application/json") BinaryData bodyParameter) {
+            spreadAsRequestBody(endpoint, contentType, bodyParameter, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.PUT,
+            path = "/parameters/spread/model/composite-request-only-with-body",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> spreadCompositeRequestOnlyWithBody(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Content-Type") String contentType, @BodyParam("application/json") BinaryData body,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -60,8 +94,18 @@ public final class ModelsImpl {
             path = "/parameters/spread/model/composite-request-only-with-body",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> spreadCompositeRequestOnlyWithBodySync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Content-Type") String contentType, @BodyParam("application/json") BinaryData body,
+        default void spreadCompositeRequestOnlyWithBody(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Content-Type") String contentType, @BodyParam("application/json") BinaryData body) {
+            spreadCompositeRequestOnlyWithBody(endpoint, contentType, body, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.PUT,
+            path = "/parameters/spread/model/composite-request-without-body/{name}",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> spreadCompositeRequestWithoutBody(@HostParam("endpoint") String endpoint,
+            @PathParam("name") String name, @HeaderParam("test-header") String testHeader,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -69,29 +113,50 @@ public final class ModelsImpl {
             path = "/parameters/spread/model/composite-request-without-body/{name}",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> spreadCompositeRequestWithoutBodySync(@HostParam("endpoint") String endpoint,
-            @PathParam("name") String name, @HeaderParam("test-header") String testHeader,
-            RequestOptions requestOptions);
+        default void spreadCompositeRequestWithoutBody(@HostParam("endpoint") String endpoint,
+            @PathParam("name") String name, @HeaderParam("test-header") String testHeader) {
+            spreadCompositeRequestWithoutBody(endpoint, name, testHeader, null);
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.PUT,
             path = "/parameters/spread/model/composite-request/{name}",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> spreadCompositeRequestSync(@HostParam("endpoint") String endpoint,
-            @PathParam("name") String name, @HeaderParam("test-header") String testHeader,
-            @HeaderParam("Content-Type") String contentType, @BodyParam("application/json") BinaryData body,
-            RequestOptions requestOptions);
+        Response<Void> spreadCompositeRequest(@HostParam("endpoint") String endpoint, @PathParam("name") String name,
+            @HeaderParam("test-header") String testHeader, @HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData body, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.PUT,
+            path = "/parameters/spread/model/composite-request/{name}",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void spreadCompositeRequest(@HostParam("endpoint") String endpoint, @PathParam("name") String name,
+            @HeaderParam("test-header") String testHeader, @HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData body) {
+            spreadCompositeRequest(endpoint, name, testHeader, contentType, body, null);
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.PUT,
             path = "/parameters/spread/model/composite-request-mix/{name}",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> spreadCompositeRequestMixSync(@HostParam("endpoint") String endpoint,
-            @PathParam("name") String name, @HeaderParam("test-header") String testHeader,
-            @HeaderParam("Content-Type") String contentType,
+        Response<Void> spreadCompositeRequestMix(@HostParam("endpoint") String endpoint, @PathParam("name") String name,
+            @HeaderParam("test-header") String testHeader, @HeaderParam("Content-Type") String contentType,
             @BodyParam("application/json") BinaryData spreadCompositeRequestMixRequest, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.PUT,
+            path = "/parameters/spread/model/composite-request-mix/{name}",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void spreadCompositeRequestMix(@HostParam("endpoint") String endpoint, @PathParam("name") String name,
+            @HeaderParam("test-header") String testHeader, @HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData spreadCompositeRequestMixRequest) {
+            spreadCompositeRequestMix(endpoint, name, testHeader, contentType, spreadCompositeRequestMixRequest, null);
+        }
     }
 
     /**
@@ -113,7 +178,7 @@ public final class ModelsImpl {
      */
     public Response<Void> spreadAsRequestBodyWithResponse(BinaryData bodyParameter, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.spreadAsRequestBodySync(this.client.getEndpoint(), contentType, bodyParameter, requestOptions);
+        return service.spreadAsRequestBody(this.client.getEndpoint(), contentType, bodyParameter, requestOptions);
     }
 
     /**
@@ -136,8 +201,7 @@ public final class ModelsImpl {
     public Response<Void> spreadCompositeRequestOnlyWithBodyWithResponse(BinaryData body,
         RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.spreadCompositeRequestOnlyWithBodySync(this.client.getEndpoint(), contentType, body,
-            requestOptions);
+        return service.spreadCompositeRequestOnlyWithBody(this.client.getEndpoint(), contentType, body, requestOptions);
     }
 
     /**
@@ -151,8 +215,7 @@ public final class ModelsImpl {
      */
     public Response<Void> spreadCompositeRequestWithoutBodyWithResponse(String name, String testHeader,
         RequestOptions requestOptions) {
-        return service.spreadCompositeRequestWithoutBodySync(this.client.getEndpoint(), name, testHeader,
-            requestOptions);
+        return service.spreadCompositeRequestWithoutBody(this.client.getEndpoint(), name, testHeader, requestOptions);
     }
 
     /**
@@ -177,7 +240,7 @@ public final class ModelsImpl {
     public Response<Void> spreadCompositeRequestWithResponse(String name, String testHeader, BinaryData body,
         RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.spreadCompositeRequestSync(this.client.getEndpoint(), name, testHeader, contentType, body,
+        return service.spreadCompositeRequest(this.client.getEndpoint(), name, testHeader, contentType, body,
             requestOptions);
     }
 
@@ -203,7 +266,7 @@ public final class ModelsImpl {
     public Response<Void> spreadCompositeRequestMixWithResponse(String name, String testHeader,
         BinaryData spreadCompositeRequestMixRequest, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.spreadCompositeRequestMixSync(this.client.getEndpoint(), name, testHeader, contentType,
+        return service.spreadCompositeRequestMix(this.client.getEndpoint(), name, testHeader, contentType,
             spreadCompositeRequestMixRequest, requestOptions);
     }
 }

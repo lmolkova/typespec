@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import parameters.spread.implementation.ModelsImpl;
 import parameters.spread.implementation.SpreadCompositeRequestMixRequest;
@@ -20,14 +21,18 @@ public final class ModelClient {
     @Metadata(generated = true)
     private final ModelsImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of ModelClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    ModelClient(ModelsImpl serviceClient) {
+    ModelClient(ModelsImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -49,7 +54,8 @@ public final class ModelClient {
      */
     @Metadata(generated = true)
     public Response<Void> spreadAsRequestBodyWithResponse(BinaryData bodyParameter, RequestOptions requestOptions) {
-        return this.serviceClient.spreadAsRequestBodyWithResponse(bodyParameter, requestOptions);
+        return this.instrumentation.instrument("Parameters.Spread.Model.spreadAsRequestBody", requestOptions,
+            updatedOptions -> this.serviceClient.spreadAsRequestBodyWithResponse(bodyParameter, updatedOptions));
     }
 
     /**
@@ -72,7 +78,9 @@ public final class ModelClient {
     @Metadata(generated = true)
     public Response<Void> spreadCompositeRequestOnlyWithBodyWithResponse(BinaryData body,
         RequestOptions requestOptions) {
-        return this.serviceClient.spreadCompositeRequestOnlyWithBodyWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Parameters.Spread.Model.spreadCompositeRequestOnlyWithBody",
+            requestOptions,
+            updatedOptions -> this.serviceClient.spreadCompositeRequestOnlyWithBodyWithResponse(body, updatedOptions));
     }
 
     /**
@@ -87,7 +95,9 @@ public final class ModelClient {
     @Metadata(generated = true)
     public Response<Void> spreadCompositeRequestWithoutBodyWithResponse(String name, String testHeader,
         RequestOptions requestOptions) {
-        return this.serviceClient.spreadCompositeRequestWithoutBodyWithResponse(name, testHeader, requestOptions);
+        return this.instrumentation.instrument("Parameters.Spread.Model.spreadCompositeRequestWithoutBody",
+            requestOptions, updatedOptions -> this.serviceClient.spreadCompositeRequestWithoutBodyWithResponse(name,
+                testHeader, updatedOptions));
     }
 
     /**
@@ -112,7 +122,9 @@ public final class ModelClient {
     @Metadata(generated = true)
     public Response<Void> spreadCompositeRequestWithResponse(String name, String testHeader, BinaryData body,
         RequestOptions requestOptions) {
-        return this.serviceClient.spreadCompositeRequestWithResponse(name, testHeader, body, requestOptions);
+        return this.instrumentation.instrument("Parameters.Spread.Model.spreadCompositeRequest", requestOptions,
+            updatedOptions -> this.serviceClient.spreadCompositeRequestWithResponse(name, testHeader, body,
+                updatedOptions));
     }
 
     /**
@@ -137,8 +149,9 @@ public final class ModelClient {
     @Metadata(generated = true)
     public Response<Void> spreadCompositeRequestMixWithResponse(String name, String testHeader,
         BinaryData spreadCompositeRequestMixRequest, RequestOptions requestOptions) {
-        return this.serviceClient.spreadCompositeRequestMixWithResponse(name, testHeader,
-            spreadCompositeRequestMixRequest, requestOptions);
+        return this.instrumentation.instrument("Parameters.Spread.Model.spreadCompositeRequestMix", requestOptions,
+            updatedOptions -> this.serviceClient.spreadCompositeRequestMixWithResponse(name, testHeader,
+                spreadCompositeRequestMixRequest, updatedOptions));
     }
 
     /**

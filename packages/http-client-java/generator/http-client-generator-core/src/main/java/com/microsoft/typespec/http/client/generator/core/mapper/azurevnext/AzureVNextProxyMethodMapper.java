@@ -291,6 +291,7 @@ public class AzureVNextProxyMethodMapper extends ProxyMethodMapper {
     private void addNoCustomHeaderProxyMethod(Operation operation, JavaSettings settings, String operationName,
         ProxyMethod.Builder builder, IType responseBodyType, IType asyncRestResponseReturnType,
         List<ProxyMethod> proxyMethods) {
+
         if (settings.isDisableTypedHeadersMethods()) {
             return;
         }

@@ -11,6 +11,9 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * An instance of this class provides access to all the operations defined in InInterfaces.
@@ -42,12 +45,34 @@ public final class InInterfacesImpl {
      */
     @ServiceInterface(name = "RoutesClientInInterf", host = "{endpoint}")
     public interface InInterfacesService {
+        static InInterfacesService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("routes.implementation.InInterfacesServiceImpl");
+                return (InInterfacesService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/routes/in-interface/fixed",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> fixedSync(@HostParam("endpoint") String endpoint, RequestOptions requestOptions);
+        Response<Void> fixed(@HostParam("endpoint") String endpoint, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/routes/in-interface/fixed",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void fixed(@HostParam("endpoint") String endpoint) {
+            fixed(endpoint, null);
+        }
     }
 
     /**
@@ -58,6 +83,6 @@ public final class InInterfacesImpl {
      * @return the response.
      */
     public Response<Void> fixedWithResponse(RequestOptions requestOptions) {
-        return service.fixedSync(this.client.getEndpoint(), requestOptions);
+        return service.fixed(this.client.getEndpoint(), requestOptions);
     }
 }

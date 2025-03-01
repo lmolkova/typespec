@@ -12,6 +12,8 @@ import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
 import io.clientcore.core.http.pipeline.HttpPipeline;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Initializes a new instance of the ConditionalRequestClient type.
@@ -68,33 +70,84 @@ public final class ConditionalRequestClientImpl {
      */
     @ServiceInterface(name = "ConditionalRequestCl", host = "{endpoint}")
     public interface ConditionalRequestClientService {
+        static ConditionalRequestClientService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer,
+            @HostParam("endpoint") String endpoint) {
+            try {
+                Class<?> clazz = Class
+                    .forName("specialheaders.conditionalrequest.implementation.ConditionalRequestClientServiceImpl");
+                return (ConditionalRequestClientService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class, String.class)
+                    .invoke(null, pipeline, serializer, endpoint);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.POST,
             path = "/special-headers/conditional-request/if-match",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> postIfMatchSync(@HostParam("endpoint") String endpoint, RequestOptions requestOptions);
+        Response<Void> postIfMatch(RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/special-headers/conditional-request/if-match",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void postIfMatch() {
+            postIfMatch(null, null);
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.POST,
             path = "/special-headers/conditional-request/if-none-match",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> postIfNoneMatchSync(@HostParam("endpoint") String endpoint, RequestOptions requestOptions);
+        Response<Void> postIfNoneMatch(RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/special-headers/conditional-request/if-none-match",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void postIfNoneMatch() {
+            postIfNoneMatch(null, null);
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.HEAD,
             path = "/special-headers/conditional-request/if-modified-since",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> headIfModifiedSinceSync(@HostParam("endpoint") String endpoint, RequestOptions requestOptions);
+        Response<Void> headIfModifiedSince(RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.HEAD,
+            path = "/special-headers/conditional-request/if-modified-since",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void headIfModifiedSince() {
+            headIfModifiedSince(null, null);
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.POST,
             path = "/special-headers/conditional-request/if-unmodified-since",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> postIfUnmodifiedSinceSync(@HostParam("endpoint") String endpoint, RequestOptions requestOptions);
+        Response<Void> postIfUnmodifiedSince(RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/special-headers/conditional-request/if-unmodified-since",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void postIfUnmodifiedSince() {
+            postIfUnmodifiedSince(null, null);
+        }
     }
 
     /**
@@ -113,7 +166,7 @@ public final class ConditionalRequestClientImpl {
      * @return the response.
      */
     public Response<Void> postIfMatchWithResponse(RequestOptions requestOptions) {
-        return service.postIfMatchSync(this.getEndpoint(), requestOptions);
+        return service.postIfMatch(requestOptions);
     }
 
     /**
@@ -132,7 +185,7 @@ public final class ConditionalRequestClientImpl {
      * @return the response.
      */
     public Response<Void> postIfNoneMatchWithResponse(RequestOptions requestOptions) {
-        return service.postIfNoneMatchSync(this.getEndpoint(), requestOptions);
+        return service.postIfNoneMatch(requestOptions);
     }
 
     /**
@@ -153,7 +206,7 @@ public final class ConditionalRequestClientImpl {
      * @return the response.
      */
     public Response<Void> headIfModifiedSinceWithResponse(RequestOptions requestOptions) {
-        return service.headIfModifiedSinceSync(this.getEndpoint(), requestOptions);
+        return service.headIfModifiedSince(requestOptions);
     }
 
     /**
@@ -174,6 +227,6 @@ public final class ConditionalRequestClientImpl {
      * @return the response.
      */
     public Response<Void> postIfUnmodifiedSinceWithResponse(RequestOptions requestOptions) {
-        return service.postIfUnmodifiedSinceSync(this.getEndpoint(), requestOptions);
+        return service.postIfUnmodifiedSince(requestOptions);
     }
 }

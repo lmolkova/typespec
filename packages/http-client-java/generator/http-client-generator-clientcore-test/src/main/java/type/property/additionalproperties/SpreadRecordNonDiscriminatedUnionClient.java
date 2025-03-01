@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import type.property.additionalproperties.implementation.SpreadRecordNonDiscriminatedUnionsImpl;
 
@@ -18,14 +19,19 @@ public final class SpreadRecordNonDiscriminatedUnionClient {
     @Metadata(generated = true)
     private final SpreadRecordNonDiscriminatedUnionsImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of SpreadRecordNonDiscriminatedUnionClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    SpreadRecordNonDiscriminatedUnionClient(SpreadRecordNonDiscriminatedUnionsImpl serviceClient) {
+    SpreadRecordNonDiscriminatedUnionClient(SpreadRecordNonDiscriminatedUnionsImpl serviceClient,
+        Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -49,7 +55,9 @@ public final class SpreadRecordNonDiscriminatedUnionClient {
      */
     @Metadata(generated = true)
     public Response<SpreadRecordForNonDiscriminatedUnion> getWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getWithResponse(requestOptions);
+        return this.instrumentation.instrument(
+            "Type.Property.AdditionalProperties.SpreadRecordNonDiscriminatedUnion.get", requestOptions,
+            updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
     /**
@@ -74,7 +82,9 @@ public final class SpreadRecordNonDiscriminatedUnionClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.putWithResponse(body, requestOptions);
+        return this.instrumentation.instrument(
+            "Type.Property.AdditionalProperties.SpreadRecordNonDiscriminatedUnion.put", requestOptions,
+            updatedOptions -> this.serviceClient.putWithResponse(body, updatedOptions));
     }
 
     /**

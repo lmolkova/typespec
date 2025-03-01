@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import payload.contentnegotiation.implementation.SameBodiesImpl;
 
@@ -18,14 +19,18 @@ public final class SameBodyClient {
     @Metadata(generated = true)
     private final SameBodiesImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of SameBodyClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    SameBodyClient(SameBodiesImpl serviceClient) {
+    SameBodyClient(SameBodiesImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -44,7 +49,8 @@ public final class SameBodyClient {
      */
     @Metadata(generated = true)
     public Response<BinaryData> getAvatarAsPngWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getAvatarAsPngWithResponse(requestOptions);
+        return this.instrumentation.instrument("Payload.ContentNegotiation.SameBody.getAvatarAsPng", requestOptions,
+            updatedOptions -> this.serviceClient.getAvatarAsPngWithResponse(updatedOptions));
     }
 
     /**
@@ -63,7 +69,8 @@ public final class SameBodyClient {
      */
     @Metadata(generated = true)
     public Response<BinaryData> getAvatarAsJpegWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getAvatarAsJpegWithResponse(requestOptions);
+        return this.instrumentation.instrument("Payload.ContentNegotiation.SameBody.getAvatarAsJpeg", requestOptions,
+            updatedOptions -> this.serviceClient.getAvatarAsJpegWithResponse(updatedOptions));
     }
 
     /**

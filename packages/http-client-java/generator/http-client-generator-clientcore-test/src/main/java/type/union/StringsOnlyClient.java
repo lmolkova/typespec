@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import type.union.implementation.SendRequest9;
 import type.union.implementation.StringsOnliesImpl;
@@ -19,14 +20,18 @@ public final class StringsOnlyClient {
     @Metadata(generated = true)
     private final StringsOnliesImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of StringsOnlyClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    StringsOnlyClient(StringsOnliesImpl serviceClient) {
+    StringsOnlyClient(StringsOnliesImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -47,7 +52,8 @@ public final class StringsOnlyClient {
      */
     @Metadata(generated = true)
     public Response<GetResponse9> getWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Union.StringsOnly.get", requestOptions,
+            updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
     /**
@@ -69,7 +75,8 @@ public final class StringsOnlyClient {
      */
     @Metadata(generated = true)
     public Response<Void> sendWithResponse(BinaryData sendRequest9, RequestOptions requestOptions) {
-        return this.serviceClient.sendWithResponse(sendRequest9, requestOptions);
+        return this.instrumentation.instrument("Type.Union.StringsOnly.send", requestOptions,
+            updatedOptions -> this.serviceClient.sendWithResponse(sendRequest9, updatedOptions));
     }
 
     /**

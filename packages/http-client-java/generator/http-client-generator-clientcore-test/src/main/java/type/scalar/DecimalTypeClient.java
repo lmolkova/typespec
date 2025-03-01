@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import java.math.BigDecimal;
 import type.scalar.implementation.DecimalTypesImpl;
@@ -19,14 +20,18 @@ public final class DecimalTypeClient {
     @Metadata(generated = true)
     private final DecimalTypesImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of DecimalTypeClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    DecimalTypeClient(DecimalTypesImpl serviceClient) {
+    DecimalTypeClient(DecimalTypesImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -45,7 +50,8 @@ public final class DecimalTypeClient {
      */
     @Metadata(generated = true)
     public Response<BigDecimal> responseBodyWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.responseBodyWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Scalar.DecimalType.responseBody", requestOptions,
+            updatedOptions -> this.serviceClient.responseBodyWithResponse(updatedOptions));
     }
 
     /**
@@ -65,7 +71,8 @@ public final class DecimalTypeClient {
      */
     @Metadata(generated = true)
     public Response<Void> requestBodyWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.requestBodyWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Type.Scalar.DecimalType.requestBody", requestOptions,
+            updatedOptions -> this.serviceClient.requestBodyWithResponse(body, updatedOptions));
     }
 
     /**
@@ -78,7 +85,8 @@ public final class DecimalTypeClient {
      */
     @Metadata(generated = true)
     public Response<Void> requestParameterWithResponse(BigDecimal value, RequestOptions requestOptions) {
-        return this.serviceClient.requestParameterWithResponse(value, requestOptions);
+        return this.instrumentation.instrument("Type.Scalar.DecimalType.requestParameter", requestOptions,
+            updatedOptions -> this.serviceClient.requestParameterWithResponse(value, updatedOptions));
     }
 
     /**

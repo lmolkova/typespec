@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import type.property.nullable.implementation.DurationOperationsImpl;
 import type.property.nullable.implementation.JsonMergePatchHelper;
@@ -19,14 +20,18 @@ public final class DurationOperationClient {
     @Metadata(generated = true)
     private final DurationOperationsImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of DurationOperationClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    DurationOperationClient(DurationOperationsImpl serviceClient) {
+    DurationOperationClient(DurationOperationsImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -48,7 +53,8 @@ public final class DurationOperationClient {
      */
     @Metadata(generated = true)
     public Response<DurationProperty> getNonNullWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getNonNullWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Property.Nullable.Duration.getNonNull", requestOptions,
+            updatedOptions -> this.serviceClient.getNonNullWithResponse(updatedOptions));
     }
 
     /**
@@ -70,7 +76,8 @@ public final class DurationOperationClient {
      */
     @Metadata(generated = true)
     public Response<DurationProperty> getNullWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getNullWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Property.Nullable.Duration.getNull", requestOptions,
+            updatedOptions -> this.serviceClient.getNullWithResponse(updatedOptions));
     }
 
     /**
@@ -93,7 +100,8 @@ public final class DurationOperationClient {
      */
     @Metadata(generated = true)
     public Response<Void> patchNonNullWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.patchNonNullWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Type.Property.Nullable.Duration.patchNonNull", requestOptions,
+            updatedOptions -> this.serviceClient.patchNonNullWithResponse(body, updatedOptions));
     }
 
     /**
@@ -116,7 +124,8 @@ public final class DurationOperationClient {
      */
     @Metadata(generated = true)
     public Response<Void> patchNullWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.patchNullWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Type.Property.Nullable.Duration.patchNull", requestOptions,
+            updatedOptions -> this.serviceClient.patchNullWithResponse(body, updatedOptions));
     }
 
     /**

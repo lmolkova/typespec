@@ -15,6 +15,8 @@ import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
 import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 import type.model.usage.InputOutputRecord;
 import type.model.usage.OutputRecord;
 
@@ -72,21 +74,61 @@ public final class UsageClientImpl {
      */
     @ServiceInterface(name = "UsageClient", host = "{endpoint}")
     public interface UsageClientService {
+        static UsageClientService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer,
+            @HostParam("endpoint") String endpoint) {
+            try {
+                Class<?> clazz = Class.forName("type.model.usage.implementation.UsageClientServiceImpl");
+                return (UsageClientService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class, String.class)
+                    .invoke(null, pipeline, serializer, endpoint);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.POST,
             path = "/type/model/usage/input",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> inputSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Content-Type") String contentType, @BodyParam("application/json") BinaryData input,
-            RequestOptions requestOptions);
+        Response<Void> input(@HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData input, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/type/model/usage/input",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void input(@HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData input) {
+            input(contentType, input, null);
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/type/model/usage/output",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<OutputRecord> outputSync(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
+        Response<OutputRecord> output(@HeaderParam("Accept") String accept, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/type/model/usage/output",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default OutputRecord output(@HeaderParam("Accept") String accept) {
+            return output(accept, null).getValue();
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/type/model/usage/input-output",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        Response<InputOutputRecord> inputAndOutput(@HeaderParam("Content-Type") String contentType,
+            @HeaderParam("Accept") String accept, @BodyParam("application/json") BinaryData body,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -94,9 +136,10 @@ public final class UsageClientImpl {
             path = "/type/model/usage/input-output",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<InputOutputRecord> inputAndOutputSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
-            @BodyParam("application/json") BinaryData body, RequestOptions requestOptions);
+        default InputOutputRecord inputAndOutput(@HeaderParam("Content-Type") String contentType,
+            @HeaderParam("Accept") String accept, @BodyParam("application/json") BinaryData body) {
+            return inputAndOutput(contentType, accept, body, null).getValue();
+        }
     }
 
     /**
@@ -118,7 +161,7 @@ public final class UsageClientImpl {
      */
     public Response<Void> inputWithResponse(BinaryData input, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.inputSync(this.getEndpoint(), contentType, input, requestOptions);
+        return service.input(contentType, input, requestOptions);
     }
 
     /**
@@ -139,7 +182,7 @@ public final class UsageClientImpl {
      */
     public Response<OutputRecord> outputWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.outputSync(this.getEndpoint(), accept, requestOptions);
+        return service.output(accept, requestOptions);
     }
 
     /**
@@ -172,6 +215,6 @@ public final class UsageClientImpl {
     public Response<InputOutputRecord> inputAndOutputWithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "application/json";
         final String accept = "application/json";
-        return service.inputAndOutputSync(this.getEndpoint(), contentType, accept, body, requestOptions);
+        return service.inputAndOutput(contentType, accept, body, requestOptions);
     }
 }

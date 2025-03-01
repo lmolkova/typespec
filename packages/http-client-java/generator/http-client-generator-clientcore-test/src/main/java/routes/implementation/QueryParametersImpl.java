@@ -12,6 +12,9 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * An instance of this class provides access to all the operations defined in QueryParameters.
@@ -43,17 +46,53 @@ public final class QueryParametersImpl {
      */
     @ServiceInterface(name = "RoutesClientQueryPar", host = "{endpoint}")
     public interface QueryParametersService {
+        static QueryParametersService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("routes.implementation.QueryParametersServiceImpl");
+                return (QueryParametersService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/routes/query/template-only",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> templateOnlySync(@HostParam("endpoint") String endpoint, @QueryParam("param") String param,
+        Response<Void> templateOnly(@HostParam("endpoint") String endpoint, @QueryParam("param") String param,
+            RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/routes/query/template-only",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void templateOnly(@HostParam("endpoint") String endpoint, @QueryParam("param") String param) {
+            templateOnly(endpoint, param, null);
+        }
+
+        @HttpRequestInformation(method = HttpMethod.GET, path = "/routes/query/explicit", expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> explicit(@HostParam("endpoint") String endpoint, @QueryParam("param") String param,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(method = HttpMethod.GET, path = "/routes/query/explicit", expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> explicitSync(@HostParam("endpoint") String endpoint, @QueryParam("param") String param,
+        default void explicit(@HostParam("endpoint") String endpoint, @QueryParam("param") String param) {
+            explicit(endpoint, param, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/routes/query/annotation-only",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> annotationOnly(@HostParam("endpoint") String endpoint, @QueryParam("param") String param,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -61,8 +100,9 @@ public final class QueryParametersImpl {
             path = "/routes/query/annotation-only",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> annotationOnlySync(@HostParam("endpoint") String endpoint, @QueryParam("param") String param,
-            RequestOptions requestOptions);
+        default void annotationOnly(@HostParam("endpoint") String endpoint, @QueryParam("param") String param) {
+            annotationOnly(endpoint, param, null);
+        }
     }
 
     /**
@@ -74,7 +114,7 @@ public final class QueryParametersImpl {
      * @return the response.
      */
     public Response<Void> templateOnlyWithResponse(String param, RequestOptions requestOptions) {
-        return service.templateOnlySync(this.client.getEndpoint(), param, requestOptions);
+        return service.templateOnly(this.client.getEndpoint(), param, requestOptions);
     }
 
     /**
@@ -86,7 +126,7 @@ public final class QueryParametersImpl {
      * @return the response.
      */
     public Response<Void> explicitWithResponse(String param, RequestOptions requestOptions) {
-        return service.explicitSync(this.client.getEndpoint(), param, requestOptions);
+        return service.explicit(this.client.getEndpoint(), param, requestOptions);
     }
 
     /**
@@ -98,6 +138,6 @@ public final class QueryParametersImpl {
      * @return the response.
      */
     public Response<Void> annotationOnlyWithResponse(String param, RequestOptions requestOptions) {
-        return service.annotationOnlySync(this.client.getEndpoint(), param, requestOptions);
+        return service.annotationOnly(this.client.getEndpoint(), param, requestOptions);
     }
 }

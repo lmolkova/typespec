@@ -12,6 +12,8 @@ import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
 import io.clientcore.core.http.pipeline.HttpPipeline;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Initializes a new instance of the NotDefinedClient type.
@@ -68,12 +70,35 @@ public final class NotDefinedClientImpl {
      */
     @ServiceInterface(name = "NotDefinedClient", host = "{endpoint}")
     public interface NotDefinedClientService {
+        static NotDefinedClientService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer,
+            @HostParam("endpoint") String endpoint) {
+            try {
+                Class<?> clazz = Class.forName("server.endpoint.notdefined.implementation.NotDefinedClientServiceImpl");
+                return (NotDefinedClientService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class, String.class)
+                    .invoke(null, pipeline, serializer, endpoint);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.HEAD,
             path = "/server/endpoint/not-defined/valid",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> validSync(@HostParam("endpoint") String endpoint, RequestOptions requestOptions);
+        Response<Void> valid(RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.HEAD,
+            path = "/server/endpoint/not-defined/valid",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default void valid() {
+            valid(null);
+        }
     }
 
     /**
@@ -84,6 +109,6 @@ public final class NotDefinedClientImpl {
      * @return the response.
      */
     public Response<Void> validWithResponse(RequestOptions requestOptions) {
-        return service.validSync(this.getEndpoint(), requestOptions);
+        return service.valid(requestOptions);
     }
 }

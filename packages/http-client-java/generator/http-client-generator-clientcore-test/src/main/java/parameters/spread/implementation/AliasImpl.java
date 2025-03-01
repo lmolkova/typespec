@@ -14,7 +14,10 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * An instance of this class provides access to all the operations defined in Alias.
@@ -46,44 +49,110 @@ public final class AliasImpl {
      */
     @ServiceInterface(name = "SpreadClientAlias", host = "{endpoint}")
     public interface AliasService {
+        static AliasService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("parameters.spread.implementation.AliasServiceImpl");
+                return (AliasService) clazz.getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.PUT,
             path = "/parameters/spread/alias/request-body",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> spreadAsRequestBodySync(@HostParam("endpoint") String endpoint,
+        Response<Void> spreadAsRequestBody(@HostParam("endpoint") String endpoint,
             @HeaderParam("Content-Type") String contentType,
             @BodyParam("application/json") BinaryData spreadAsRequestBodyRequest, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.PUT,
+            path = "/parameters/spread/alias/request-body",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void spreadAsRequestBody(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData spreadAsRequestBodyRequest) {
+            spreadAsRequestBody(endpoint, contentType, spreadAsRequestBodyRequest, null);
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.POST,
             path = "/parameters/spread/alias/inner-model-parameter/{id}",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> spreadParameterWithInnerModelSync(@HostParam("endpoint") String endpoint,
-            @PathParam("id") String id, @HeaderParam("x-ms-test-header") String xMsTestHeader,
-            @HeaderParam("Content-Type") String contentType,
+        Response<Void> spreadParameterWithInnerModel(@HostParam("endpoint") String endpoint, @PathParam("id") String id,
+            @HeaderParam("x-ms-test-header") String xMsTestHeader, @HeaderParam("Content-Type") String contentType,
             @BodyParam("application/json") BinaryData spreadParameterWithInnerModelRequest,
             RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/parameters/spread/alias/inner-model-parameter/{id}",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void spreadParameterWithInnerModel(@HostParam("endpoint") String endpoint, @PathParam("id") String id,
+            @HeaderParam("x-ms-test-header") String xMsTestHeader, @HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData spreadParameterWithInnerModelRequest) {
+            spreadParameterWithInnerModel(endpoint, id, xMsTestHeader, contentType,
+                spreadParameterWithInnerModelRequest, null);
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.PUT,
             path = "/parameters/spread/alias/request-parameter/{id}",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> spreadAsRequestParameterSync(@HostParam("endpoint") String endpoint, @PathParam("id") String id,
+        Response<Void> spreadAsRequestParameter(@HostParam("endpoint") String endpoint, @PathParam("id") String id,
             @HeaderParam("x-ms-test-header") String xMsTestHeader, @HeaderParam("Content-Type") String contentType,
             @BodyParam("application/json") BinaryData spreadAsRequestParameterRequest, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.PUT,
+            path = "/parameters/spread/alias/request-parameter/{id}",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void spreadAsRequestParameter(@HostParam("endpoint") String endpoint, @PathParam("id") String id,
+            @HeaderParam("x-ms-test-header") String xMsTestHeader, @HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData spreadAsRequestParameterRequest) {
+            spreadAsRequestParameter(endpoint, id, xMsTestHeader, contentType, spreadAsRequestParameterRequest, null);
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.PUT,
             path = "/parameters/spread/alias/multiple-parameters/{id}",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> spreadWithMultipleParametersSync(@HostParam("endpoint") String endpoint,
-            @PathParam("id") String id, @HeaderParam("x-ms-test-header") String xMsTestHeader,
-            @HeaderParam("Content-Type") String contentType,
+        Response<Void> spreadWithMultipleParameters(@HostParam("endpoint") String endpoint, @PathParam("id") String id,
+            @HeaderParam("x-ms-test-header") String xMsTestHeader, @HeaderParam("Content-Type") String contentType,
             @BodyParam("application/json") BinaryData spreadWithMultipleParametersRequest,
+            RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.PUT,
+            path = "/parameters/spread/alias/multiple-parameters/{id}",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void spreadWithMultipleParameters(@HostParam("endpoint") String endpoint, @PathParam("id") String id,
+            @HeaderParam("x-ms-test-header") String xMsTestHeader, @HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData spreadWithMultipleParametersRequest) {
+            spreadWithMultipleParameters(endpoint, id, xMsTestHeader, contentType, spreadWithMultipleParametersRequest,
+                null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/parameters/spread/alias/inner-alias-parameter/{id}",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> spreadParameterWithInnerAlias(@HostParam("endpoint") String endpoint, @PathParam("id") String id,
+            @HeaderParam("x-ms-test-header") String xMsTestHeader, @HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData spreadParameterWithInnerAliasRequest,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -91,11 +160,12 @@ public final class AliasImpl {
             path = "/parameters/spread/alias/inner-alias-parameter/{id}",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> spreadParameterWithInnerAliasSync(@HostParam("endpoint") String endpoint,
-            @PathParam("id") String id, @HeaderParam("x-ms-test-header") String xMsTestHeader,
-            @HeaderParam("Content-Type") String contentType,
-            @BodyParam("application/json") BinaryData spreadParameterWithInnerAliasRequest,
-            RequestOptions requestOptions);
+        default void spreadParameterWithInnerAlias(@HostParam("endpoint") String endpoint, @PathParam("id") String id,
+            @HeaderParam("x-ms-test-header") String xMsTestHeader, @HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData spreadParameterWithInnerAliasRequest) {
+            spreadParameterWithInnerAlias(endpoint, id, xMsTestHeader, contentType,
+                spreadParameterWithInnerAliasRequest, null);
+        }
     }
 
     /**
@@ -118,7 +188,7 @@ public final class AliasImpl {
     public Response<Void> spreadAsRequestBodyWithResponse(BinaryData spreadAsRequestBodyRequest,
         RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.spreadAsRequestBodySync(this.client.getEndpoint(), contentType, spreadAsRequestBodyRequest,
+        return service.spreadAsRequestBody(this.client.getEndpoint(), contentType, spreadAsRequestBodyRequest,
             requestOptions);
     }
 
@@ -144,7 +214,7 @@ public final class AliasImpl {
     public Response<Void> spreadParameterWithInnerModelWithResponse(String id, String xMsTestHeader,
         BinaryData spreadParameterWithInnerModelRequest, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.spreadParameterWithInnerModelSync(this.client.getEndpoint(), id, xMsTestHeader, contentType,
+        return service.spreadParameterWithInnerModel(this.client.getEndpoint(), id, xMsTestHeader, contentType,
             spreadParameterWithInnerModelRequest, requestOptions);
     }
 
@@ -170,7 +240,7 @@ public final class AliasImpl {
     public Response<Void> spreadAsRequestParameterWithResponse(String id, String xMsTestHeader,
         BinaryData spreadAsRequestParameterRequest, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.spreadAsRequestParameterSync(this.client.getEndpoint(), id, xMsTestHeader, contentType,
+        return service.spreadAsRequestParameter(this.client.getEndpoint(), id, xMsTestHeader, contentType,
             spreadAsRequestParameterRequest, requestOptions);
     }
 
@@ -203,7 +273,7 @@ public final class AliasImpl {
     public Response<Void> spreadWithMultipleParametersWithResponse(String id, String xMsTestHeader,
         BinaryData spreadWithMultipleParametersRequest, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.spreadWithMultipleParametersSync(this.client.getEndpoint(), id, xMsTestHeader, contentType,
+        return service.spreadWithMultipleParameters(this.client.getEndpoint(), id, xMsTestHeader, contentType,
             spreadWithMultipleParametersRequest, requestOptions);
     }
 
@@ -230,7 +300,7 @@ public final class AliasImpl {
     public Response<Void> spreadParameterWithInnerAliasWithResponse(String id, String xMsTestHeader,
         BinaryData spreadParameterWithInnerAliasRequest, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.spreadParameterWithInnerAliasSync(this.client.getEndpoint(), id, xMsTestHeader, contentType,
+        return service.spreadParameterWithInnerAlias(this.client.getEndpoint(), id, xMsTestHeader, contentType,
             spreadParameterWithInnerAliasRequest, requestOptions);
     }
 }

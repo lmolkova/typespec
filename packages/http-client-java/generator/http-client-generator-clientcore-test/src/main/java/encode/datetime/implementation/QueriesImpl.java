@@ -12,8 +12,11 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
 import io.clientcore.core.utils.DateTimeRfc1123;
+import java.lang.reflect.InvocationTargetException;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,20 +51,58 @@ public final class QueriesImpl {
      */
     @ServiceInterface(name = "DatetimeClientQuerie", host = "{endpoint}")
     public interface QueriesService {
+        static QueriesService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("encode.datetime.implementation.QueriesServiceImpl");
+                return (QueriesService) clazz.getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/encode/datetime/query/default",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> defaultMethodSync(@HostParam("endpoint") String endpoint,
-            @QueryParam("value") OffsetDateTime value, RequestOptions requestOptions);
+        Response<Void> defaultMethod(@HostParam("endpoint") String endpoint, @QueryParam("value") OffsetDateTime value,
+            RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/encode/datetime/query/default",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void defaultMethod(@HostParam("endpoint") String endpoint, @QueryParam("value") OffsetDateTime value) {
+            defaultMethod(endpoint, value, null);
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/encode/datetime/query/rfc3339",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> rfc3339Sync(@HostParam("endpoint") String endpoint, @QueryParam("value") OffsetDateTime value,
+        Response<Void> rfc3339(@HostParam("endpoint") String endpoint, @QueryParam("value") OffsetDateTime value,
+            RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/encode/datetime/query/rfc3339",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void rfc3339(@HostParam("endpoint") String endpoint, @QueryParam("value") OffsetDateTime value) {
+            rfc3339(endpoint, value, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/encode/datetime/query/rfc7231",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> rfc7231(@HostParam("endpoint") String endpoint, @QueryParam("value") DateTimeRfc1123 value,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -69,7 +110,16 @@ public final class QueriesImpl {
             path = "/encode/datetime/query/rfc7231",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> rfc7231Sync(@HostParam("endpoint") String endpoint, @QueryParam("value") DateTimeRfc1123 value,
+        default void rfc7231(@HostParam("endpoint") String endpoint, @QueryParam("value") DateTimeRfc1123 value) {
+            rfc7231(endpoint, value, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/encode/datetime/query/unix-timestamp",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> unixTimestamp(@HostParam("endpoint") String endpoint, @QueryParam("value") long value,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -77,7 +127,16 @@ public final class QueriesImpl {
             path = "/encode/datetime/query/unix-timestamp",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> unixTimestampSync(@HostParam("endpoint") String endpoint, @QueryParam("value") long value,
+        default void unixTimestamp(@HostParam("endpoint") String endpoint, @QueryParam("value") long value) {
+            unixTimestamp(endpoint, value, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/encode/datetime/query/unix-timestamp-array",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> unixTimestampArray(@HostParam("endpoint") String endpoint, @QueryParam("value") String value,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -85,8 +144,9 @@ public final class QueriesImpl {
             path = "/encode/datetime/query/unix-timestamp-array",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> unixTimestampArraySync(@HostParam("endpoint") String endpoint, @QueryParam("value") String value,
-            RequestOptions requestOptions);
+        default void unixTimestampArray(@HostParam("endpoint") String endpoint, @QueryParam("value") String value) {
+            unixTimestampArray(endpoint, value, null);
+        }
     }
 
     /**
@@ -98,7 +158,7 @@ public final class QueriesImpl {
      * @return the response.
      */
     public Response<Void> defaultMethodWithResponse(OffsetDateTime value, RequestOptions requestOptions) {
-        return service.defaultMethodSync(this.client.getEndpoint(), value, requestOptions);
+        return service.defaultMethod(this.client.getEndpoint(), value, requestOptions);
     }
 
     /**
@@ -110,7 +170,7 @@ public final class QueriesImpl {
      * @return the response.
      */
     public Response<Void> rfc3339WithResponse(OffsetDateTime value, RequestOptions requestOptions) {
-        return service.rfc3339Sync(this.client.getEndpoint(), value, requestOptions);
+        return service.rfc3339(this.client.getEndpoint(), value, requestOptions);
     }
 
     /**
@@ -123,7 +183,7 @@ public final class QueriesImpl {
      */
     public Response<Void> rfc7231WithResponse(OffsetDateTime value, RequestOptions requestOptions) {
         DateTimeRfc1123 valueConverted = new DateTimeRfc1123(value);
-        return service.rfc7231Sync(this.client.getEndpoint(), valueConverted, requestOptions);
+        return service.rfc7231(this.client.getEndpoint(), valueConverted, requestOptions);
     }
 
     /**
@@ -136,7 +196,7 @@ public final class QueriesImpl {
      */
     public Response<Void> unixTimestampWithResponse(OffsetDateTime value, RequestOptions requestOptions) {
         long valueConverted = value.toEpochSecond();
-        return service.unixTimestampSync(this.client.getEndpoint(), valueConverted, requestOptions);
+        return service.unixTimestamp(this.client.getEndpoint(), valueConverted, requestOptions);
     }
 
     /**
@@ -180,6 +240,6 @@ public final class QueriesImpl {
                 }
             })
             .collect(Collectors.joining(","));
-        return service.unixTimestampArraySync(this.client.getEndpoint(), valueConverted, requestOptions);
+        return service.unixTimestampArray(this.client.getEndpoint(), valueConverted, requestOptions);
     }
 }

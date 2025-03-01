@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import type.model.inheritance.recursive.implementation.RecursiveClientImpl;
 
@@ -18,14 +19,18 @@ public final class RecursiveClient {
     @Metadata(generated = true)
     private final RecursiveClientImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of RecursiveClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    RecursiveClient(RecursiveClientImpl serviceClient) {
+    RecursiveClient(RecursiveClientImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -50,7 +55,8 @@ public final class RecursiveClient {
      */
     @Metadata(generated = true)
     public Response<Void> putWithResponse(BinaryData input, RequestOptions requestOptions) {
-        return this.serviceClient.putWithResponse(input, requestOptions);
+        return this.instrumentation.instrument("Type.Model.Inheritance.Recursive.put", requestOptions,
+            updatedOptions -> this.serviceClient.putWithResponse(input, updatedOptions));
     }
 
     /**
@@ -74,7 +80,8 @@ public final class RecursiveClient {
      */
     @Metadata(generated = true)
     public Response<Extension> getWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Model.Inheritance.Recursive.get", requestOptions,
+            updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
     /**

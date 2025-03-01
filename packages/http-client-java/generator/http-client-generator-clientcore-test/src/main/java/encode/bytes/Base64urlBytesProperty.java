@@ -8,7 +8,7 @@ import io.clientcore.core.serialization.json.JsonReader;
 import io.clientcore.core.serialization.json.JsonSerializable;
 import io.clientcore.core.serialization.json.JsonToken;
 import io.clientcore.core.serialization.json.JsonWriter;
-import io.clientcore.core.utils.Base64Uri;
+import io.clientcore.core.utils.Base64Url;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -21,7 +21,7 @@ public final class Base64urlBytesProperty implements JsonSerializable<Base64urlB
      * The value property.
      */
     @Metadata(generated = true)
-    private final Base64Uri value;
+    private final Base64Url value;
 
     /**
      * Creates an instance of Base64urlBytesProperty class.
@@ -33,7 +33,7 @@ public final class Base64urlBytesProperty implements JsonSerializable<Base64urlB
         if (value == null) {
             this.value = null;
         } else {
-            this.value = Base64Uri.encode(value);
+            this.value = Base64Url.encode(value);
         }
     }
 
@@ -79,7 +79,7 @@ public final class Base64urlBytesProperty implements JsonSerializable<Base64urlB
                 reader.nextToken();
 
                 if ("value".equals(fieldName)) {
-                    Base64Uri valueHolder
+                    Base64Url valueHolder
                         = reader.getNullable(nonNullReader -> new Base64Uri(nonNullReader.getString()));
                     if (valueHolder != null) {
                         value = valueHolder.decodedBytes();

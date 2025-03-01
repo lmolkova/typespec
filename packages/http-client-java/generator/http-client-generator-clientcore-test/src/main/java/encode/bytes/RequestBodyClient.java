@@ -8,8 +8,9 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
-import io.clientcore.core.utils.Base64Uri;
+import io.clientcore.core.utils.Base64Url;
 
 /**
  * Initializes a new instance of the synchronous BytesClient type.
@@ -19,14 +20,18 @@ public final class RequestBodyClient {
     @Metadata(generated = true)
     private final RequestBodiesImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of RequestBodyClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    RequestBodyClient(RequestBodiesImpl serviceClient) {
+    RequestBodyClient(RequestBodiesImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -46,7 +51,8 @@ public final class RequestBodyClient {
      */
     @Metadata(generated = true)
     public Response<Void> defaultMethodWithResponse(BinaryData value, RequestOptions requestOptions) {
-        return this.serviceClient.defaultMethodWithResponse(value, requestOptions);
+        return this.instrumentation.instrument("Encode.Bytes.RequestBody.default", requestOptions,
+            updatedOptions -> this.serviceClient.defaultMethodWithResponse(value, updatedOptions));
     }
 
     /**
@@ -66,7 +72,8 @@ public final class RequestBodyClient {
      */
     @Metadata(generated = true)
     public Response<Void> octetStreamWithResponse(BinaryData value, RequestOptions requestOptions) {
-        return this.serviceClient.octetStreamWithResponse(value, requestOptions);
+        return this.instrumentation.instrument("Encode.Bytes.RequestBody.octetStream", requestOptions,
+            updatedOptions -> this.serviceClient.octetStreamWithResponse(value, updatedOptions));
     }
 
     /**
@@ -86,7 +93,8 @@ public final class RequestBodyClient {
      */
     @Metadata(generated = true)
     public Response<Void> customContentTypeWithResponse(BinaryData value, RequestOptions requestOptions) {
-        return this.serviceClient.customContentTypeWithResponse(value, requestOptions);
+        return this.instrumentation.instrument("Encode.Bytes.RequestBody.customContentType", requestOptions,
+            updatedOptions -> this.serviceClient.customContentTypeWithResponse(value, updatedOptions));
     }
 
     /**
@@ -106,7 +114,8 @@ public final class RequestBodyClient {
      */
     @Metadata(generated = true)
     public Response<Void> base64WithResponse(BinaryData value, RequestOptions requestOptions) {
-        return this.serviceClient.base64WithResponse(value, requestOptions);
+        return this.instrumentation.instrument("Encode.Bytes.RequestBody.base64", requestOptions,
+            updatedOptions -> this.serviceClient.base64WithResponse(value, updatedOptions));
     }
 
     /**
@@ -115,7 +124,7 @@ public final class RequestBodyClient {
      * 
      * <pre>
      * {@code
-     * Base64Uri
+     * Base64Url
      * }
      * </pre>
      * 
@@ -126,7 +135,8 @@ public final class RequestBodyClient {
      */
     @Metadata(generated = true)
     public Response<Void> base64urlWithResponse(BinaryData value, RequestOptions requestOptions) {
-        return this.serviceClient.base64urlWithResponse(value, requestOptions);
+        return this.instrumentation.instrument("Encode.Bytes.RequestBody.base64url", requestOptions,
+            updatedOptions -> this.serviceClient.base64urlWithResponse(value, updatedOptions));
     }
 
     /**
@@ -201,6 +211,6 @@ public final class RequestBodyClient {
     public void base64url(byte[] value) {
         // Generated convenience method for base64urlWithResponse
         RequestOptions requestOptions = new RequestOptions();
-        base64urlWithResponse(BinaryData.fromObject(Base64Uri.encode(value)), requestOptions).getValue();
+        base64urlWithResponse(BinaryData.fromObject(Base64Url.encode(value)), requestOptions).getValue();
     }
 }

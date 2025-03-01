@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import parameters.bodyoptionality.implementation.OptionalExplicitsImpl;
 
@@ -18,14 +19,18 @@ public final class OptionalExplicitClient {
     @Metadata(generated = true)
     private final OptionalExplicitsImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of OptionalExplicitClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    OptionalExplicitClient(OptionalExplicitsImpl serviceClient) {
+    OptionalExplicitClient(OptionalExplicitsImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -54,7 +59,8 @@ public final class OptionalExplicitClient {
      */
     @Metadata(generated = true)
     public Response<Void> setWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.setWithResponse(requestOptions);
+        return this.instrumentation.instrument("Parameters.BodyOptionality.OptionalExplicit.set", requestOptions,
+            updatedOptions -> this.serviceClient.setWithResponse(updatedOptions));
     }
 
     /**
@@ -83,7 +89,8 @@ public final class OptionalExplicitClient {
      */
     @Metadata(generated = true)
     public Response<Void> omitWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.omitWithResponse(requestOptions);
+        return this.instrumentation.instrument("Parameters.BodyOptionality.OptionalExplicit.omit", requestOptions,
+            updatedOptions -> this.serviceClient.omitWithResponse(updatedOptions));
     }
 
     /**

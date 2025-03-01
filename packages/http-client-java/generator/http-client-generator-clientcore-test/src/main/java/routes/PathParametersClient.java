@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import routes.implementation.PathParametersImpl;
 
 /**
@@ -17,14 +18,18 @@ public final class PathParametersClient {
     @Metadata(generated = true)
     private final PathParametersImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of PathParametersClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    PathParametersClient(PathParametersImpl serviceClient) {
+    PathParametersClient(PathParametersImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -37,7 +42,8 @@ public final class PathParametersClient {
      */
     @Metadata(generated = true)
     public Response<Void> templateOnlyWithResponse(String param, RequestOptions requestOptions) {
-        return this.serviceClient.templateOnlyWithResponse(param, requestOptions);
+        return this.instrumentation.instrument("Routes.PathParameters.templateOnly", requestOptions,
+            updatedOptions -> this.serviceClient.templateOnlyWithResponse(param, updatedOptions));
     }
 
     /**
@@ -50,7 +56,8 @@ public final class PathParametersClient {
      */
     @Metadata(generated = true)
     public Response<Void> explicitWithResponse(String param, RequestOptions requestOptions) {
-        return this.serviceClient.explicitWithResponse(param, requestOptions);
+        return this.instrumentation.instrument("Routes.PathParameters.explicit", requestOptions,
+            updatedOptions -> this.serviceClient.explicitWithResponse(param, updatedOptions));
     }
 
     /**
@@ -63,7 +70,8 @@ public final class PathParametersClient {
      */
     @Metadata(generated = true)
     public Response<Void> annotationOnlyWithResponse(String param, RequestOptions requestOptions) {
-        return this.serviceClient.annotationOnlyWithResponse(param, requestOptions);
+        return this.instrumentation.instrument("Routes.PathParameters.annotationOnly", requestOptions,
+            updatedOptions -> this.serviceClient.annotationOnlyWithResponse(param, updatedOptions));
     }
 
     /**

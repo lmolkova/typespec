@@ -18,7 +18,10 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * An instance of this class provides access to all the operations defined in Properties.
@@ -50,12 +53,44 @@ public final class PropertiesImpl {
      */
     @ServiceInterface(name = "DatetimeClientProper", host = "{endpoint}")
     public interface PropertiesService {
+        static PropertiesService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("encode.datetime.implementation.PropertiesServiceImpl");
+                return (PropertiesService) clazz.getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.POST,
             path = "/encode/datetime/property/default",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<DefaultDatetimeProperty> defaultMethodSync(@HostParam("endpoint") String endpoint,
+        Response<DefaultDatetimeProperty> defaultMethod(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
+            @BodyParam("application/json") BinaryData body, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/encode/datetime/property/default",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default DefaultDatetimeProperty defaultMethod(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
+            @BodyParam("application/json") BinaryData body) {
+            return defaultMethod(endpoint, contentType, accept, body, null).getValue();
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/encode/datetime/property/rfc3339",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        Response<Rfc3339DatetimeProperty> rfc3339(@HostParam("endpoint") String endpoint,
             @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
             @BodyParam("application/json") BinaryData body, RequestOptions requestOptions);
 
@@ -64,7 +99,18 @@ public final class PropertiesImpl {
             path = "/encode/datetime/property/rfc3339",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Rfc3339DatetimeProperty> rfc3339Sync(@HostParam("endpoint") String endpoint,
+        default Rfc3339DatetimeProperty rfc3339(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
+            @BodyParam("application/json") BinaryData body) {
+            return rfc3339(endpoint, contentType, accept, body, null).getValue();
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/encode/datetime/property/rfc7231",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        Response<Rfc7231DatetimeProperty> rfc7231(@HostParam("endpoint") String endpoint,
             @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
             @BodyParam("application/json") BinaryData body, RequestOptions requestOptions);
 
@@ -73,7 +119,18 @@ public final class PropertiesImpl {
             path = "/encode/datetime/property/rfc7231",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Rfc7231DatetimeProperty> rfc7231Sync(@HostParam("endpoint") String endpoint,
+        default Rfc7231DatetimeProperty rfc7231(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
+            @BodyParam("application/json") BinaryData body) {
+            return rfc7231(endpoint, contentType, accept, body, null).getValue();
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/encode/datetime/property/unix-timestamp",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        Response<UnixTimestampDatetimeProperty> unixTimestamp(@HostParam("endpoint") String endpoint,
             @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
             @BodyParam("application/json") BinaryData body, RequestOptions requestOptions);
 
@@ -82,7 +139,18 @@ public final class PropertiesImpl {
             path = "/encode/datetime/property/unix-timestamp",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<UnixTimestampDatetimeProperty> unixTimestampSync(@HostParam("endpoint") String endpoint,
+        default UnixTimestampDatetimeProperty unixTimestamp(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
+            @BodyParam("application/json") BinaryData body) {
+            return unixTimestamp(endpoint, contentType, accept, body, null).getValue();
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/encode/datetime/property/unix-timestamp-array",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        Response<UnixTimestampArrayDatetimeProperty> unixTimestampArray(@HostParam("endpoint") String endpoint,
             @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
             @BodyParam("application/json") BinaryData body, RequestOptions requestOptions);
 
@@ -91,9 +159,11 @@ public final class PropertiesImpl {
             path = "/encode/datetime/property/unix-timestamp-array",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<UnixTimestampArrayDatetimeProperty> unixTimestampArraySync(@HostParam("endpoint") String endpoint,
+        default UnixTimestampArrayDatetimeProperty unixTimestampArray(@HostParam("endpoint") String endpoint,
             @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
-            @BodyParam("application/json") BinaryData body, RequestOptions requestOptions);
+            @BodyParam("application/json") BinaryData body) {
+            return unixTimestampArray(endpoint, contentType, accept, body, null).getValue();
+        }
     }
 
     /**
@@ -126,7 +196,7 @@ public final class PropertiesImpl {
     public Response<DefaultDatetimeProperty> defaultMethodWithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "application/json";
         final String accept = "application/json";
-        return service.defaultMethodSync(this.client.getEndpoint(), contentType, accept, body, requestOptions);
+        return service.defaultMethod(this.client.getEndpoint(), contentType, accept, body, requestOptions);
     }
 
     /**
@@ -159,7 +229,7 @@ public final class PropertiesImpl {
     public Response<Rfc3339DatetimeProperty> rfc3339WithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "application/json";
         final String accept = "application/json";
-        return service.rfc3339Sync(this.client.getEndpoint(), contentType, accept, body, requestOptions);
+        return service.rfc3339(this.client.getEndpoint(), contentType, accept, body, requestOptions);
     }
 
     /**
@@ -192,7 +262,7 @@ public final class PropertiesImpl {
     public Response<Rfc7231DatetimeProperty> rfc7231WithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "application/json";
         final String accept = "application/json";
-        return service.rfc7231Sync(this.client.getEndpoint(), contentType, accept, body, requestOptions);
+        return service.rfc7231(this.client.getEndpoint(), contentType, accept, body, requestOptions);
     }
 
     /**
@@ -226,7 +296,7 @@ public final class PropertiesImpl {
         RequestOptions requestOptions) {
         final String contentType = "application/json";
         final String accept = "application/json";
-        return service.unixTimestampSync(this.client.getEndpoint(), contentType, accept, body, requestOptions);
+        return service.unixTimestamp(this.client.getEndpoint(), contentType, accept, body, requestOptions);
     }
 
     /**
@@ -264,6 +334,6 @@ public final class PropertiesImpl {
         RequestOptions requestOptions) {
         final String contentType = "application/json";
         final String accept = "application/json";
-        return service.unixTimestampArraySync(this.client.getEndpoint(), contentType, accept, body, requestOptions);
+        return service.unixTimestampArray(this.client.getEndpoint(), contentType, accept, body, requestOptions);
     }
 }

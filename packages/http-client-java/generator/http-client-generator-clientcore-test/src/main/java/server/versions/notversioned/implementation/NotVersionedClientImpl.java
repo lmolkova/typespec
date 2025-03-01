@@ -14,6 +14,8 @@ import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
 import io.clientcore.core.http.pipeline.HttpPipeline;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Initializes a new instance of the NotVersionedClient type.
@@ -70,28 +72,68 @@ public final class NotVersionedClientImpl {
      */
     @ServiceInterface(name = "NotVersionedClient", host = "{endpoint}")
     public interface NotVersionedClientService {
+        static NotVersionedClientService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer,
+            @HostParam("endpoint") String endpoint) {
+            try {
+                Class<?> clazz
+                    = Class.forName("server.versions.notversioned.implementation.NotVersionedClientServiceImpl");
+                return (NotVersionedClientService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class, String.class)
+                    .invoke(null, pipeline, serializer, endpoint);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.HEAD,
             path = "/server/versions/not-versioned/without-api-version",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> withoutApiVersionSync(@HostParam("endpoint") String endpoint, RequestOptions requestOptions);
+        Response<Void> withoutApiVersion(RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.HEAD,
+            path = "/server/versions/not-versioned/without-api-version",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default void withoutApiVersion() {
+            withoutApiVersion(null);
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.HEAD,
             path = "/server/versions/not-versioned/with-query-api-version",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> withQueryApiVersionSync(@HostParam("endpoint") String endpoint,
-            @QueryParam("api-version") String apiVersion, RequestOptions requestOptions);
+        Response<Void> withQueryApiVersion(@QueryParam("api-version") String apiVersion, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.HEAD,
+            path = "/server/versions/not-versioned/with-query-api-version",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default void withQueryApiVersion(@QueryParam("api-version") String apiVersion) {
+            withQueryApiVersion(apiVersion, null);
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.HEAD,
             path = "/server/versions/not-versioned/with-path-api-version/{apiVersion}",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> withPathApiVersionSync(@HostParam("endpoint") String endpoint,
-            @PathParam("apiVersion") String apiVersion, RequestOptions requestOptions);
+        Response<Void> withPathApiVersion(@PathParam("apiVersion") String apiVersion, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.HEAD,
+            path = "/server/versions/not-versioned/with-path-api-version/{apiVersion}",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default void withPathApiVersion(@PathParam("apiVersion") String apiVersion) {
+            withPathApiVersion(apiVersion, null);
+        }
     }
 
     /**
@@ -102,7 +144,7 @@ public final class NotVersionedClientImpl {
      * @return the response.
      */
     public Response<Void> withoutApiVersionWithResponse(RequestOptions requestOptions) {
-        return service.withoutApiVersionSync(this.getEndpoint(), requestOptions);
+        return service.withoutApiVersion(requestOptions);
     }
 
     /**
@@ -114,7 +156,7 @@ public final class NotVersionedClientImpl {
      * @return the response.
      */
     public Response<Void> withQueryApiVersionWithResponse(String apiVersion, RequestOptions requestOptions) {
-        return service.withQueryApiVersionSync(this.getEndpoint(), apiVersion, requestOptions);
+        return service.withQueryApiVersion(apiVersion, requestOptions);
     }
 
     /**
@@ -126,6 +168,6 @@ public final class NotVersionedClientImpl {
      * @return the response.
      */
     public Response<Void> withPathApiVersionWithResponse(String apiVersion, RequestOptions requestOptions) {
-        return service.withPathApiVersionSync(this.getEndpoint(), apiVersion, requestOptions);
+        return service.withPathApiVersion(apiVersion, requestOptions);
     }
 }

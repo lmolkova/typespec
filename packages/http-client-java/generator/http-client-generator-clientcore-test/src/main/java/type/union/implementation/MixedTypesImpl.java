@@ -13,7 +13,10 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 import type.union.GetResponse;
 
 /**
@@ -46,21 +49,52 @@ public final class MixedTypesImpl {
      */
     @ServiceInterface(name = "UnionClientMixedType", host = "{endpoint}")
     public interface MixedTypesService {
+        static MixedTypesService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("type.union.implementation.MixedTypesServiceImpl");
+                return (MixedTypesService) clazz.getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/type/union/mixed-types",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<GetResponse> getSync(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
+        Response<GetResponse> get(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
             RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/type/union/mixed-types",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default GetResponse get(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept) {
+            return get(endpoint, accept, null).getValue();
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.POST,
             path = "/type/union/mixed-types",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> sendSync(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
+        Response<Void> send(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
             @BodyParam("application/json") BinaryData sendRequest, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/type/union/mixed-types",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void send(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData sendRequest) {
+            send(endpoint, contentType, sendRequest, null);
+        }
     }
 
     /**
@@ -89,7 +123,7 @@ public final class MixedTypesImpl {
      */
     public Response<GetResponse> getWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.getSync(this.client.getEndpoint(), accept, requestOptions);
+        return service.get(this.client.getEndpoint(), accept, requestOptions);
     }
 
     /**
@@ -119,6 +153,6 @@ public final class MixedTypesImpl {
      */
     public Response<Void> sendWithResponse(BinaryData sendRequest, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.sendSync(this.client.getEndpoint(), contentType, sendRequest, requestOptions);
+        return service.send(this.client.getEndpoint(), contentType, sendRequest, requestOptions);
     }
 }

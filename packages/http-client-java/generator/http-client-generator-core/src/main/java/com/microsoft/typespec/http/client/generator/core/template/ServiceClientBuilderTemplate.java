@@ -91,6 +91,11 @@ public class ServiceClientBuilderTemplate implements IJavaTemplate<ClientBuilder
         if (settings.isUseClientLogger()) {
             ClassType.CLIENT_LOGGER.addImportsTo(imports, false);
         }
+        if (!settings.isBranded()) {
+            ClassType.INSTRUMENTATION.addImportsTo(imports, false);
+            ClassType.LIBRARY_INSTRUMENTATION_OPTIONS.addImportsTo(imports, false);
+            ClassType.HTTP_INSTRUMENTATION_POLICY.addImportsTo(imports, false);
+        }
         addServiceClientBuilderAnnotationImport(imports);
         addHttpPolicyImports(imports);
         addImportForCoreUtils(imports);
@@ -166,6 +171,15 @@ public class ServiceClientBuilderTemplate implements IJavaTemplate<ClientBuilder
                 // sdk version
                 addGeneratedAnnotation(classBlock);
                 classBlock.privateStaticFinalVariable("String SDK_VERSION = \"version\"");
+
+                if (!settings.isBranded()) {
+                    // sdk version
+                    addGeneratedAnnotation(classBlock);
+                    // TODO: (liudmila) update to SDK_NAME and add SDK_VERSION
+                    classBlock.privateStaticFinalVariable(
+                        "LibraryInstrumentationOptions LIBRARY_INSTRUMENTATION_OPTIONS = new LibraryInstrumentationOptions(\""
+                            + settings.getArtifactId() + "\")");
+                }
 
                 // default scope
                 Set<String> scopes
@@ -478,7 +492,16 @@ public class ServiceClientBuilderTemplate implements IJavaTemplate<ClientBuilder
     protected void writeSyncClientBuildMethodFromInnerClient(AsyncSyncClient syncClient, JavaBlock function,
         String buildMethodName, boolean wrapServiceClient) {
         if (wrapServiceClient) {
-            function.line("return new %1$s(%2$s());", syncClient.getClassName(), buildMethodName);
+            if (!JavaSettings.getInstance().isBranded()) {
+                function.line(
+                    "HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null ? new HttpInstrumentationOptions() : this.httpInstrumentationOptions;");
+                function.line(
+                    "Instrumentation instrumentation = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, this.endpoint);");
+                function.line("return new %1$s(%2$s(), %3$s);", syncClient.getClassName(), buildMethodName,
+                    "instrumentation");
+            } else {
+                function.line("return new %1$s(%2$s());", syncClient.getClassName(), buildMethodName);
+            }
         } else {
             function.line("return new %1$s(%2$s().get%3$s());", syncClient.getClassName(), buildMethodName,
                 CodeNamer.toPascalCase(syncClient.getMethodGroupClient().getVariableName()));

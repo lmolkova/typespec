@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import specialheaders.repeatability.implementation.RepeatabilityClientImpl;
 
 /**
@@ -17,14 +18,18 @@ public final class RepeatabilityClient {
     @Metadata(generated = true)
     private final RepeatabilityClientImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of RepeatabilityClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    RepeatabilityClient(RepeatabilityClientImpl serviceClient) {
+    RepeatabilityClient(RepeatabilityClientImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -45,7 +50,8 @@ public final class RepeatabilityClient {
      */
     @Metadata(generated = true)
     public Response<Void> immediateSuccessWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.immediateSuccessWithResponse(requestOptions);
+        return this.instrumentation.instrument("SpecialHeaders.Repeatability.immediateSuccess", requestOptions,
+            updatedOptions -> this.serviceClient.immediateSuccessWithResponse(updatedOptions));
     }
 
     /**

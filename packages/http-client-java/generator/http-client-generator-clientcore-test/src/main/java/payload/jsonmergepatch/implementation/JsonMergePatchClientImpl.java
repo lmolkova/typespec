@@ -16,6 +16,8 @@ import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
 import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 import payload.jsonmergepatch.Resource;
 
 /**
@@ -73,31 +75,71 @@ public final class JsonMergePatchClientImpl {
      */
     @ServiceInterface(name = "JsonMergePatchClient", host = "{endpoint}")
     public interface JsonMergePatchClientService {
+        static JsonMergePatchClientService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer,
+            @HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept) {
+            try {
+                Class<?> clazz = Class.forName("payload.jsonmergepatch.implementation.JsonMergePatchClientServiceImpl");
+                return (JsonMergePatchClientService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class, String.class, String.class)
+                    .invoke(null, pipeline, serializer, endpoint, accept);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.PUT,
             path = "/json-merge-patch/create/resource",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Resource> createResourceSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Content-Type") String contentType, @HeaderParam("Accept") String accept,
+        Response<Resource> createResource(@HeaderParam("Content-Type") String contentType,
             @BodyParam("application/json") BinaryData body, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.PUT,
+            path = "/json-merge-patch/create/resource",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default Resource createResource(@HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData body) {
+            return createResource(contentType, body, null).getValue();
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.PATCH,
             path = "/json-merge-patch/update/resource",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Resource> updateResourceSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("content-type") String contentType, @HeaderParam("Accept") String accept,
+        Response<Resource> updateResource(@HeaderParam("content-type") String contentType,
             @BodyParam("application/merge-patch+json") BinaryData body, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.PATCH,
+            path = "/json-merge-patch/update/resource",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default Resource updateResource(@HeaderParam("content-type") String contentType,
+            @BodyParam("application/merge-patch+json") BinaryData body) {
+            return updateResource(contentType, body, null).getValue();
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.PATCH,
             path = "/json-merge-patch/update/resource/optional",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Resource> updateOptionalResourceSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Accept") String accept, RequestOptions requestOptions);
+        Response<Resource> updateOptionalResource(RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.PATCH,
+            path = "/json-merge-patch/update/resource/optional",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default Resource updateOptionalResource() {
+            return updateOptionalResource(null, null, null).getValue();
+        }
     }
 
     /**
@@ -161,8 +203,7 @@ public final class JsonMergePatchClientImpl {
      */
     public Response<Resource> createResourceWithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        final String accept = "application/json";
-        return service.createResourceSync(this.getEndpoint(), contentType, accept, body, requestOptions);
+        return service.createResource(contentType, body, requestOptions);
     }
 
     /**
@@ -225,8 +266,7 @@ public final class JsonMergePatchClientImpl {
      */
     public Response<Resource> updateResourceWithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "application/merge-patch+json";
-        final String accept = "application/json";
-        return service.updateResourceSync(this.getEndpoint(), contentType, accept, body, requestOptions);
+        return service.updateResource(contentType, body, requestOptions);
     }
 
     /**
@@ -295,13 +335,12 @@ public final class JsonMergePatchClientImpl {
      * @return details about a resource.
      */
     public Response<Resource> updateOptionalResourceWithResponse(RequestOptions requestOptions) {
-        final String accept = "application/json";
         RequestOptions requestOptionsLocal = requestOptions == null ? new RequestOptions() : requestOptions;
         requestOptionsLocal.addRequestCallback(requestLocal -> {
             if (requestLocal.getBody() != null && requestLocal.getHeaders().get(HttpHeaderName.CONTENT_TYPE) == null) {
                 requestLocal.getHeaders().set(HttpHeaderName.CONTENT_TYPE, "application/merge-patch+json");
             }
         });
-        return service.updateOptionalResourceSync(this.getEndpoint(), accept, requestOptionsLocal);
+        return service.updateOptionalResource(requestOptionsLocal);
     }
 }

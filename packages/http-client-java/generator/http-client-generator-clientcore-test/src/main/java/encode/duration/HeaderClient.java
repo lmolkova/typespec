@@ -8,6 +8,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import java.time.Duration;
 import java.util.List;
 
@@ -19,14 +20,18 @@ public final class HeaderClient {
     @Metadata(generated = true)
     private final HeadersImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of HeaderClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    HeaderClient(HeadersImpl serviceClient) {
+    HeaderClient(HeadersImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -39,7 +44,8 @@ public final class HeaderClient {
      */
     @Metadata(generated = true)
     public Response<Void> defaultMethodWithResponse(Duration duration, RequestOptions requestOptions) {
-        return this.serviceClient.defaultMethodWithResponse(duration, requestOptions);
+        return this.instrumentation.instrument("Encode.Duration.Header.default", requestOptions,
+            updatedOptions -> this.serviceClient.defaultMethodWithResponse(duration, updatedOptions));
     }
 
     /**
@@ -52,7 +58,8 @@ public final class HeaderClient {
      */
     @Metadata(generated = true)
     public Response<Void> iso8601WithResponse(Duration duration, RequestOptions requestOptions) {
-        return this.serviceClient.iso8601WithResponse(duration, requestOptions);
+        return this.instrumentation.instrument("Encode.Duration.Header.iso8601", requestOptions,
+            updatedOptions -> this.serviceClient.iso8601WithResponse(duration, updatedOptions));
     }
 
     /**
@@ -65,7 +72,8 @@ public final class HeaderClient {
      */
     @Metadata(generated = true)
     public Response<Void> iso8601ArrayWithResponse(List<Duration> duration, RequestOptions requestOptions) {
-        return this.serviceClient.iso8601ArrayWithResponse(duration, requestOptions);
+        return this.instrumentation.instrument("Encode.Duration.Header.iso8601Array", requestOptions,
+            updatedOptions -> this.serviceClient.iso8601ArrayWithResponse(duration, updatedOptions));
     }
 
     /**
@@ -78,7 +86,8 @@ public final class HeaderClient {
      */
     @Metadata(generated = true)
     public Response<Void> int32SecondsWithResponse(Duration duration, RequestOptions requestOptions) {
-        return this.serviceClient.int32SecondsWithResponse(duration, requestOptions);
+        return this.instrumentation.instrument("Encode.Duration.Header.int32Seconds", requestOptions,
+            updatedOptions -> this.serviceClient.int32SecondsWithResponse(duration, updatedOptions));
     }
 
     /**
@@ -91,7 +100,8 @@ public final class HeaderClient {
      */
     @Metadata(generated = true)
     public Response<Void> floatSecondsWithResponse(Duration duration, RequestOptions requestOptions) {
-        return this.serviceClient.floatSecondsWithResponse(duration, requestOptions);
+        return this.instrumentation.instrument("Encode.Duration.Header.floatSeconds", requestOptions,
+            updatedOptions -> this.serviceClient.floatSecondsWithResponse(duration, updatedOptions));
     }
 
     /**
@@ -104,7 +114,8 @@ public final class HeaderClient {
      */
     @Metadata(generated = true)
     public Response<Void> float64SecondsWithResponse(Duration duration, RequestOptions requestOptions) {
-        return this.serviceClient.float64SecondsWithResponse(duration, requestOptions);
+        return this.instrumentation.instrument("Encode.Duration.Header.float64Seconds", requestOptions,
+            updatedOptions -> this.serviceClient.float64SecondsWithResponse(duration, updatedOptions));
     }
 
     /**

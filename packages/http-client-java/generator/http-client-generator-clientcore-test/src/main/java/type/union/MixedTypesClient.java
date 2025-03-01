@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import type.union.implementation.MixedTypesImpl;
 import type.union.implementation.SendRequest;
@@ -19,14 +20,18 @@ public final class MixedTypesClient {
     @Metadata(generated = true)
     private final MixedTypesImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of MixedTypesClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    MixedTypesClient(MixedTypesImpl serviceClient) {
+    MixedTypesClient(MixedTypesImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -55,7 +60,8 @@ public final class MixedTypesClient {
      */
     @Metadata(generated = true)
     public Response<GetResponse> getWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Union.MixedTypes.get", requestOptions,
+            updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
     /**
@@ -85,7 +91,8 @@ public final class MixedTypesClient {
      */
     @Metadata(generated = true)
     public Response<Void> sendWithResponse(BinaryData sendRequest, RequestOptions requestOptions) {
-        return this.serviceClient.sendWithResponse(sendRequest, requestOptions);
+        return this.instrumentation.instrument("Type.Union.MixedTypes.send", requestOptions,
+            updatedOptions -> this.serviceClient.sendWithResponse(sendRequest, updatedOptions));
     }
 
     /**

@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import server.versions.versioned.implementation.VersionedClientImpl;
 
 /**
@@ -17,14 +18,18 @@ public final class VersionedClient {
     @Metadata(generated = true)
     private final VersionedClientImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of VersionedClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    VersionedClient(VersionedClientImpl serviceClient) {
+    VersionedClient(VersionedClientImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -36,7 +41,8 @@ public final class VersionedClient {
      */
     @Metadata(generated = true)
     public Response<Void> withoutApiVersionWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.withoutApiVersionWithResponse(requestOptions);
+        return this.instrumentation.instrument("Server.Versions.Versioned.withoutApiVersion", requestOptions,
+            updatedOptions -> this.serviceClient.withoutApiVersionWithResponse(updatedOptions));
     }
 
     /**
@@ -48,7 +54,8 @@ public final class VersionedClient {
      */
     @Metadata(generated = true)
     public Response<Void> withQueryApiVersionWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.withQueryApiVersionWithResponse(requestOptions);
+        return this.instrumentation.instrument("Server.Versions.Versioned.withQueryApiVersion", requestOptions,
+            updatedOptions -> this.serviceClient.withQueryApiVersionWithResponse(updatedOptions));
     }
 
     /**
@@ -60,7 +67,8 @@ public final class VersionedClient {
      */
     @Metadata(generated = true)
     public Response<Void> withPathApiVersionWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.withPathApiVersionWithResponse(requestOptions);
+        return this.instrumentation.instrument("Server.Versions.Versioned.withPathApiVersion", requestOptions,
+            updatedOptions -> this.serviceClient.withPathApiVersionWithResponse(updatedOptions));
     }
 
     /**
@@ -72,7 +80,8 @@ public final class VersionedClient {
      */
     @Metadata(generated = true)
     public Response<Void> withQueryOldApiVersionWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.withQueryOldApiVersionWithResponse(requestOptions);
+        return this.instrumentation.instrument("Server.Versions.Versioned.withQueryOldApiVersion", requestOptions,
+            updatedOptions -> this.serviceClient.withQueryOldApiVersionWithResponse(updatedOptions));
     }
 
     /**

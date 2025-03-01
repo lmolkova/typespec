@@ -13,7 +13,10 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -46,21 +49,53 @@ public final class NullableInt32ValuesImpl {
      */
     @ServiceInterface(name = "ArrayClientNullableI", host = "{endpoint}")
     public interface NullableInt32ValuesService {
+        static NullableInt32ValuesService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("type.array.implementation.NullableInt32ValuesServiceImpl");
+                return (NullableInt32ValuesService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/type/array/nullable-int32",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<List<Integer>> getSync(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
+        Response<List<Integer>> get(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept,
             RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/type/array/nullable-int32",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default List<Integer> get(@HostParam("endpoint") String endpoint, @HeaderParam("Accept") String accept) {
+            return get(endpoint, accept, null).getValue();
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.PUT,
             path = "/type/array/nullable-int32",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> putSync(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
+        Response<Void> put(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
             @BodyParam("application/json") BinaryData body, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.PUT,
+            path = "/type/array/nullable-int32",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void put(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData body) {
+            put(endpoint, contentType, body, null);
+        }
     }
 
     /**
@@ -81,7 +116,7 @@ public final class NullableInt32ValuesImpl {
      */
     public Response<List<Integer>> getWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.getSync(this.client.getEndpoint(), accept, requestOptions);
+        return service.get(this.client.getEndpoint(), accept, requestOptions);
     }
 
     /**
@@ -103,6 +138,6 @@ public final class NullableInt32ValuesImpl {
      */
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.putSync(this.client.getEndpoint(), contentType, body, requestOptions);
+        return service.put(this.client.getEndpoint(), contentType, body, requestOptions);
     }
 }

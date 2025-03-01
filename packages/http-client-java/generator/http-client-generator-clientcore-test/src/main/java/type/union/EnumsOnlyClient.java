@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import type.union.implementation.EnumsOnliesImpl;
 import type.union.implementation.SendRequest3;
@@ -19,14 +20,18 @@ public final class EnumsOnlyClient {
     @Metadata(generated = true)
     private final EnumsOnliesImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of EnumsOnlyClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    EnumsOnlyClient(EnumsOnliesImpl serviceClient) {
+    EnumsOnlyClient(EnumsOnliesImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -50,7 +55,8 @@ public final class EnumsOnlyClient {
      */
     @Metadata(generated = true)
     public Response<GetResponse3> getWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Union.EnumsOnly.get", requestOptions,
+            updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
     /**
@@ -75,7 +81,8 @@ public final class EnumsOnlyClient {
      */
     @Metadata(generated = true)
     public Response<Void> sendWithResponse(BinaryData sendRequest3, RequestOptions requestOptions) {
-        return this.serviceClient.sendWithResponse(sendRequest3, requestOptions);
+        return this.instrumentation.instrument("Type.Union.EnumsOnly.send", requestOptions,
+            updatedOptions -> this.serviceClient.sendWithResponse(sendRequest3, updatedOptions));
     }
 
     /**

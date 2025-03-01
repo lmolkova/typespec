@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import type.property.optional.implementation.StringOperationsImpl;
 
@@ -18,14 +19,18 @@ public final class StringOperationClient {
     @Metadata(generated = true)
     private final StringOperationsImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of StringOperationClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    StringOperationClient(StringOperationsImpl serviceClient) {
+    StringOperationClient(StringOperationsImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -46,7 +51,8 @@ public final class StringOperationClient {
      */
     @Metadata(generated = true)
     public Response<StringProperty> getAllWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getAllWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Property.Optional.String.getAll", requestOptions,
+            updatedOptions -> this.serviceClient.getAllWithResponse(updatedOptions));
     }
 
     /**
@@ -67,7 +73,8 @@ public final class StringOperationClient {
      */
     @Metadata(generated = true)
     public Response<StringProperty> getDefaultWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getDefaultWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Property.Optional.String.getDefault", requestOptions,
+            updatedOptions -> this.serviceClient.getDefaultWithResponse(updatedOptions));
     }
 
     /**
@@ -89,7 +96,8 @@ public final class StringOperationClient {
      */
     @Metadata(generated = true)
     public Response<Void> putAllWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.putAllWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Type.Property.Optional.String.putAll", requestOptions,
+            updatedOptions -> this.serviceClient.putAllWithResponse(body, updatedOptions));
     }
 
     /**
@@ -111,7 +119,8 @@ public final class StringOperationClient {
      */
     @Metadata(generated = true)
     public Response<Void> putDefaultWithResponse(BinaryData body, RequestOptions requestOptions) {
-        return this.serviceClient.putDefaultWithResponse(body, requestOptions);
+        return this.instrumentation.instrument("Type.Property.Optional.String.putDefault", requestOptions,
+            updatedOptions -> this.serviceClient.putDefaultWithResponse(body, updatedOptions));
     }
 
     /**

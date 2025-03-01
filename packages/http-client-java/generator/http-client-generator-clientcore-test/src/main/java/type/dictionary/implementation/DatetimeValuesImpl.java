@@ -13,7 +13,10 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 import java.time.OffsetDateTime;
 import java.util.Map;
 
@@ -47,21 +50,54 @@ public final class DatetimeValuesImpl {
      */
     @ServiceInterface(name = "DictionaryClientDate", host = "{endpoint}")
     public interface DatetimeValuesService {
+        static DatetimeValuesService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("type.dictionary.implementation.DatetimeValuesServiceImpl");
+                return (DatetimeValuesService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/type/dictionary/datetime",
             expectedStatusCodes = { 200 })
         @UnexpectedResponseExceptionDetail
-        Response<Map<String, OffsetDateTime>> getSync(@HostParam("endpoint") String endpoint,
+        Response<Map<String, OffsetDateTime>> get(@HostParam("endpoint") String endpoint,
             @HeaderParam("Accept") String accept, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/type/dictionary/datetime",
+            expectedStatusCodes = { 200 })
+        @UnexpectedResponseExceptionDetail
+        default Map<String, OffsetDateTime> get(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Accept") String accept) {
+            return get(endpoint, accept, null).getValue();
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.PUT,
             path = "/type/dictionary/datetime",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> putSync(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
+        Response<Void> put(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
             @BodyParam("application/json") BinaryData body, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.PUT,
+            path = "/type/dictionary/datetime",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void put(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData body) {
+            put(endpoint, contentType, body, null);
+        }
     }
 
     /**
@@ -82,7 +118,7 @@ public final class DatetimeValuesImpl {
      */
     public Response<Map<String, OffsetDateTime>> getWithResponse(RequestOptions requestOptions) {
         final String accept = "application/json";
-        return service.getSync(this.client.getEndpoint(), accept, requestOptions);
+        return service.get(this.client.getEndpoint(), accept, requestOptions);
     }
 
     /**
@@ -104,6 +140,6 @@ public final class DatetimeValuesImpl {
      */
     public Response<Void> putWithResponse(BinaryData body, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.putSync(this.client.getEndpoint(), contentType, body, requestOptions);
+        return service.put(this.client.getEndpoint(), contentType, body, requestOptions);
     }
 }

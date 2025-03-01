@@ -12,6 +12,9 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -46,13 +49,43 @@ public final class QueriesImpl {
      */
     @ServiceInterface(name = "CollectionFormatClie", host = "{endpoint}")
     public interface QueriesService {
+        static QueriesService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("parameters.collectionformat.implementation.QueriesServiceImpl");
+                return (QueriesService) clazz.getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.GET,
             path = "/parameters/collection-format/query/multi",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> multiSync(@HostParam("endpoint") String endpoint,
+        Response<Void> multi(@HostParam("endpoint") String endpoint,
             @QueryParam(value = "colors", multipleQueryParams = true) List<String> colors,
+            RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/parameters/collection-format/query/multi",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void multi(@HostParam("endpoint") String endpoint,
+            @QueryParam(value = "colors", multipleQueryParams = true) List<String> colors) {
+            multi(endpoint, colors, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/parameters/collection-format/query/ssv",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> ssv(@HostParam("endpoint") String endpoint, @QueryParam("colors") String colors,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -60,7 +93,16 @@ public final class QueriesImpl {
             path = "/parameters/collection-format/query/ssv",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> ssvSync(@HostParam("endpoint") String endpoint, @QueryParam("colors") String colors,
+        default void ssv(@HostParam("endpoint") String endpoint, @QueryParam("colors") String colors) {
+            ssv(endpoint, colors, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/parameters/collection-format/query/tsv",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> tsv(@HostParam("endpoint") String endpoint, @QueryParam("colors") String colors,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -68,7 +110,16 @@ public final class QueriesImpl {
             path = "/parameters/collection-format/query/tsv",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> tsvSync(@HostParam("endpoint") String endpoint, @QueryParam("colors") String colors,
+        default void tsv(@HostParam("endpoint") String endpoint, @QueryParam("colors") String colors) {
+            tsv(endpoint, colors, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/parameters/collection-format/query/pipes",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> pipes(@HostParam("endpoint") String endpoint, @QueryParam("colors") String colors,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -76,7 +127,16 @@ public final class QueriesImpl {
             path = "/parameters/collection-format/query/pipes",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> pipesSync(@HostParam("endpoint") String endpoint, @QueryParam("colors") String colors,
+        default void pipes(@HostParam("endpoint") String endpoint, @QueryParam("colors") String colors) {
+            pipes(endpoint, colors, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.GET,
+            path = "/parameters/collection-format/query/csv",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> csv(@HostParam("endpoint") String endpoint, @QueryParam("colors") String colors,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -84,8 +144,9 @@ public final class QueriesImpl {
             path = "/parameters/collection-format/query/csv",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> csvSync(@HostParam("endpoint") String endpoint, @QueryParam("colors") String colors,
-            RequestOptions requestOptions);
+        default void csv(@HostParam("endpoint") String endpoint, @QueryParam("colors") String colors) {
+            csv(endpoint, colors, null);
+        }
     }
 
     /**
@@ -99,7 +160,7 @@ public final class QueriesImpl {
     public Response<Void> multiWithResponse(List<String> colors, RequestOptions requestOptions) {
         List<String> colorsConverted
             = colors.stream().map(item -> Objects.toString(item, "")).collect(Collectors.toList());
-        return service.multiSync(this.client.getEndpoint(), colorsConverted, requestOptions);
+        return service.multi(this.client.getEndpoint(), colorsConverted, requestOptions);
     }
 
     /**
@@ -114,7 +175,7 @@ public final class QueriesImpl {
         String colorsConverted = colors.stream()
             .map(paramItemValue -> Objects.toString(paramItemValue, ""))
             .collect(Collectors.joining(" "));
-        return service.ssvSync(this.client.getEndpoint(), colorsConverted, requestOptions);
+        return service.ssv(this.client.getEndpoint(), colorsConverted, requestOptions);
     }
 
     /**
@@ -129,7 +190,7 @@ public final class QueriesImpl {
         String colorsConverted = colors.stream()
             .map(paramItemValue -> Objects.toString(paramItemValue, ""))
             .collect(Collectors.joining("\t"));
-        return service.tsvSync(this.client.getEndpoint(), colorsConverted, requestOptions);
+        return service.tsv(this.client.getEndpoint(), colorsConverted, requestOptions);
     }
 
     /**
@@ -144,7 +205,7 @@ public final class QueriesImpl {
         String colorsConverted = colors.stream()
             .map(paramItemValue -> Objects.toString(paramItemValue, ""))
             .collect(Collectors.joining("|"));
-        return service.pipesSync(this.client.getEndpoint(), colorsConverted, requestOptions);
+        return service.pipes(this.client.getEndpoint(), colorsConverted, requestOptions);
     }
 
     /**
@@ -159,6 +220,6 @@ public final class QueriesImpl {
         String colorsConverted = colors.stream()
             .map(paramItemValue -> Objects.toString(paramItemValue, ""))
             .collect(Collectors.joining(","));
-        return service.csvSync(this.client.getEndpoint(), colorsConverted, requestOptions);
+        return service.csv(this.client.getEndpoint(), colorsConverted, requestOptions);
     }
 }

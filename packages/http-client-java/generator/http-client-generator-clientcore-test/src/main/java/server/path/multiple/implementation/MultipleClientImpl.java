@@ -13,6 +13,8 @@ import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
 import io.clientcore.core.http.pipeline.HttpPipeline;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 import server.path.multiple.MultipleServiceVersion;
 
 /**
@@ -85,16 +87,39 @@ public final class MultipleClientImpl {
      */
     @ServiceInterface(name = "MultipleClient", host = "{endpoint}/server/path/multiple/{apiVersion}")
     public interface MultipleClientService {
+        static MultipleClientService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer,
+            @HostParam("endpoint") String endpoint, @HostParam("apiVersion") String apiVersion) {
+            try {
+                Class<?> clazz = Class.forName("server.path.multiple.implementation.MultipleClientServiceImpl");
+                return (MultipleClientService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class, String.class, String.class)
+                    .invoke(null, pipeline, serializer, endpoint, apiVersion);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(method = HttpMethod.GET, path = "/", expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> noOperationParamsSync(@HostParam("endpoint") String endpoint,
-            @HostParam("apiVersion") String apiVersion, RequestOptions requestOptions);
+        Response<Void> noOperationParams(RequestOptions requestOptions);
+
+        @HttpRequestInformation(method = HttpMethod.GET, path = "/", expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void noOperationParams() {
+            noOperationParams(null);
+        }
 
         @HttpRequestInformation(method = HttpMethod.GET, path = "/{keyword}", expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> withOperationPathParamSync(@HostParam("endpoint") String endpoint,
-            @HostParam("apiVersion") String apiVersion, @PathParam("keyword") String keyword,
-            RequestOptions requestOptions);
+        Response<Void> withOperationPathParam(@PathParam("keyword") String keyword, RequestOptions requestOptions);
+
+        @HttpRequestInformation(method = HttpMethod.GET, path = "/{keyword}", expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void withOperationPathParam(@PathParam("keyword") String keyword) {
+            withOperationPathParam(keyword, null);
+        }
     }
 
     /**
@@ -105,7 +130,7 @@ public final class MultipleClientImpl {
      * @return the response.
      */
     public Response<Void> noOperationParamsWithResponse(RequestOptions requestOptions) {
-        return service.noOperationParamsSync(this.getEndpoint(), this.getServiceVersion().getVersion(), requestOptions);
+        return service.noOperationParams(requestOptions);
     }
 
     /**
@@ -117,7 +142,6 @@ public final class MultipleClientImpl {
      * @return the response.
      */
     public Response<Void> withOperationPathParamWithResponse(String keyword, RequestOptions requestOptions) {
-        return service.withOperationPathParamSync(this.getEndpoint(), this.getServiceVersion().getVersion(), keyword,
-            requestOptions);
+        return service.withOperationPathParam(keyword, requestOptions);
     }
 }

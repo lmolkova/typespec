@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import type.model.inheritance.notdiscriminated.implementation.NotDiscriminatedClientImpl;
 
@@ -18,14 +19,18 @@ public final class NotDiscriminatedClient {
     @Metadata(generated = true)
     private final NotDiscriminatedClientImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of NotDiscriminatedClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    NotDiscriminatedClient(NotDiscriminatedClientImpl serviceClient) {
+    NotDiscriminatedClient(NotDiscriminatedClientImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -49,7 +54,8 @@ public final class NotDiscriminatedClient {
      */
     @Metadata(generated = true)
     public Response<Void> postValidWithResponse(BinaryData input, RequestOptions requestOptions) {
-        return this.serviceClient.postValidWithResponse(input, requestOptions);
+        return this.instrumentation.instrument("Type.Model.Inheritance.NotDiscriminated.postValid", requestOptions,
+            updatedOptions -> this.serviceClient.postValidWithResponse(input, updatedOptions));
     }
 
     /**
@@ -72,7 +78,8 @@ public final class NotDiscriminatedClient {
      */
     @Metadata(generated = true)
     public Response<Siamese> getValidWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getValidWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Model.Inheritance.NotDiscriminated.getValid", requestOptions,
+            updatedOptions -> this.serviceClient.getValidWithResponse(updatedOptions));
     }
 
     /**
@@ -108,7 +115,8 @@ public final class NotDiscriminatedClient {
      */
     @Metadata(generated = true)
     public Response<Siamese> putValidWithResponse(BinaryData input, RequestOptions requestOptions) {
-        return this.serviceClient.putValidWithResponse(input, requestOptions);
+        return this.instrumentation.instrument("Type.Model.Inheritance.NotDiscriminated.putValid", requestOptions,
+            updatedOptions -> this.serviceClient.putValidWithResponse(input, updatedOptions));
     }
 
     /**

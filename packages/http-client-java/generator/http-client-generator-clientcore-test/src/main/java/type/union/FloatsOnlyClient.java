@@ -7,6 +7,7 @@ import io.clientcore.core.annotations.ServiceClient;
 import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.instrumentation.Instrumentation;
 import io.clientcore.core.models.binarydata.BinaryData;
 import type.union.implementation.FloatsOnliesImpl;
 import type.union.implementation.SendRequest5;
@@ -19,14 +20,18 @@ public final class FloatsOnlyClient {
     @Metadata(generated = true)
     private final FloatsOnliesImpl serviceClient;
 
+    private final Instrumentation instrumentation;
+
     /**
      * Initializes an instance of FloatsOnlyClient class.
      * 
      * @param serviceClient the service client implementation.
+     * @param instrumentation the instrumentation instance.
      */
     @Metadata(generated = true)
-    FloatsOnlyClient(FloatsOnliesImpl serviceClient) {
+    FloatsOnlyClient(FloatsOnliesImpl serviceClient, Instrumentation instrumentation) {
         this.serviceClient = serviceClient;
+        this.instrumentation = instrumentation;
     }
 
     /**
@@ -47,7 +52,8 @@ public final class FloatsOnlyClient {
      */
     @Metadata(generated = true)
     public Response<GetResponse5> getWithResponse(RequestOptions requestOptions) {
-        return this.serviceClient.getWithResponse(requestOptions);
+        return this.instrumentation.instrument("Type.Union.FloatsOnly.get", requestOptions,
+            updatedOptions -> this.serviceClient.getWithResponse(updatedOptions));
     }
 
     /**
@@ -69,7 +75,8 @@ public final class FloatsOnlyClient {
      */
     @Metadata(generated = true)
     public Response<Void> sendWithResponse(BinaryData sendRequest5, RequestOptions requestOptions) {
-        return this.serviceClient.sendWithResponse(sendRequest5, requestOptions);
+        return this.instrumentation.instrument("Type.Union.FloatsOnly.send", requestOptions,
+            updatedOptions -> this.serviceClient.sendWithResponse(sendRequest5, updatedOptions));
     }
 
     /**

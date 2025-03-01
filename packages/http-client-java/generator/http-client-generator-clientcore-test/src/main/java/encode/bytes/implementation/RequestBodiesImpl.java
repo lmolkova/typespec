@@ -13,7 +13,10 @@ import io.clientcore.core.http.exceptions.HttpResponseException;
 import io.clientcore.core.http.models.HttpMethod;
 import io.clientcore.core.http.models.RequestOptions;
 import io.clientcore.core.http.models.Response;
+import io.clientcore.core.http.pipeline.HttpPipeline;
 import io.clientcore.core.models.binarydata.BinaryData;
+import io.clientcore.core.serialization.ObjectSerializer;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * An instance of this class provides access to all the operations defined in RequestBodies.
@@ -45,13 +48,45 @@ public final class RequestBodiesImpl {
      */
     @ServiceInterface(name = "BytesClientRequestBo", host = "{endpoint}")
     public interface RequestBodiesService {
+        static RequestBodiesService getNewInstance(HttpPipeline pipeline, ObjectSerializer serializer) {
+            try {
+                Class<?> clazz = Class.forName("encode.bytes.implementation.RequestBodiesServiceImpl");
+                return (RequestBodiesService) clazz
+                    .getMethod("getNewInstance", HttpPipeline.class, ObjectSerializer.class)
+                    .invoke(null, pipeline, serializer);
+            } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException
+                | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
         @HttpRequestInformation(
             method = HttpMethod.POST,
             path = "/encode/bytes/body/request/default",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> defaultMethodSync(@HostParam("endpoint") String endpoint,
+        Response<Void> defaultMethod(@HostParam("endpoint") String endpoint,
             @HeaderParam("Content-Type") String contentType, @BodyParam("application/json") BinaryData value,
+            RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/encode/bytes/body/request/default",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void defaultMethod(@HostParam("endpoint") String endpoint,
+            @HeaderParam("Content-Type") String contentType, @BodyParam("application/json") BinaryData value) {
+            defaultMethod(endpoint, contentType, value, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/encode/bytes/body/request/octet-stream",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> octetStream(@HostParam("endpoint") String endpoint,
+            @HeaderParam("content-type") String contentType, @BodyParam("application/octet-stream") BinaryData value,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -59,8 +94,18 @@ public final class RequestBodiesImpl {
             path = "/encode/bytes/body/request/octet-stream",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> octetStreamSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("content-type") String contentType, @BodyParam("application/octet-stream") BinaryData value,
+        default void octetStream(@HostParam("endpoint") String endpoint,
+            @HeaderParam("content-type") String contentType, @BodyParam("application/octet-stream") BinaryData value) {
+            octetStream(endpoint, contentType, value, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/encode/bytes/body/request/custom-content-type",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> customContentType(@HostParam("endpoint") String endpoint,
+            @HeaderParam("content-type") String contentType, @BodyParam("image/png") BinaryData value,
             RequestOptions requestOptions);
 
         @HttpRequestInformation(
@@ -68,16 +113,35 @@ public final class RequestBodiesImpl {
             path = "/encode/bytes/body/request/custom-content-type",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> customContentTypeSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("content-type") String contentType, @BodyParam("image/png") BinaryData value,
-            RequestOptions requestOptions);
+        default void customContentType(@HostParam("endpoint") String endpoint,
+            @HeaderParam("content-type") String contentType, @BodyParam("image/png") BinaryData value) {
+            customContentType(endpoint, contentType, value, null);
+        }
 
         @HttpRequestInformation(
             method = HttpMethod.POST,
             path = "/encode/bytes/body/request/base64",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> base64Sync(@HostParam("endpoint") String endpoint,
+        Response<Void> base64(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData value, RequestOptions requestOptions);
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/encode/bytes/body/request/base64",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        default void base64(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData value) {
+            base64(endpoint, contentType, value, null);
+        }
+
+        @HttpRequestInformation(
+            method = HttpMethod.POST,
+            path = "/encode/bytes/body/request/base64url",
+            expectedStatusCodes = { 204 })
+        @UnexpectedResponseExceptionDetail
+        Response<Void> base64url(@HostParam("endpoint") String endpoint,
             @HeaderParam("Content-Type") String contentType, @BodyParam("application/json") BinaryData value,
             RequestOptions requestOptions);
 
@@ -86,9 +150,10 @@ public final class RequestBodiesImpl {
             path = "/encode/bytes/body/request/base64url",
             expectedStatusCodes = { 204 })
         @UnexpectedResponseExceptionDetail
-        Response<Void> base64urlSync(@HostParam("endpoint") String endpoint,
-            @HeaderParam("Content-Type") String contentType, @BodyParam("application/json") BinaryData value,
-            RequestOptions requestOptions);
+        default void base64url(@HostParam("endpoint") String endpoint, @HeaderParam("Content-Type") String contentType,
+            @BodyParam("application/json") BinaryData value) {
+            base64url(endpoint, contentType, value, null);
+        }
     }
 
     /**
@@ -108,7 +173,7 @@ public final class RequestBodiesImpl {
      */
     public Response<Void> defaultMethodWithResponse(BinaryData value, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.defaultMethodSync(this.client.getEndpoint(), contentType, value, requestOptions);
+        return service.defaultMethod(this.client.getEndpoint(), contentType, value, requestOptions);
     }
 
     /**
@@ -128,7 +193,7 @@ public final class RequestBodiesImpl {
      */
     public Response<Void> octetStreamWithResponse(BinaryData value, RequestOptions requestOptions) {
         final String contentType = "application/octet-stream";
-        return service.octetStreamSync(this.client.getEndpoint(), contentType, value, requestOptions);
+        return service.octetStream(this.client.getEndpoint(), contentType, value, requestOptions);
     }
 
     /**
@@ -148,7 +213,7 @@ public final class RequestBodiesImpl {
      */
     public Response<Void> customContentTypeWithResponse(BinaryData value, RequestOptions requestOptions) {
         final String contentType = "image/png";
-        return service.customContentTypeSync(this.client.getEndpoint(), contentType, value, requestOptions);
+        return service.customContentType(this.client.getEndpoint(), contentType, value, requestOptions);
     }
 
     /**
@@ -168,7 +233,7 @@ public final class RequestBodiesImpl {
      */
     public Response<Void> base64WithResponse(BinaryData value, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.base64Sync(this.client.getEndpoint(), contentType, value, requestOptions);
+        return service.base64(this.client.getEndpoint(), contentType, value, requestOptions);
     }
 
     /**
@@ -177,7 +242,7 @@ public final class RequestBodiesImpl {
      * 
      * <pre>
      * {@code
-     * Base64Uri
+     * Base64Url
      * }
      * </pre>
      * 
@@ -188,6 +253,6 @@ public final class RequestBodiesImpl {
      */
     public Response<Void> base64urlWithResponse(BinaryData value, RequestOptions requestOptions) {
         final String contentType = "application/json";
-        return service.base64urlSync(this.client.getEndpoint(), contentType, value, requestOptions);
+        return service.base64url(this.client.getEndpoint(), contentType, value, requestOptions);
     }
 }
