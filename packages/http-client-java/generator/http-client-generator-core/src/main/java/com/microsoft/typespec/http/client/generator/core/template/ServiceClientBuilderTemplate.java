@@ -491,20 +491,30 @@ public class ServiceClientBuilderTemplate implements IJavaTemplate<ClientBuilder
 
     protected void writeSyncClientBuildMethodFromInnerClient(AsyncSyncClient syncClient, JavaBlock function,
         String buildMethodName, boolean wrapServiceClient) {
+
+        boolean isBranded = JavaSettings.getInstance().isBranded();
+
+        if (!isBranded) {
+            function.line(
+                "HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null ? new HttpInstrumentationOptions() : this.httpInstrumentationOptions;");
+            function.line(
+                "Instrumentation instrumentation = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, this.endpoint);");
+        }
         if (wrapServiceClient) {
-            if (!JavaSettings.getInstance().isBranded()) {
-                function.line(
-                    "HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null ? new HttpInstrumentationOptions() : this.httpInstrumentationOptions;");
-                function.line(
-                    "Instrumentation instrumentation = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, this.endpoint);");
+            if (!isBranded) {
                 function.line("return new %1$s(%2$s(), %3$s);", syncClient.getClassName(), buildMethodName,
                     "instrumentation");
             } else {
                 function.line("return new %1$s(%2$s());", syncClient.getClassName(), buildMethodName);
             }
         } else {
-            function.line("return new %1$s(%2$s().get%3$s());", syncClient.getClassName(), buildMethodName,
-                CodeNamer.toPascalCase(syncClient.getMethodGroupClient().getVariableName()));
+            if (!isBranded) {
+                function.line("return new %1$s(%2$s().get%3$s(), %4$s);", syncClient.getClassName(), buildMethodName,
+                    CodeNamer.toPascalCase(syncClient.getMethodGroupClient().getVariableName()), "instrumentation");
+            } else {
+                function.line("return new %1$s(%2$s().get%3$s());", syncClient.getClassName(), buildMethodName,
+                    CodeNamer.toPascalCase(syncClient.getMethodGroupClient().getVariableName()));
+            }
         }
     }
 

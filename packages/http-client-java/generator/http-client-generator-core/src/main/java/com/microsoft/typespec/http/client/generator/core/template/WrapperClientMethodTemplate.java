@@ -108,6 +108,9 @@ public class WrapperClientMethodTemplate extends ClientMethodTemplateBase {
         } else {
             // TODO
             String opName = clientMethod.getCrossLanguageDefinitionId();
+            if (opName == null) {
+                opName = clientMethod.getProxyMethod().getOperationId();
+            }
             String requestOptionsParam = parameters.stream()
                 .filter(p -> p.getClientType() == ClassType.REQUEST_OPTIONS)
                 .map(ClientMethodParameter::getName)
