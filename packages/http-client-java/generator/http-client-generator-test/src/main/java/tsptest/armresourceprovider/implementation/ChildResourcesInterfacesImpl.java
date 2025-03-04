@@ -4,11 +4,12 @@
 
 package tsptest.armresourceprovider.implementation;
 
-import com.azure.core.http.rest.PagedIterable;
-import com.azure.core.http.rest.Response;
-import com.azure.core.http.rest.SimpleResponse;
-import com.azure.core.util.Context;
-import com.azure.core.util.logging.ClientLogger;
+import azure.resourcemanager.foundations.models.ChildResourceUpdate;
+import com.azure.v2.core.http.rest.PagedIterable;
+import com.azure.v2.core.http.rest.Response;
+import com.azure.v2.core.http.rest.SimpleResponse;
+import com.azure.v2.core.util.Context;
+import com.azure.v2.core.util.logging.ClientLogger;
 import tsptest.armresourceprovider.fluent.ChildResourcesInterfacesClient;
 import tsptest.armresourceprovider.fluent.models.ChildResourceInner;
 import tsptest.armresourceprovider.models.ChildResource;
@@ -42,6 +43,29 @@ public final class ChildResourcesInterfacesImpl implements ChildResourcesInterfa
     public ChildResource get(String resourceGroupName, String topLevelArmResourceName, String childResourceName) {
         ChildResourceInner inner
             = this.serviceClient().get(resourceGroupName, topLevelArmResourceName, childResourceName);
+        if (inner != null) {
+            return new ChildResourceImpl(inner, this.manager());
+        } else {
+            return null;
+        }
+    }
+
+    public Response<ChildResource> updateWithResponse(String resourceGroupName, String topLevelArmResourceName,
+        String childResourceName, ChildResourceUpdate properties, Context context) {
+        Response<ChildResourceInner> inner = this.serviceClient()
+            .updateWithResponse(resourceGroupName, topLevelArmResourceName, childResourceName, properties, context);
+        if (inner != null) {
+            return new SimpleResponse<>(inner.getRequest(), inner.getStatusCode(), inner.getHeaders(),
+                new ChildResourceImpl(inner.getValue(), this.manager()));
+        } else {
+            return null;
+        }
+    }
+
+    public ChildResource update(String resourceGroupName, String topLevelArmResourceName, String childResourceName,
+        ChildResourceUpdate properties) {
+        ChildResourceInner inner
+            = this.serviceClient().update(resourceGroupName, topLevelArmResourceName, childResourceName, properties);
         if (inner != null) {
             return new ChildResourceImpl(inner, this.manager());
         } else {

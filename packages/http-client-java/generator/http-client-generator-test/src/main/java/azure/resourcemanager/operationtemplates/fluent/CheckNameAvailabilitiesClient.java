@@ -4,12 +4,12 @@
 
 package azure.resourcemanager.operationtemplates.fluent;
 
-import azure.resourcemanager.operationtemplates.fluent.models.CheckNameAvailabilityResponseInner;
-import azure.resourcemanager.operationtemplates.models.CheckNameAvailabilityRequest;
-import com.azure.core.annotation.ReturnType;
-import com.azure.core.annotation.ServiceMethod;
-import com.azure.core.http.rest.Response;
-import com.azure.core.util.Context;
+import azure.resourcemanager.commontypes.fluent.models.CheckNameAvailabilityResponseInner;
+import azure.resourcemanager.commontypes.models.CheckNameAvailabilityRequest;
+import com.azure.v2.core.annotation.ReturnType;
+import com.azure.v2.core.annotation.ServiceMethod;
+import com.azure.v2.core.http.rest.Response;
+import com.azure.v2.core.util.Context;
 
 /**
  * An instance of this class provides access to all the operations defined in CheckNameAvailabilitiesClient.
@@ -21,7 +21,7 @@ public interface CheckNameAvailabilitiesClient {
      * @param body The CheckAvailability request.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the check availability result along with {@link Response}.
      */
@@ -34,7 +34,7 @@ public interface CheckNameAvailabilitiesClient {
      * 
      * @param body The CheckAvailability request.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the check availability result.
      */
@@ -48,7 +48,7 @@ public interface CheckNameAvailabilitiesClient {
      * @param body The CheckAvailability request.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the check availability result along with {@link Response}.
      */
@@ -62,7 +62,7 @@ public interface CheckNameAvailabilitiesClient {
      * @param location The name of the Azure region.
      * @param body The CheckAvailability request.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the check availability result.
      */

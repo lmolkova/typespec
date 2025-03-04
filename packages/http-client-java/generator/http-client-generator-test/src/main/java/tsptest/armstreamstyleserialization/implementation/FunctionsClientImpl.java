@@ -4,21 +4,21 @@
 
 package tsptest.armstreamstyleserialization.implementation;
 
-import com.azure.core.annotation.BodyParam;
-import com.azure.core.annotation.ExpectedResponses;
-import com.azure.core.annotation.HeaderParam;
-import com.azure.core.annotation.Host;
-import com.azure.core.annotation.HostParam;
-import com.azure.core.annotation.Put;
-import com.azure.core.annotation.ReturnType;
-import com.azure.core.annotation.ServiceInterface;
-import com.azure.core.annotation.ServiceMethod;
-import com.azure.core.annotation.UnexpectedResponseExceptionType;
-import com.azure.core.http.rest.Response;
-import com.azure.core.http.rest.RestProxy;
-import com.azure.core.management.exception.ManagementException;
-import com.azure.core.util.Context;
-import com.azure.core.util.FluxUtil;
+import com.azure.v2.core.annotation.BodyParam;
+import com.azure.v2.core.annotation.ExpectedResponses;
+import com.azure.v2.core.annotation.HeaderParam;
+import com.azure.v2.core.annotation.Host;
+import com.azure.v2.core.annotation.HostParam;
+import com.azure.v2.core.annotation.Put;
+import com.azure.v2.core.annotation.ReturnType;
+import com.azure.v2.core.annotation.ServiceInterface;
+import com.azure.v2.core.annotation.ServiceMethod;
+import com.azure.v2.core.annotation.UnexpectedResponseExceptionType;
+import com.azure.v2.core.http.rest.Response;
+import com.azure.v2.core.http.rest.RestProxy;
+import com.azure.v2.core.management.exception.ManagementException;
+import com.azure.v2.core.util.Context;
+import com.azure.v2.core.util.FluxUtil;
 import reactor.core.publisher.Mono;
 import tsptest.armstreamstyleserialization.fluent.FunctionsClient;
 import tsptest.armstreamstyleserialization.fluent.models.FunctionInner;

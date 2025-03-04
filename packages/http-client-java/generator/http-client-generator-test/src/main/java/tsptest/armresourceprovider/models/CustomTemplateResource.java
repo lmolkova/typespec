@@ -4,9 +4,10 @@
 
 package tsptest.armresourceprovider.models;
 
-import com.azure.core.management.Region;
-import com.azure.core.management.SystemData;
-import com.azure.core.util.Context;
+import azure.resourcemanager.commontypes.models.ManagedServiceIdentity;
+import com.azure.v2.core.management.Region;
+import com.azure.v2.core.management.SystemData;
+import com.azure.v2.core.util.Context;
 import java.util.Map;
 import tsptest.armresourceprovider.fluent.models.CustomTemplateResourceInner;
 

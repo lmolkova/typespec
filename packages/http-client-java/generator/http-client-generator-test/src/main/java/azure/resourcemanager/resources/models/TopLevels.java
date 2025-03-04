@@ -4,9 +4,9 @@
 
 package azure.resourcemanager.resources.models;
 
-import com.azure.core.http.rest.PagedIterable;
-import com.azure.core.http.rest.Response;
-import com.azure.core.util.Context;
+import com.azure.v2.core.http.rest.PagedIterable;
+import com.azure.v2.core.http.rest.Response;
+import com.azure.v2.core.util.Context;
 
 /**
  * Resource collection API of TopLevels.
@@ -19,7 +19,7 @@ public interface TopLevels {
      * @param topLevelTrackedResourceName arm resource name for path.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return a TopLevelTrackedResource along with {@link Response}.
      */
@@ -32,7 +32,7 @@ public interface TopLevels {
      * @param resourceGroupName The name of the resource group. The name is case insensitive.
      * @param topLevelTrackedResourceName arm resource name for path.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return a TopLevelTrackedResource.
      */
@@ -44,7 +44,7 @@ public interface TopLevels {
      * @param resourceGroupName The name of the resource group. The name is case insensitive.
      * @param topLevelTrackedResourceName arm resource name for path.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      */
     void deleteByResourceGroup(String resourceGroupName, String topLevelTrackedResourceName);
@@ -56,7 +56,7 @@ public interface TopLevels {
      * @param topLevelTrackedResourceName arm resource name for path.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      */
     void delete(String resourceGroupName, String topLevelTrackedResourceName, Context context);
@@ -66,7 +66,7 @@ public interface TopLevels {
      * 
      * @param resourceGroupName The name of the resource group. The name is case insensitive.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the response of a TopLevelTrackedResource list operation as paginated response with
      * {@link PagedIterable}.
@@ -79,7 +79,7 @@ public interface TopLevels {
      * @param resourceGroupName The name of the resource group. The name is case insensitive.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the response of a TopLevelTrackedResource list operation as paginated response with
      * {@link PagedIterable}.
@@ -89,7 +89,7 @@ public interface TopLevels {
     /**
      * List TopLevelTrackedResource resources by subscription ID.
      * 
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the response of a TopLevelTrackedResource list operation as paginated response with
      * {@link PagedIterable}.
@@ -101,7 +101,7 @@ public interface TopLevels {
      * 
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the response of a TopLevelTrackedResource list operation as paginated response with
      * {@link PagedIterable}.
@@ -116,7 +116,7 @@ public interface TopLevels {
      * @param body The content of the action request.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the {@link Response}.
      */
@@ -130,7 +130,7 @@ public interface TopLevels {
      * @param topLevelTrackedResourceName arm resource name for path.
      * @param body The content of the action request.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      */
     void actionSync(String resourceGroupName, String topLevelTrackedResourceName, NotificationDetails body);
@@ -140,7 +140,7 @@ public interface TopLevels {
      * 
      * @param id the resource ID.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return a TopLevelTrackedResource along with {@link Response}.
      */
@@ -152,7 +152,7 @@ public interface TopLevels {
      * @param id the resource ID.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return a TopLevelTrackedResource along with {@link Response}.
      */
@@ -163,7 +163,7 @@ public interface TopLevels {
      * 
      * @param id the resource ID.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      */
     void deleteById(String id);
@@ -174,7 +174,7 @@ public interface TopLevels {
      * @param id the resource ID.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      */
     void deleteByIdWithResponse(String id, Context context);

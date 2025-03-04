@@ -173,15 +173,6 @@ public class ServiceClientBuilderTemplate implements IJavaTemplate<ClientBuilder
                 addGeneratedAnnotation(classBlock);
                 classBlock.privateStaticFinalVariable("String SDK_VERSION = \"version\"");
 
-                if (!settings.isBranded()) {
-                    // sdk version
-                    addGeneratedAnnotation(classBlock);
-                    // TODO: (liudmila) update to SDK_NAME and add SDK_VERSION
-                    classBlock.privateStaticFinalVariable(
-                        "LibraryInstrumentationOptions LIBRARY_INSTRUMENTATION_OPTIONS = new LibraryInstrumentationOptions(\""
-                            + settings.getArtifactId() + "\")");
-                }
-
                 // default scope
                 Set<String> scopes
                     = serviceClient.getSecurityInfo() != null ? serviceClient.getSecurityInfo().getScopes() : null;
@@ -503,9 +494,18 @@ public class ServiceClientBuilderTemplate implements IJavaTemplate<ClientBuilder
 
             function.line(
                 "HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null ? new HttpInstrumentationOptions() : this.httpInstrumentationOptions;");
+
+            String libraryName = JavaSettings.getInstance().getArtifactId();
+            if (libraryName == null || libraryName.isEmpty()) {
+                libraryName = "TODO";
+            }
+
             function.line(
-                "Instrumentation instrumentation = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, %1$s);",
-                hasEndpoint ? "this.endpoint" : "null");
+                "LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions(\"%1$s\")%2$s;",
+                libraryName, hasEndpoint ? ".setEndpoint(this.endpoint)" : "");
+
+            function.line(
+                "Instrumentation instrumentation = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);");
         }
         if (wrapServiceClient) {
             if (!isBranded) {

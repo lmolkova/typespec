@@ -4,10 +4,10 @@
 
 package tsptest.armstreamstyleserialization.implementation;
 
-import com.azure.core.http.rest.Response;
-import com.azure.core.http.rest.SimpleResponse;
-import com.azure.core.util.Context;
-import com.azure.core.util.logging.ClientLogger;
+import com.azure.v2.core.http.rest.Response;
+import com.azure.v2.core.http.rest.SimpleResponse;
+import com.azure.v2.core.util.Context;
+import com.azure.v2.core.util.logging.ClientLogger;
 import tsptest.armstreamstyleserialization.fluent.FunctionsClient;
 import tsptest.armstreamstyleserialization.fluent.models.FunctionInner;
 import tsptest.armstreamstyleserialization.models.Function;

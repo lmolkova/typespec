@@ -49,10 +49,6 @@ public final class ScalarClientBuilder implements HttpTrait<ScalarClientBuilder>
     private static final String SDK_VERSION = "version";
 
     @Metadata(generated = true)
-    private static final LibraryInstrumentationOptions LIBRARY_INSTRUMENTATION_OPTIONS
-        = new LibraryInstrumentationOptions("");
-
-    @Metadata(generated = true)
     private final List<HttpPipelinePolicy> pipelinePolicies;
 
     /**
@@ -252,8 +248,9 @@ public final class ScalarClientBuilder implements HttpTrait<ScalarClientBuilder>
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new StringOperationClient(buildInnerClient().getStringOperations(), instrumentation);
     }
 
@@ -267,8 +264,9 @@ public final class ScalarClientBuilder implements HttpTrait<ScalarClientBuilder>
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new BooleanOperationClient(buildInnerClient().getBooleanOperations(), instrumentation);
     }
 
@@ -282,8 +280,9 @@ public final class ScalarClientBuilder implements HttpTrait<ScalarClientBuilder>
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new UnknownClient(buildInnerClient().getUnknowns(), instrumentation);
     }
 
@@ -297,8 +296,9 @@ public final class ScalarClientBuilder implements HttpTrait<ScalarClientBuilder>
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new DecimalTypeClient(buildInnerClient().getDecimalTypes(), instrumentation);
     }
 
@@ -312,8 +312,9 @@ public final class ScalarClientBuilder implements HttpTrait<ScalarClientBuilder>
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new Decimal128TypeClient(buildInnerClient().getDecimal128Types(), instrumentation);
     }
 
@@ -327,8 +328,9 @@ public final class ScalarClientBuilder implements HttpTrait<ScalarClientBuilder>
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new DecimalVerifyClient(buildInnerClient().getDecimalVerifies(), instrumentation);
     }
 
@@ -342,8 +344,9 @@ public final class ScalarClientBuilder implements HttpTrait<ScalarClientBuilder>
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new Decimal128VerifyClient(buildInnerClient().getDecimal128Verifies(), instrumentation);
     }
 

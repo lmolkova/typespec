@@ -41,10 +41,6 @@ public final class BasicClientBuilder implements HttpTrait<BasicClientBuilder>, 
     private static final String SDK_VERSION = "version";
 
     @Metadata(generated = true)
-    private static final LibraryInstrumentationOptions LIBRARY_INSTRUMENTATION_OPTIONS
-        = new LibraryInstrumentationOptions("");
-
-    @Metadata(generated = true)
     private final List<HttpPipelinePolicy> pipelinePolicies;
 
     /**
@@ -244,8 +240,9 @@ public final class BasicClientBuilder implements HttpTrait<BasicClientBuilder>, 
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new ExplicitBodyClient(buildInnerClient().getExplicitBodies(), instrumentation);
     }
 
@@ -259,8 +256,9 @@ public final class BasicClientBuilder implements HttpTrait<BasicClientBuilder>, 
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new ImplicitBodyClient(buildInnerClient().getImplicitBodies(), instrumentation);
     }
 

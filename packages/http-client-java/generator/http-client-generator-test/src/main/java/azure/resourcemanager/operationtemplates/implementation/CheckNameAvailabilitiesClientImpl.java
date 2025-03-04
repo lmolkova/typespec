@@ -4,26 +4,26 @@
 
 package azure.resourcemanager.operationtemplates.implementation;
 
+import azure.resourcemanager.commontypes.fluent.models.CheckNameAvailabilityResponseInner;
+import azure.resourcemanager.commontypes.models.CheckNameAvailabilityRequest;
 import azure.resourcemanager.operationtemplates.fluent.CheckNameAvailabilitiesClient;
-import azure.resourcemanager.operationtemplates.fluent.models.CheckNameAvailabilityResponseInner;
-import azure.resourcemanager.operationtemplates.models.CheckNameAvailabilityRequest;
-import com.azure.core.annotation.BodyParam;
-import com.azure.core.annotation.ExpectedResponses;
-import com.azure.core.annotation.HeaderParam;
-import com.azure.core.annotation.Host;
-import com.azure.core.annotation.HostParam;
-import com.azure.core.annotation.PathParam;
-import com.azure.core.annotation.Post;
-import com.azure.core.annotation.QueryParam;
-import com.azure.core.annotation.ReturnType;
-import com.azure.core.annotation.ServiceInterface;
-import com.azure.core.annotation.ServiceMethod;
-import com.azure.core.annotation.UnexpectedResponseExceptionType;
-import com.azure.core.http.rest.Response;
-import com.azure.core.http.rest.RestProxy;
-import com.azure.core.management.exception.ManagementException;
-import com.azure.core.util.Context;
-import com.azure.core.util.FluxUtil;
+import com.azure.v2.core.annotation.BodyParam;
+import com.azure.v2.core.annotation.ExpectedResponses;
+import com.azure.v2.core.annotation.HeaderParam;
+import com.azure.v2.core.annotation.Host;
+import com.azure.v2.core.annotation.HostParam;
+import com.azure.v2.core.annotation.PathParam;
+import com.azure.v2.core.annotation.Post;
+import com.azure.v2.core.annotation.QueryParam;
+import com.azure.v2.core.annotation.ReturnType;
+import com.azure.v2.core.annotation.ServiceInterface;
+import com.azure.v2.core.annotation.ServiceMethod;
+import com.azure.v2.core.annotation.UnexpectedResponseExceptionType;
+import com.azure.v2.core.http.rest.Response;
+import com.azure.v2.core.http.rest.RestProxy;
+import com.azure.v2.core.management.exception.ManagementException;
+import com.azure.v2.core.util.Context;
+import com.azure.v2.core.util.FluxUtil;
 import reactor.core.publisher.Mono;
 
 /**
@@ -98,8 +98,6 @@ public final class CheckNameAvailabilitiesClientImpl implements CheckNameAvailab
         }
         if (body == null) {
             return Mono.error(new IllegalArgumentException("Parameter body is required and cannot be null."));
-        } else {
-            body.validate();
         }
         final String contentType = "application/json";
         final String accept = "application/json";
@@ -132,8 +130,6 @@ public final class CheckNameAvailabilitiesClientImpl implements CheckNameAvailab
         }
         if (body == null) {
             return Mono.error(new IllegalArgumentException("Parameter body is required and cannot be null."));
-        } else {
-            body.validate();
         }
         final String contentType = "application/json";
         final String accept = "application/json";
@@ -212,8 +208,6 @@ public final class CheckNameAvailabilitiesClientImpl implements CheckNameAvailab
         }
         if (body == null) {
             return Mono.error(new IllegalArgumentException("Parameter body is required and cannot be null."));
-        } else {
-            body.validate();
         }
         final String contentType = "application/json";
         final String accept = "application/json";
@@ -250,8 +244,6 @@ public final class CheckNameAvailabilitiesClientImpl implements CheckNameAvailab
         }
         if (body == null) {
             return Mono.error(new IllegalArgumentException("Parameter body is required and cannot be null."));
-        } else {
-            body.validate();
         }
         final String contentType = "application/json";
         final String accept = "application/json";

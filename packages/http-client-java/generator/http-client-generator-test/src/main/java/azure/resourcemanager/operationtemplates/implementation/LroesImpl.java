@@ -9,8 +9,8 @@ import azure.resourcemanager.operationtemplates.fluent.models.ExportResultInner;
 import azure.resourcemanager.operationtemplates.models.ExportRequest;
 import azure.resourcemanager.operationtemplates.models.ExportResult;
 import azure.resourcemanager.operationtemplates.models.Lroes;
-import com.azure.core.util.Context;
-import com.azure.core.util.logging.ClientLogger;
+import com.azure.v2.core.util.Context;
+import com.azure.v2.core.util.logging.ClientLogger;
 
 public final class LroesImpl implements Lroes {
     private static final ClientLogger LOGGER = new ClientLogger(LroesImpl.class);

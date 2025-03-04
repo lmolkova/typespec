@@ -1,13 +1,6 @@
 {
-  "flavor": "Azure", 
+  "flavor": "azurev2", 
   "CrossLanguageDefinitionId": {
-    "type.model.inheritance.notdiscriminated.NotDiscriminatedAsyncClient": "Type.Model.Inheritance.NotDiscriminated",
-    "type.model.inheritance.notdiscriminated.NotDiscriminatedAsyncClient.getValid": "Type.Model.Inheritance.NotDiscriminated.getValid",
-    "type.model.inheritance.notdiscriminated.NotDiscriminatedAsyncClient.getValidWithResponse": "Type.Model.Inheritance.NotDiscriminated.getValid",
-    "type.model.inheritance.notdiscriminated.NotDiscriminatedAsyncClient.postValid": "Type.Model.Inheritance.NotDiscriminated.postValid",
-    "type.model.inheritance.notdiscriminated.NotDiscriminatedAsyncClient.postValidWithResponse": "Type.Model.Inheritance.NotDiscriminated.postValid",
-    "type.model.inheritance.notdiscriminated.NotDiscriminatedAsyncClient.putValid": "Type.Model.Inheritance.NotDiscriminated.putValid",
-    "type.model.inheritance.notdiscriminated.NotDiscriminatedAsyncClient.putValidWithResponse": "Type.Model.Inheritance.NotDiscriminated.putValid",
     "type.model.inheritance.notdiscriminated.NotDiscriminatedClient": "Type.Model.Inheritance.NotDiscriminated",
     "type.model.inheritance.notdiscriminated.NotDiscriminatedClient.getValid": "Type.Model.Inheritance.NotDiscriminated.getValid",
     "type.model.inheritance.notdiscriminated.NotDiscriminatedClient.getValidWithResponse": "Type.Model.Inheritance.NotDiscriminated.getValid",

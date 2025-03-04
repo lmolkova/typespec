@@ -4,9 +4,9 @@
 
 package azure.resourcemanager.resources.models;
 
-import com.azure.core.http.rest.PagedIterable;
-import com.azure.core.http.rest.Response;
-import com.azure.core.util.Context;
+import com.azure.v2.core.http.rest.PagedIterable;
+import com.azure.v2.core.http.rest.Response;
+import com.azure.v2.core.util.Context;
 
 /**
  * Resource collection API of Nesteds.
@@ -20,7 +20,7 @@ public interface Nesteds {
      * @param nextedProxyResourceName Name of the nested resource.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return a NestedProxyResource along with {@link Response}.
      */
@@ -34,7 +34,7 @@ public interface Nesteds {
      * @param topLevelTrackedResourceName arm resource name for path.
      * @param nextedProxyResourceName Name of the nested resource.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return a NestedProxyResource.
      */
@@ -48,7 +48,7 @@ public interface Nesteds {
      * @param topLevelTrackedResourceName arm resource name for path.
      * @param nextedProxyResourceName Name of the nested resource.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      */
     void delete(String resourceGroupName, String topLevelTrackedResourceName, String nextedProxyResourceName);
@@ -61,7 +61,7 @@ public interface Nesteds {
      * @param nextedProxyResourceName Name of the nested resource.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      */
     void delete(String resourceGroupName, String topLevelTrackedResourceName, String nextedProxyResourceName,
@@ -73,7 +73,7 @@ public interface Nesteds {
      * @param resourceGroupName The name of the resource group. The name is case insensitive.
      * @param topLevelTrackedResourceName arm resource name for path.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the response of a NestedProxyResource list operation as paginated response with {@link PagedIterable}.
      */
@@ -87,7 +87,7 @@ public interface Nesteds {
      * @param topLevelTrackedResourceName arm resource name for path.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the response of a NestedProxyResource list operation as paginated response with {@link PagedIterable}.
      */
@@ -99,7 +99,7 @@ public interface Nesteds {
      * 
      * @param id the resource ID.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return a NestedProxyResource along with {@link Response}.
      */
@@ -111,7 +111,7 @@ public interface Nesteds {
      * @param id the resource ID.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return a NestedProxyResource along with {@link Response}.
      */
@@ -122,7 +122,7 @@ public interface Nesteds {
      * 
      * @param id the resource ID.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      */
     void deleteById(String id);
@@ -133,7 +133,7 @@ public interface Nesteds {
      * @param id the resource ID.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      */
     void deleteByIdWithResponse(String id, Context context);

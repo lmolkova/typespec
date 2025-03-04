@@ -4,16 +4,16 @@
 
 package tsptest.armresourceprovider.fluent;
 
-import com.azure.core.annotation.ReturnType;
-import com.azure.core.annotation.ServiceMethod;
-import com.azure.core.http.rest.PagedIterable;
-import com.azure.core.http.rest.Response;
-import com.azure.core.management.polling.PollResult;
-import com.azure.core.util.Context;
-import com.azure.core.util.polling.SyncPoller;
+import azure.resourcemanager.foundations.models.TopLevelArmResourceUpdate;
+import com.azure.v2.core.annotation.ReturnType;
+import com.azure.v2.core.annotation.ServiceMethod;
+import com.azure.v2.core.http.rest.PagedIterable;
+import com.azure.v2.core.http.rest.Response;
+import com.azure.v2.core.management.polling.PollResult;
+import com.azure.v2.core.util.Context;
+import com.azure.v2.core.util.polling.SyncPoller;
 import tsptest.armresourceprovider.fluent.models.ResultInner;
 import tsptest.armresourceprovider.fluent.models.TopLevelArmResourceInner;
-import tsptest.armresourceprovider.models.TopLevelArmResourceUpdate;
 
 /**
  * An instance of this class provides access to all the operations defined in TopLevelArmResourceInterfacesClient.
@@ -26,7 +26,7 @@ public interface TopLevelArmResourceInterfacesClient {
      * @param topLevelArmResourceName arm resource name for path.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return a TopLevelArmResource along with {@link Response}.
      */
@@ -40,7 +40,7 @@ public interface TopLevelArmResourceInterfacesClient {
      * @param resourceGroupName The name of the resource group. The name is case insensitive.
      * @param topLevelArmResourceName arm resource name for path.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return a TopLevelArmResource.
      */
@@ -54,7 +54,7 @@ public interface TopLevelArmResourceInterfacesClient {
      * @param topLevelArmResourceName arm resource name for path.
      * @param resource Resource create parameters.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the {@link SyncPoller} for polling of concrete tracked resource types can be created by aliasing this
      * type using a specific property type.
@@ -71,7 +71,7 @@ public interface TopLevelArmResourceInterfacesClient {
      * @param resource Resource create parameters.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the {@link SyncPoller} for polling of concrete tracked resource types can be created by aliasing this
      * type using a specific property type.
@@ -87,7 +87,7 @@ public interface TopLevelArmResourceInterfacesClient {
      * @param topLevelArmResourceName arm resource name for path.
      * @param resource Resource create parameters.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return concrete tracked resource types can be created by aliasing this type using a specific property type.
      */
@@ -103,7 +103,7 @@ public interface TopLevelArmResourceInterfacesClient {
      * @param resource Resource create parameters.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return concrete tracked resource types can be created by aliasing this type using a specific property type.
      */
@@ -119,7 +119,7 @@ public interface TopLevelArmResourceInterfacesClient {
      * @param properties The resource properties to be updated.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return concrete tracked resource types can be created by aliasing this type using a specific property type along
      * with {@link Response}.
@@ -135,7 +135,7 @@ public interface TopLevelArmResourceInterfacesClient {
      * @param topLevelArmResourceName arm resource name for path.
      * @param properties The resource properties to be updated.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return concrete tracked resource types can be created by aliasing this type using a specific property type.
      */
@@ -149,7 +149,7 @@ public interface TopLevelArmResourceInterfacesClient {
      * @param resourceGroupName The name of the resource group. The name is case insensitive.
      * @param topLevelArmResourceName arm resource name for path.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the {@link SyncPoller} for polling of long-running operation.
      */
@@ -163,7 +163,7 @@ public interface TopLevelArmResourceInterfacesClient {
      * @param topLevelArmResourceName arm resource name for path.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the {@link SyncPoller} for polling of long-running operation.
      */
@@ -177,7 +177,7 @@ public interface TopLevelArmResourceInterfacesClient {
      * @param resourceGroupName The name of the resource group. The name is case insensitive.
      * @param topLevelArmResourceName arm resource name for path.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
@@ -190,7 +190,7 @@ public interface TopLevelArmResourceInterfacesClient {
      * @param topLevelArmResourceName arm resource name for path.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
@@ -201,7 +201,7 @@ public interface TopLevelArmResourceInterfacesClient {
      * 
      * @param resourceGroupName The name of the resource group. The name is case insensitive.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the response of a TopLevelArmResource list operation as paginated response with {@link PagedIterable}.
      */
@@ -214,7 +214,7 @@ public interface TopLevelArmResourceInterfacesClient {
      * @param resourceGroupName The name of the resource group. The name is case insensitive.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the response of a TopLevelArmResource list operation as paginated response with {@link PagedIterable}.
      */
@@ -224,7 +224,7 @@ public interface TopLevelArmResourceInterfacesClient {
     /**
      * List TopLevelArmResource resources by subscription ID.
      * 
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the response of a TopLevelArmResource list operation as paginated response with {@link PagedIterable}.
      */
@@ -236,7 +236,7 @@ public interface TopLevelArmResourceInterfacesClient {
      * 
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the response of a TopLevelArmResource list operation as paginated response with {@link PagedIterable}.
      */
@@ -249,7 +249,7 @@ public interface TopLevelArmResourceInterfacesClient {
      * @param resourceGroupName The name of the resource group. The name is case insensitive.
      * @param topLevelArmResourceName arm resource name for path.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the {@link SyncPoller} for polling of long-running operation.
      */
@@ -264,7 +264,7 @@ public interface TopLevelArmResourceInterfacesClient {
      * @param topLevelArmResourceName arm resource name for path.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the {@link SyncPoller} for polling of long-running operation.
      */
@@ -278,7 +278,7 @@ public interface TopLevelArmResourceInterfacesClient {
      * @param resourceGroupName The name of the resource group. The name is case insensitive.
      * @param topLevelArmResourceName arm resource name for path.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the response.
      */
@@ -292,7 +292,7 @@ public interface TopLevelArmResourceInterfacesClient {
      * @param topLevelArmResourceName arm resource name for path.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the response.
      */

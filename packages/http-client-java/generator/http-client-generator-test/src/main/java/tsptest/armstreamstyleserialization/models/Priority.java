@@ -4,7 +4,7 @@
 
 package tsptest.armstreamstyleserialization.models;
 
-import com.azure.core.util.ExpandableEnum;
+import com.azure.v2.core.util.ExpandableEnum;
 import com.azure.json.JsonReader;
 import com.azure.json.JsonSerializable;
 import com.azure.json.JsonToken;

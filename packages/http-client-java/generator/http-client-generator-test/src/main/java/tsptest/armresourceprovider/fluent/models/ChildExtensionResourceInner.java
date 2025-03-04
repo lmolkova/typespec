@@ -4,9 +4,9 @@
 
 package tsptest.armresourceprovider.fluent.models;
 
-import com.azure.core.annotation.Fluent;
-import com.azure.core.management.ProxyResource;
-import com.azure.core.management.SystemData;
+import com.azure.v2.core.annotation.Fluent;
+import com.azure.v2.core.management.ProxyResource;
+import com.azure.v2.core.management.SystemData;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import tsptest.armresourceprovider.models.ChildExtensionResourceProperties;
 

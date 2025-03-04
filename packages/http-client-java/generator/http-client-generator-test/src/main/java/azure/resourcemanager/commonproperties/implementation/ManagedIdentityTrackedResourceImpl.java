@@ -7,10 +7,10 @@ package azure.resourcemanager.commonproperties.implementation;
 import azure.resourcemanager.commonproperties.fluent.models.ManagedIdentityTrackedResourceInner;
 import azure.resourcemanager.commonproperties.models.ManagedIdentityTrackedResource;
 import azure.resourcemanager.commonproperties.models.ManagedIdentityTrackedResourceProperties;
-import azure.resourcemanager.commonproperties.models.ManagedServiceIdentity;
-import com.azure.core.management.Region;
-import com.azure.core.management.SystemData;
-import com.azure.core.util.Context;
+import azure.resourcemanager.commontypes.models.ManagedServiceIdentity;
+import com.azure.v2.core.management.Region;
+import com.azure.v2.core.management.SystemData;
+import com.azure.v2.core.util.Context;
 import java.util.Collections;
 import java.util.Map;
 

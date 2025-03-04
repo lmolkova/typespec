@@ -75,10 +75,6 @@ public final class AdditionalPropertiesClientBuilder
     private static final String SDK_VERSION = "version";
 
     @Metadata(generated = true)
-    private static final LibraryInstrumentationOptions LIBRARY_INSTRUMENTATION_OPTIONS
-        = new LibraryInstrumentationOptions("");
-
-    @Metadata(generated = true)
     private final List<HttpPipelinePolicy> pipelinePolicies;
 
     /**
@@ -279,8 +275,9 @@ public final class AdditionalPropertiesClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new ExtendsUnknownClient(buildInnerClient().getExtendsUnknowns(), instrumentation);
     }
 
@@ -294,8 +291,9 @@ public final class AdditionalPropertiesClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new ExtendsUnknownDerivedClient(buildInnerClient().getExtendsUnknownDeriveds(), instrumentation);
     }
 
@@ -309,8 +307,9 @@ public final class AdditionalPropertiesClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new ExtendsUnknownDiscriminatedClient(buildInnerClient().getExtendsUnknownDiscriminateds(),
             instrumentation);
     }
@@ -325,8 +324,9 @@ public final class AdditionalPropertiesClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new IsUnknownClient(buildInnerClient().getIsUnknowns(), instrumentation);
     }
 
@@ -340,8 +340,9 @@ public final class AdditionalPropertiesClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new IsUnknownDerivedClient(buildInnerClient().getIsUnknownDeriveds(), instrumentation);
     }
 
@@ -355,8 +356,9 @@ public final class AdditionalPropertiesClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new IsUnknownDiscriminatedClient(buildInnerClient().getIsUnknownDiscriminateds(), instrumentation);
     }
 
@@ -370,8 +372,9 @@ public final class AdditionalPropertiesClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new ExtendsStringClient(buildInnerClient().getExtendsStrings(), instrumentation);
     }
 
@@ -385,8 +388,9 @@ public final class AdditionalPropertiesClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new IsStringClient(buildInnerClient().getIsStrings(), instrumentation);
     }
 
@@ -400,8 +404,9 @@ public final class AdditionalPropertiesClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new SpreadStringClient(buildInnerClient().getSpreadStrings(), instrumentation);
     }
 
@@ -415,8 +420,9 @@ public final class AdditionalPropertiesClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new ExtendsFloatClient(buildInnerClient().getExtendsFloats(), instrumentation);
     }
 
@@ -430,8 +436,9 @@ public final class AdditionalPropertiesClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new IsFloatClient(buildInnerClient().getIsFloats(), instrumentation);
     }
 
@@ -445,8 +452,9 @@ public final class AdditionalPropertiesClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new SpreadFloatClient(buildInnerClient().getSpreadFloats(), instrumentation);
     }
 
@@ -460,8 +468,9 @@ public final class AdditionalPropertiesClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new ExtendsModelClient(buildInnerClient().getExtendsModels(), instrumentation);
     }
 
@@ -475,8 +484,9 @@ public final class AdditionalPropertiesClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new IsModelClient(buildInnerClient().getIsModels(), instrumentation);
     }
 
@@ -490,8 +500,9 @@ public final class AdditionalPropertiesClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new SpreadModelClient(buildInnerClient().getSpreadModels(), instrumentation);
     }
 
@@ -505,8 +516,9 @@ public final class AdditionalPropertiesClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new ExtendsModelArrayClient(buildInnerClient().getExtendsModelArrays(), instrumentation);
     }
 
@@ -520,8 +532,9 @@ public final class AdditionalPropertiesClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new IsModelArrayClient(buildInnerClient().getIsModelArrays(), instrumentation);
     }
 
@@ -535,8 +548,9 @@ public final class AdditionalPropertiesClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new SpreadModelArrayClient(buildInnerClient().getSpreadModelArrays(), instrumentation);
     }
 
@@ -550,8 +564,9 @@ public final class AdditionalPropertiesClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new SpreadDifferentStringClient(buildInnerClient().getSpreadDifferentStrings(), instrumentation);
     }
 
@@ -565,8 +580,9 @@ public final class AdditionalPropertiesClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new SpreadDifferentFloatClient(buildInnerClient().getSpreadDifferentFloats(), instrumentation);
     }
 
@@ -580,8 +596,9 @@ public final class AdditionalPropertiesClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new SpreadDifferentModelClient(buildInnerClient().getSpreadDifferentModels(), instrumentation);
     }
 
@@ -595,8 +612,9 @@ public final class AdditionalPropertiesClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new SpreadDifferentModelArrayClient(buildInnerClient().getSpreadDifferentModelArrays(), instrumentation);
     }
 
@@ -610,8 +628,9 @@ public final class AdditionalPropertiesClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new ExtendsDifferentSpreadStringClient(buildInnerClient().getExtendsDifferentSpreadStrings(),
             instrumentation);
     }
@@ -626,8 +645,9 @@ public final class AdditionalPropertiesClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new ExtendsDifferentSpreadFloatClient(buildInnerClient().getExtendsDifferentSpreadFloats(),
             instrumentation);
     }
@@ -642,8 +662,9 @@ public final class AdditionalPropertiesClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new ExtendsDifferentSpreadModelClient(buildInnerClient().getExtendsDifferentSpreadModels(),
             instrumentation);
     }
@@ -658,8 +679,9 @@ public final class AdditionalPropertiesClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new ExtendsDifferentSpreadModelArrayClient(buildInnerClient().getExtendsDifferentSpreadModelArrays(),
             instrumentation);
     }
@@ -674,8 +696,9 @@ public final class AdditionalPropertiesClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new MultipleSpreadClient(buildInnerClient().getMultipleSpreads(), instrumentation);
     }
 
@@ -689,8 +712,9 @@ public final class AdditionalPropertiesClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new SpreadRecordUnionClient(buildInnerClient().getSpreadRecordUnions(), instrumentation);
     }
 
@@ -704,8 +728,9 @@ public final class AdditionalPropertiesClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new SpreadRecordDiscriminatedUnionClient(buildInnerClient().getSpreadRecordDiscriminatedUnions(),
             instrumentation);
     }
@@ -720,8 +745,9 @@ public final class AdditionalPropertiesClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new SpreadRecordNonDiscriminatedUnionClient(buildInnerClient().getSpreadRecordNonDiscriminatedUnions(),
             instrumentation);
     }
@@ -736,8 +762,9 @@ public final class AdditionalPropertiesClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new SpreadRecordNonDiscriminatedUnion2Client(buildInnerClient().getSpreadRecordNonDiscriminatedUnion2s(),
             instrumentation);
     }
@@ -752,8 +779,9 @@ public final class AdditionalPropertiesClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new SpreadRecordNonDiscriminatedUnion3Client(buildInnerClient().getSpreadRecordNonDiscriminatedUnion3s(),
             instrumentation);
     }

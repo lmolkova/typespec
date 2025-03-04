@@ -1,8 +1,7 @@
 {
-  "flavor": "Azure", 
+  "flavor": "azurev2", 
   "CrossLanguageDefinitionId": {
-    "azure.payload.pageable.PageableAsyncClient": "_Specs_.Azure.Payload.Pageable",
-    "azure.payload.pageable.PageableAsyncClient.list": "_Specs_.Azure.Payload.Pageable.list",
+    "azure.core.implementation.models.PagedUser": "Azure.Core.Page",
     "azure.payload.pageable.PageableClient": "_Specs_.Azure.Payload.Pageable",
     "azure.payload.pageable.PageableClient.list": "_Specs_.Azure.Payload.Pageable.list",
     "azure.payload.pageable.PageableClientBuilder": "_Specs_.Azure.Payload.Pageable",

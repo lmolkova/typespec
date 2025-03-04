@@ -4,9 +4,9 @@
 
 package tsptest.armresourceprovider.models;
 
-import com.azure.core.management.Region;
-import com.azure.core.management.SystemData;
-import com.azure.core.util.Context;
+import com.azure.v2.core.management.Region;
+import com.azure.v2.core.management.SystemData;
+import com.azure.v2.core.util.Context;
 import java.util.Map;
 import tsptest.armresourceprovider.fluent.models.ChildResourceInner;
 
@@ -241,7 +241,7 @@ public interface ChildResource {
     /**
      * A long-running resource action.
      * 
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      */
     void actionWithoutBody();
@@ -251,7 +251,7 @@ public interface ChildResource {
      * 
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      */
     void actionWithoutBody(Context context);

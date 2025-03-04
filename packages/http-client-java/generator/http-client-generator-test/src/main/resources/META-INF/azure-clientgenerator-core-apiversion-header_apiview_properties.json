@@ -1,9 +1,6 @@
 {
-  "flavor": "Azure", 
+  "flavor": "azurev2", 
   "CrossLanguageDefinitionId": {
-    "azure.clientgenerator.core.apiversion.header.HeaderAsyncClient": "Client.AlternateApiVersion.Service.Header",
-    "azure.clientgenerator.core.apiversion.header.HeaderAsyncClient.headerApiVersion": "Client.AlternateApiVersion.Service.Header.headerApiVersion",
-    "azure.clientgenerator.core.apiversion.header.HeaderAsyncClient.headerApiVersionWithResponse": "Client.AlternateApiVersion.Service.Header.headerApiVersion",
     "azure.clientgenerator.core.apiversion.header.HeaderClient": "Client.AlternateApiVersion.Service.Header",
     "azure.clientgenerator.core.apiversion.header.HeaderClient.headerApiVersion": "Client.AlternateApiVersion.Service.Header.headerApiVersion",
     "azure.clientgenerator.core.apiversion.header.HeaderClient.headerApiVersionWithResponse": "Client.AlternateApiVersion.Service.Header.headerApiVersion",

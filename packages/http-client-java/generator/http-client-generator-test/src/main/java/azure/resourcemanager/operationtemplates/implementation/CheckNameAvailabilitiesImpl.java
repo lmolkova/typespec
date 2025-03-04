@@ -4,15 +4,13 @@
 
 package azure.resourcemanager.operationtemplates.implementation;
 
+import azure.resourcemanager.commontypes.fluent.models.CheckNameAvailabilityResponseInner;
+import azure.resourcemanager.commontypes.models.CheckNameAvailabilityRequest;
 import azure.resourcemanager.operationtemplates.fluent.CheckNameAvailabilitiesClient;
-import azure.resourcemanager.operationtemplates.fluent.models.CheckNameAvailabilityResponseInner;
 import azure.resourcemanager.operationtemplates.models.CheckNameAvailabilities;
-import azure.resourcemanager.operationtemplates.models.CheckNameAvailabilityRequest;
-import azure.resourcemanager.operationtemplates.models.CheckNameAvailabilityResponse;
-import com.azure.core.http.rest.Response;
-import com.azure.core.http.rest.SimpleResponse;
-import com.azure.core.util.Context;
-import com.azure.core.util.logging.ClientLogger;
+import com.azure.v2.core.http.rest.Response;
+import com.azure.v2.core.util.Context;
+import com.azure.v2.core.util.logging.ClientLogger;
 
 public final class CheckNameAvailabilitiesImpl implements CheckNameAvailabilities {
     private static final ClientLogger LOGGER = new ClientLogger(CheckNameAvailabilitiesImpl.class);
@@ -27,46 +25,22 @@ public final class CheckNameAvailabilitiesImpl implements CheckNameAvailabilitie
         this.serviceManager = serviceManager;
     }
 
-    public Response<CheckNameAvailabilityResponse> checkGlobalWithResponse(CheckNameAvailabilityRequest body,
+    public Response<CheckNameAvailabilityResponseInner> checkGlobalWithResponse(CheckNameAvailabilityRequest body,
         Context context) {
-        Response<CheckNameAvailabilityResponseInner> inner
-            = this.serviceClient().checkGlobalWithResponse(body, context);
-        if (inner != null) {
-            return new SimpleResponse<>(inner.getRequest(), inner.getStatusCode(), inner.getHeaders(),
-                new CheckNameAvailabilityResponseImpl(inner.getValue(), this.manager()));
-        } else {
-            return null;
-        }
+        return this.serviceClient().checkGlobalWithResponse(body, context);
     }
 
-    public CheckNameAvailabilityResponse checkGlobal(CheckNameAvailabilityRequest body) {
-        CheckNameAvailabilityResponseInner inner = this.serviceClient().checkGlobal(body);
-        if (inner != null) {
-            return new CheckNameAvailabilityResponseImpl(inner, this.manager());
-        } else {
-            return null;
-        }
+    public CheckNameAvailabilityResponseInner checkGlobal(CheckNameAvailabilityRequest body) {
+        return this.serviceClient().checkGlobal(body);
     }
 
-    public Response<CheckNameAvailabilityResponse> checkLocalWithResponse(String location,
+    public Response<CheckNameAvailabilityResponseInner> checkLocalWithResponse(String location,
         CheckNameAvailabilityRequest body, Context context) {
-        Response<CheckNameAvailabilityResponseInner> inner
-            = this.serviceClient().checkLocalWithResponse(location, body, context);
-        if (inner != null) {
-            return new SimpleResponse<>(inner.getRequest(), inner.getStatusCode(), inner.getHeaders(),
-                new CheckNameAvailabilityResponseImpl(inner.getValue(), this.manager()));
-        } else {
-            return null;
-        }
+        return this.serviceClient().checkLocalWithResponse(location, body, context);
     }
 
-    public CheckNameAvailabilityResponse checkLocal(String location, CheckNameAvailabilityRequest body) {
-        CheckNameAvailabilityResponseInner inner = this.serviceClient().checkLocal(location, body);
-        if (inner != null) {
-            return new CheckNameAvailabilityResponseImpl(inner, this.manager());
-        } else {
-            return null;
-        }
+    public CheckNameAvailabilityResponseInner checkLocal(String location, CheckNameAvailabilityRequest body) {
+        return this.serviceClient().checkLocal(location, body);
     }
 
     private CheckNameAvailabilitiesClient serviceClient() {

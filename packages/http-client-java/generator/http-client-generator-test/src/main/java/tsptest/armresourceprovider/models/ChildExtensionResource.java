@@ -4,8 +4,8 @@
 
 package tsptest.armresourceprovider.models;
 
-import com.azure.core.management.SystemData;
-import com.azure.core.util.Context;
+import com.azure.v2.core.management.SystemData;
+import com.azure.v2.core.util.Context;
 import tsptest.armresourceprovider.fluent.models.ChildExtensionResourceInner;
 
 /**
@@ -130,7 +130,7 @@ public interface ChildExtensionResource {
     /**
      * The template for ChildExtensionResource update.
      */
-    interface Update {
+    interface Update extends UpdateStages.WithProperties {
         /**
          * Executes the update request.
          * 
@@ -151,6 +151,18 @@ public interface ChildExtensionResource {
      * The ChildExtensionResource update stages.
      */
     interface UpdateStages {
+        /**
+         * The stage of the ChildExtensionResource update allowing to specify properties.
+         */
+        interface WithProperties {
+            /**
+             * Specifies the properties property: The resource-specific properties for this resource..
+             * 
+             * @param properties The resource-specific properties for this resource.
+             * @return the next definition stage.
+             */
+            Update withProperties(ChildExtensionResourceProperties properties);
+        }
     }
 
     /**

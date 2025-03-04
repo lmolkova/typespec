@@ -5,9 +5,9 @@
 package azure.resourcemanager.resources.fluent.models;
 
 import azure.resourcemanager.resources.models.ExtensionsResourceProperties;
-import com.azure.core.annotation.Fluent;
-import com.azure.core.management.ProxyResource;
-import com.azure.core.management.SystemData;
+import com.azure.v2.core.annotation.Fluent;
+import com.azure.v2.core.management.ProxyResource;
+import com.azure.v2.core.management.SystemData;
 import com.azure.json.JsonReader;
 import com.azure.json.JsonToken;
 import com.azure.json.JsonWriter;

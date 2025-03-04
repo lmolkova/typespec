@@ -4,7 +4,8 @@
 
 package tsptest.armresourceprovider.models;
 
-import com.azure.core.annotation.Fluent;
+import azure.resourcemanager.commontypes.models.ManagedServiceIdentity;
+import com.azure.v2.core.annotation.Fluent;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -50,8 +51,5 @@ public final class CustomTemplateResourcePatch {
      * @throws IllegalArgumentException thrown if the instance is not valid.
      */
     public void validate() {
-        if (identity() != null) {
-            identity().validate();
-        }
     }
 }

@@ -1,15 +1,6 @@
 {
-  "flavor": "Azure", 
+  "flavor": "azurev2", 
   "CrossLanguageDefinitionId": {
-    "tsptest.model.ModelAsyncClient": "TspTest.Model.ModelOp",
-    "tsptest.model.ModelAsyncClient.get3": "TspTest.Model.ModelOp.get3",
-    "tsptest.model.ModelAsyncClient.get3WithResponse": "TspTest.Model.ModelOp.get3",
-    "tsptest.model.ModelAsyncClient.put1": "TspTest.Model.ModelOp.put1",
-    "tsptest.model.ModelAsyncClient.put1WithResponse": "TspTest.Model.ModelOp.put1",
-    "tsptest.model.ModelAsyncClient.put2": "TspTest.Model.ModelOp.put2",
-    "tsptest.model.ModelAsyncClient.put2WithResponse": "TspTest.Model.ModelOp.put2",
-    "tsptest.model.ModelAsyncClient.putNested": "TspTest.Model.ModelOp.putNested",
-    "tsptest.model.ModelAsyncClient.putNestedWithResponse": "TspTest.Model.ModelOp.putNested",
     "tsptest.model.ModelClient": "TspTest.Model.ModelOp",
     "tsptest.model.ModelClient.get3": "TspTest.Model.ModelOp.get3",
     "tsptest.model.ModelClient.get3WithResponse": "TspTest.Model.ModelOp.get3",

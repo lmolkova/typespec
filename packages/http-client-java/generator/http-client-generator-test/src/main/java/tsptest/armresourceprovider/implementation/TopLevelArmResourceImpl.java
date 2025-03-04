@@ -4,9 +4,9 @@
 
 package tsptest.armresourceprovider.implementation;
 
-import com.azure.core.management.Region;
-import com.azure.core.management.SystemData;
-import com.azure.core.util.Context;
+import com.azure.v2.core.management.Region;
+import com.azure.v2.core.management.SystemData;
+import com.azure.v2.core.util.Context;
 import java.time.OffsetDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -15,7 +15,6 @@ import tsptest.armresourceprovider.fluent.models.TopLevelArmResourceInner;
 import tsptest.armresourceprovider.models.ProvisioningState;
 import tsptest.armresourceprovider.models.Result;
 import tsptest.armresourceprovider.models.TopLevelArmResource;
-import tsptest.armresourceprovider.models.TopLevelArmResourceUpdate;
 
 public final class TopLevelArmResourceImpl
     implements TopLevelArmResource, TopLevelArmResource.Definition, TopLevelArmResource.Update {
@@ -105,8 +104,6 @@ public final class TopLevelArmResourceImpl
 
     private String topLevelArmResourceName;
 
-    private TopLevelArmResourceUpdate updateProperties;
-
     public TopLevelArmResourceImpl withExistingResourceGroup(String resourceGroupName) {
         this.resourceGroupName = resourceGroupName;
         return this;
@@ -133,23 +130,20 @@ public final class TopLevelArmResourceImpl
     }
 
     public TopLevelArmResourceImpl update() {
-        this.updateProperties = new TopLevelArmResourceUpdate();
         return this;
     }
 
     public TopLevelArmResource apply() {
         this.innerObject = serviceManager.serviceClient()
             .getTopLevelArmResourceInterfaces()
-            .updateWithResponse(resourceGroupName, topLevelArmResourceName, updateProperties, Context.NONE)
-            .getValue();
+            .createOrUpdate(resourceGroupName, topLevelArmResourceName, this.innerModel(), Context.NONE);
         return this;
     }
 
     public TopLevelArmResource apply(Context context) {
         this.innerObject = serviceManager.serviceClient()
             .getTopLevelArmResourceInterfaces()
-            .updateWithResponse(resourceGroupName, topLevelArmResourceName, updateProperties, context)
-            .getValue();
+            .createOrUpdate(resourceGroupName, topLevelArmResourceName, this.innerModel(), context);
         return this;
     }
 
@@ -198,51 +192,27 @@ public final class TopLevelArmResourceImpl
     }
 
     public TopLevelArmResourceImpl withTags(Map<String, String> tags) {
-        if (isInCreateMode()) {
-            this.innerModel().withTags(tags);
-            return this;
-        } else {
-            this.updateProperties.withTags(tags);
-            return this;
-        }
+        this.innerModel().withTags(tags);
+        return this;
     }
 
     public TopLevelArmResourceImpl withUserName(String userName) {
-        if (isInCreateMode()) {
-            this.innerModel().withUserName(userName);
-            return this;
-        } else {
-            this.updateProperties.withUserName(userName);
-            return this;
-        }
+        this.innerModel().withUserName(userName);
+        return this;
     }
 
     public TopLevelArmResourceImpl withUserNames(String userNames) {
-        if (isInCreateMode()) {
-            this.innerModel().withUserNames(userNames);
-            return this;
-        } else {
-            this.updateProperties.withUserNames(userNames);
-            return this;
-        }
+        this.innerModel().withUserNames(userNames);
+        return this;
     }
 
     public TopLevelArmResourceImpl withAccuserName(String accuserName) {
-        if (isInCreateMode()) {
-            this.innerModel().withAccuserName(accuserName);
-            return this;
-        } else {
-            this.updateProperties.withAccuserName(accuserName);
-            return this;
-        }
+        this.innerModel().withAccuserName(accuserName);
+        return this;
     }
 
     public TopLevelArmResourceImpl withStartTimeStamp(OffsetDateTime startTimeStamp) {
         this.innerModel().withStartTimeStamp(startTimeStamp);
         return this;
-    }
-
-    private boolean isInCreateMode() {
-        return this.innerModel().id() == null;
     }
 }

@@ -1,20 +1,6 @@
 {
-  "flavor": "Azure", 
+  "flavor": "azurev2", 
   "CrossLanguageDefinitionId": {
-    "azure.core.basic.BasicAsyncClient": "_Specs_.Azure.Core.Basic",
-    "azure.core.basic.BasicAsyncClient.createOrReplace": "_Specs_.Azure.Core.Basic.createOrReplace",
-    "azure.core.basic.BasicAsyncClient.createOrReplaceWithResponse": "_Specs_.Azure.Core.Basic.createOrReplace",
-    "azure.core.basic.BasicAsyncClient.createOrUpdate": "_Specs_.Azure.Core.Basic.createOrUpdate",
-    "azure.core.basic.BasicAsyncClient.createOrUpdateWithResponse": "_Specs_.Azure.Core.Basic.createOrUpdate",
-    "azure.core.basic.BasicAsyncClient.delete": "_Specs_.Azure.Core.Basic.delete",
-    "azure.core.basic.BasicAsyncClient.deleteWithResponse": "_Specs_.Azure.Core.Basic.delete",
-    "azure.core.basic.BasicAsyncClient.export": "_Specs_.Azure.Core.Basic.export",
-    "azure.core.basic.BasicAsyncClient.exportAllUsers": "_Specs_.Azure.Core.Basic.exportAllUsers",
-    "azure.core.basic.BasicAsyncClient.exportAllUsersWithResponse": "_Specs_.Azure.Core.Basic.exportAllUsers",
-    "azure.core.basic.BasicAsyncClient.exportWithResponse": "_Specs_.Azure.Core.Basic.export",
-    "azure.core.basic.BasicAsyncClient.get": "_Specs_.Azure.Core.Basic.get",
-    "azure.core.basic.BasicAsyncClient.getWithResponse": "_Specs_.Azure.Core.Basic.get",
-    "azure.core.basic.BasicAsyncClient.list": "_Specs_.Azure.Core.Basic.list",
     "azure.core.basic.BasicClient": "_Specs_.Azure.Core.Basic",
     "azure.core.basic.BasicClient.createOrReplace": "_Specs_.Azure.Core.Basic.createOrReplace",
     "azure.core.basic.BasicClient.createOrReplaceWithResponse": "_Specs_.Azure.Core.Basic.createOrReplace",
@@ -32,6 +18,10 @@
     "azure.core.basic.BasicClientBuilder": "_Specs_.Azure.Core.Basic",
     "azure.core.basic.models.User": "_Specs_.Azure.Core.Basic.User",
     "azure.core.basic.models.UserList": "_Specs_.Azure.Core.Basic.UserList",
-    "azure.core.basic.models.UserOrder": "_Specs_.Azure.Core.Basic.UserOrder"
+    "azure.core.basic.models.UserOrder": "_Specs_.Azure.Core.Basic.UserOrder",
+    "azure.core.foundations.implementation.models.PagedUser": "Azure.Core.Foundations.CustomPage",
+    "azure.core.foundations.models.Error": "Azure.Core.Foundations.Error",
+    "azure.core.foundations.models.ErrorResponse": "Azure.Core.Foundations.ErrorResponse",
+    "azure.core.foundations.models.InnerError": "Azure.Core.Foundations.InnerError"
   }
 }

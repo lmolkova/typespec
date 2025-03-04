@@ -4,7 +4,7 @@
 
 package tsptest.armresourceprovider.models;
 
-import com.azure.core.util.ExpandableStringEnum;
+import com.azure.v2.core.util.ExpandableStringEnum;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import java.util.Collection;
 

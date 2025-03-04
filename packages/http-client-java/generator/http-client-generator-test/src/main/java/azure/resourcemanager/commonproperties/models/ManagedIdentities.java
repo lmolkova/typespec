@@ -4,8 +4,8 @@
 
 package azure.resourcemanager.commonproperties.models;
 
-import com.azure.core.http.rest.Response;
-import com.azure.core.util.Context;
+import com.azure.v2.core.http.rest.Response;
+import com.azure.v2.core.util.Context;
 
 /**
  * Resource collection API of ManagedIdentities.
@@ -18,7 +18,7 @@ public interface ManagedIdentities {
      * @param managedIdentityTrackedResourceName arm resource name for path.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return a ManagedIdentityTrackedResource along with {@link Response}.
      */
@@ -31,7 +31,7 @@ public interface ManagedIdentities {
      * @param resourceGroupName The name of the resource group. The name is case insensitive.
      * @param managedIdentityTrackedResourceName arm resource name for path.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return a ManagedIdentityTrackedResource.
      */
@@ -43,7 +43,7 @@ public interface ManagedIdentities {
      * 
      * @param id the resource ID.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return a ManagedIdentityTrackedResource along with {@link Response}.
      */
@@ -55,7 +55,7 @@ public interface ManagedIdentities {
      * @param id the resource ID.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return a ManagedIdentityTrackedResource along with {@link Response}.
      */

@@ -4,11 +4,12 @@
 
 package tsptest.armresourceprovider.implementation;
 
-import com.azure.core.http.rest.PagedIterable;
-import com.azure.core.http.rest.Response;
-import com.azure.core.http.rest.SimpleResponse;
-import com.azure.core.util.Context;
-import com.azure.core.util.logging.ClientLogger;
+import azure.resourcemanager.foundations.models.ChildExtensionResourceUpdate;
+import com.azure.v2.core.http.rest.PagedIterable;
+import com.azure.v2.core.http.rest.Response;
+import com.azure.v2.core.http.rest.SimpleResponse;
+import com.azure.v2.core.util.Context;
+import com.azure.v2.core.util.logging.ClientLogger;
 import tsptest.armresourceprovider.fluent.ChildExtensionResourceInterfacesClient;
 import tsptest.armresourceprovider.fluent.models.ChildExtensionResourceInner;
 import tsptest.armresourceprovider.models.ChildExtensionResource;
@@ -43,6 +44,29 @@ public final class ChildExtensionResourceInterfacesImpl implements ChildExtensio
         String childExtensionResourceName) {
         ChildExtensionResourceInner inner
             = this.serviceClient().get(resourceUri, topLevelArmResourceName, childExtensionResourceName);
+        if (inner != null) {
+            return new ChildExtensionResourceImpl(inner, this.manager());
+        } else {
+            return null;
+        }
+    }
+
+    public Response<ChildExtensionResource> updateWithResponse(String resourceUri, String topLevelArmResourceName,
+        String childExtensionResourceName, ChildExtensionResourceUpdate properties, Context context) {
+        Response<ChildExtensionResourceInner> inner = this.serviceClient()
+            .updateWithResponse(resourceUri, topLevelArmResourceName, childExtensionResourceName, properties, context);
+        if (inner != null) {
+            return new SimpleResponse<>(inner.getRequest(), inner.getStatusCode(), inner.getHeaders(),
+                new ChildExtensionResourceImpl(inner.getValue(), this.manager()));
+        } else {
+            return null;
+        }
+    }
+
+    public ChildExtensionResource update(String resourceUri, String topLevelArmResourceName,
+        String childExtensionResourceName, ChildExtensionResourceUpdate properties) {
+        ChildExtensionResourceInner inner
+            = this.serviceClient().update(resourceUri, topLevelArmResourceName, childExtensionResourceName, properties);
         if (inner != null) {
             return new ChildExtensionResourceImpl(inner, this.manager());
         } else {

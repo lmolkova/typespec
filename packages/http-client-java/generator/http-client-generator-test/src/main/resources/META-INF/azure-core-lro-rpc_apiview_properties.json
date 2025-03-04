@@ -1,14 +1,12 @@
 {
-  "flavor": "Azure", 
+  "flavor": "azurev2", 
   "CrossLanguageDefinitionId": {
-    "azure.core.lro.rpc.RpcAsyncClient": "_Specs_.Azure.Core.Lro.Rpc",
-    "azure.core.lro.rpc.RpcAsyncClient.beginLongRunningRpc": "_Specs_.Azure.Core.Lro.Rpc.longRunningRpc",
-    "azure.core.lro.rpc.RpcAsyncClient.beginLongRunningRpcWithModel": "_Specs_.Azure.Core.Lro.Rpc.longRunningRpc",
     "azure.core.lro.rpc.RpcClient": "_Specs_.Azure.Core.Lro.Rpc",
-    "azure.core.lro.rpc.RpcClient.beginLongRunningRpc": "_Specs_.Azure.Core.Lro.Rpc.longRunningRpc",
-    "azure.core.lro.rpc.RpcClient.beginLongRunningRpcWithModel": "_Specs_.Azure.Core.Lro.Rpc.longRunningRpc",
     "azure.core.lro.rpc.RpcClientBuilder": "_Specs_.Azure.Core.Lro.Rpc",
     "azure.core.lro.rpc.models.GenerationOptions": "_Specs_.Azure.Core.Lro.Rpc.GenerationOptions",
-    "azure.core.lro.rpc.models.GenerationResult": "_Specs_.Azure.Core.Lro.Rpc.GenerationResult"
+    "azure.core.lro.rpc.models.GenerationResult": "_Specs_.Azure.Core.Lro.Rpc.GenerationResult",
+    "com.azure.core.models.models.Error": "Azure.Core.Foundations.Error",
+    "com.azure.core.models.models.InnerError": "Azure.Core.Foundations.InnerError",
+    "com.azure.core.util.polling.models.PollOperationDetails": null
   }
 }

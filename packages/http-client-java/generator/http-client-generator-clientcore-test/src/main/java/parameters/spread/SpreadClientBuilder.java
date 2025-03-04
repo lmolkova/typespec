@@ -41,10 +41,6 @@ public final class SpreadClientBuilder implements HttpTrait<SpreadClientBuilder>
     private static final String SDK_VERSION = "version";
 
     @Metadata(generated = true)
-    private static final LibraryInstrumentationOptions LIBRARY_INSTRUMENTATION_OPTIONS
-        = new LibraryInstrumentationOptions("");
-
-    @Metadata(generated = true)
     private final List<HttpPipelinePolicy> pipelinePolicies;
 
     /**
@@ -244,8 +240,9 @@ public final class SpreadClientBuilder implements HttpTrait<SpreadClientBuilder>
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new ModelClient(buildInnerClient().getModels(), instrumentation);
     }
 
@@ -259,8 +256,9 @@ public final class SpreadClientBuilder implements HttpTrait<SpreadClientBuilder>
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new AliasClient(buildInnerClient().getAlias(), instrumentation);
     }
 

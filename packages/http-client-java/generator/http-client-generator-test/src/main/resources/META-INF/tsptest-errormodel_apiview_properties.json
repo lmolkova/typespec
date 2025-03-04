@@ -1,9 +1,9 @@
 {
-  "flavor": "Azure", 
+  "flavor": "azurev2", 
   "CrossLanguageDefinitionId": {
-    "tsptest.errormodel.ErrorModelAsyncClient": "TspTest.ErrorModel.ErrorOp",
-    "tsptest.errormodel.ErrorModelAsyncClient.read": "TspTest.ErrorModel.ErrorOp.read",
-    "tsptest.errormodel.ErrorModelAsyncClient.readWithResponse": "TspTest.ErrorModel.ErrorOp.read",
+    "azure.core.foundations.models.Error": "Azure.Core.Foundations.Error",
+    "azure.core.foundations.models.ErrorResponse": "Azure.Core.Foundations.ErrorResponse",
+    "azure.core.foundations.models.InnerError": "Azure.Core.Foundations.InnerError",
     "tsptest.errormodel.ErrorModelClient": "TspTest.ErrorModel.ErrorOp",
     "tsptest.errormodel.ErrorModelClient.read": "TspTest.ErrorModel.ErrorOp.read",
     "tsptest.errormodel.ErrorModelClient.readWithResponse": "TspTest.ErrorModel.ErrorOp.read",

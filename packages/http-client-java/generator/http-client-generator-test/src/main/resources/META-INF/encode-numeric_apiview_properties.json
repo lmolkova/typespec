@@ -1,13 +1,6 @@
 {
-  "flavor": "Azure", 
+  "flavor": "azurev2", 
   "CrossLanguageDefinitionId": {
-    "encode.numeric.NumericAsyncClient": "Encode.Numeric.Property",
-    "encode.numeric.NumericAsyncClient.safeintAsString": "Encode.Numeric.Property.safeintAsString",
-    "encode.numeric.NumericAsyncClient.safeintAsStringWithResponse": "Encode.Numeric.Property.safeintAsString",
-    "encode.numeric.NumericAsyncClient.uint32AsStringOptional": "Encode.Numeric.Property.uint32AsStringOptional",
-    "encode.numeric.NumericAsyncClient.uint32AsStringOptionalWithResponse": "Encode.Numeric.Property.uint32AsStringOptional",
-    "encode.numeric.NumericAsyncClient.uint8AsString": "Encode.Numeric.Property.uint8AsString",
-    "encode.numeric.NumericAsyncClient.uint8AsStringWithResponse": "Encode.Numeric.Property.uint8AsString",
     "encode.numeric.NumericClient": "Encode.Numeric.Property",
     "encode.numeric.NumericClient.safeintAsString": "Encode.Numeric.Property.safeintAsString",
     "encode.numeric.NumericClient.safeintAsStringWithResponse": "Encode.Numeric.Property.safeintAsString",

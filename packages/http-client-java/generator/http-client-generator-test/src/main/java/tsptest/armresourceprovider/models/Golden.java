@@ -4,7 +4,7 @@
 
 package tsptest.armresourceprovider.models;
 
-import com.azure.core.annotation.Fluent;
+import com.azure.v2.core.annotation.Fluent;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeId;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

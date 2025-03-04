@@ -1,9 +1,6 @@
 {
-  "flavor": "Azure", 
+  "flavor": "azurev2", 
   "CrossLanguageDefinitionId": {
-    "tsptest.literalservice.LiteralServiceAsyncClient": "TspTest.LiteralService.LiteralOp",
-    "tsptest.literalservice.LiteralServiceAsyncClient.put": "TspTest.LiteralService.LiteralOp.put",
-    "tsptest.literalservice.LiteralServiceAsyncClient.putWithResponse": "TspTest.LiteralService.LiteralOp.put",
     "tsptest.literalservice.LiteralServiceClient": "TspTest.LiteralService.LiteralOp",
     "tsptest.literalservice.LiteralServiceClient.put": "TspTest.LiteralService.LiteralOp.put",
     "tsptest.literalservice.LiteralServiceClient.putWithResponse": "TspTest.LiteralService.LiteralOp.put",

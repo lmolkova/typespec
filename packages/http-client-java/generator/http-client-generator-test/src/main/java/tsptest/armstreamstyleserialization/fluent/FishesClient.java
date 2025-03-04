@@ -4,10 +4,10 @@
 
 package tsptest.armstreamstyleserialization.fluent;
 
-import com.azure.core.annotation.ReturnType;
-import com.azure.core.annotation.ServiceMethod;
-import com.azure.core.http.rest.Response;
-import com.azure.core.util.Context;
+import com.azure.v2.core.annotation.ReturnType;
+import com.azure.v2.core.annotation.ServiceMethod;
+import com.azure.v2.core.http.rest.Response;
+import com.azure.v2.core.util.Context;
 import tsptest.armstreamstyleserialization.fluent.models.FishInner;
 import tsptest.armstreamstyleserialization.fluent.models.OutputOnlyModelInner;
 
@@ -69,7 +69,7 @@ public interface FishesClient {
      * 
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return this is base model for polymorphic OutputOnlyModel along with {@link Response}.
      */
@@ -79,7 +79,7 @@ public interface FishesClient {
     /**
      * The getOutputOnlyModel operation.
      * 
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return this is base model for polymorphic OutputOnlyModel.
      */

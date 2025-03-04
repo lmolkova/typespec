@@ -4,11 +4,11 @@
 
 package tsptest.armresourceprovider.fluent;
 
-import com.azure.core.annotation.ReturnType;
-import com.azure.core.annotation.ServiceMethod;
-import com.azure.core.management.polling.PollResult;
-import com.azure.core.util.Context;
-import com.azure.core.util.polling.SyncPoller;
+import com.azure.v2.core.annotation.ReturnType;
+import com.azure.v2.core.annotation.ServiceMethod;
+import com.azure.v2.core.management.polling.PollResult;
+import com.azure.v2.core.util.Context;
+import com.azure.v2.core.util.polling.SyncPoller;
 import tsptest.armresourceprovider.fluent.models.CustomTemplateResourceInner;
 import tsptest.armresourceprovider.models.CustomTemplateResourcePatch;
 
@@ -23,7 +23,7 @@ public interface CustomTemplateResourceInterfacesClient {
      * @param customTemplateResourceName arm resource name for path.
      * @param resource Resource create parameters.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the {@link SyncPoller} for polling of concrete tracked resource types can be created by aliasing this
      * type using a specific property type.
@@ -42,7 +42,7 @@ public interface CustomTemplateResourceInterfacesClient {
      * @param ifNoneMatch The request should only proceed if no entity matches this string.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the {@link SyncPoller} for polling of concrete tracked resource types can be created by aliasing this
      * type using a specific property type.
@@ -59,7 +59,7 @@ public interface CustomTemplateResourceInterfacesClient {
      * @param customTemplateResourceName arm resource name for path.
      * @param resource Resource create parameters.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return concrete tracked resource types can be created by aliasing this type using a specific property type.
      */
@@ -77,7 +77,7 @@ public interface CustomTemplateResourceInterfacesClient {
      * @param ifNoneMatch The request should only proceed if no entity matches this string.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return concrete tracked resource types can be created by aliasing this type using a specific property type.
      */
@@ -92,7 +92,7 @@ public interface CustomTemplateResourceInterfacesClient {
      * @param customTemplateResourceName arm resource name for path.
      * @param properties The resource properties to be updated.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the {@link SyncPoller} for polling of concrete tracked resource types can be created by aliasing this
      * type using a specific property type.
@@ -109,7 +109,7 @@ public interface CustomTemplateResourceInterfacesClient {
      * @param properties The resource properties to be updated.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the {@link SyncPoller} for polling of concrete tracked resource types can be created by aliasing this
      * type using a specific property type.
@@ -126,7 +126,7 @@ public interface CustomTemplateResourceInterfacesClient {
      * @param customTemplateResourceName arm resource name for path.
      * @param properties The resource properties to be updated.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return concrete tracked resource types can be created by aliasing this type using a specific property type.
      */
@@ -142,7 +142,7 @@ public interface CustomTemplateResourceInterfacesClient {
      * @param properties The resource properties to be updated.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return concrete tracked resource types can be created by aliasing this type using a specific property type.
      */

@@ -8,10 +8,10 @@ import azure.resourcemanager.resources.fluent.models.TopLevelTrackedResourceInne
 import azure.resourcemanager.resources.models.NotificationDetails;
 import azure.resourcemanager.resources.models.TopLevelTrackedResource;
 import azure.resourcemanager.resources.models.TopLevelTrackedResourceProperties;
-import com.azure.core.http.rest.Response;
-import com.azure.core.management.Region;
-import com.azure.core.management.SystemData;
-import com.azure.core.util.Context;
+import com.azure.v2.core.http.rest.Response;
+import com.azure.v2.core.management.Region;
+import com.azure.v2.core.management.SystemData;
+import com.azure.v2.core.util.Context;
 import java.util.Collections;
 import java.util.Map;
 

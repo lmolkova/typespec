@@ -54,10 +54,6 @@ public final class DictionaryClientBuilder
     private static final String SDK_VERSION = "version";
 
     @Metadata(generated = true)
-    private static final LibraryInstrumentationOptions LIBRARY_INSTRUMENTATION_OPTIONS
-        = new LibraryInstrumentationOptions("");
-
-    @Metadata(generated = true)
     private final List<HttpPipelinePolicy> pipelinePolicies;
 
     /**
@@ -257,8 +253,9 @@ public final class DictionaryClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new Int32ValueClient(buildInnerClient().getInt32Values(), instrumentation);
     }
 
@@ -272,8 +269,9 @@ public final class DictionaryClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new Int64ValueClient(buildInnerClient().getInt64Values(), instrumentation);
     }
 
@@ -287,8 +285,9 @@ public final class DictionaryClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new BooleanValueClient(buildInnerClient().getBooleanValues(), instrumentation);
     }
 
@@ -302,8 +301,9 @@ public final class DictionaryClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new StringValueClient(buildInnerClient().getStringValues(), instrumentation);
     }
 
@@ -317,8 +317,9 @@ public final class DictionaryClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new Float32ValueClient(buildInnerClient().getFloat32Values(), instrumentation);
     }
 
@@ -332,8 +333,9 @@ public final class DictionaryClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new DatetimeValueClient(buildInnerClient().getDatetimeValues(), instrumentation);
     }
 
@@ -347,8 +349,9 @@ public final class DictionaryClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new DurationValueClient(buildInnerClient().getDurationValues(), instrumentation);
     }
 
@@ -362,8 +365,9 @@ public final class DictionaryClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new UnknownValueClient(buildInnerClient().getUnknownValues(), instrumentation);
     }
 
@@ -377,8 +381,9 @@ public final class DictionaryClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new ModelValueClient(buildInnerClient().getModelValues(), instrumentation);
     }
 
@@ -392,8 +397,9 @@ public final class DictionaryClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new RecursiveModelValueClient(buildInnerClient().getRecursiveModelValues(), instrumentation);
     }
 
@@ -407,8 +413,9 @@ public final class DictionaryClientBuilder
         HttpInstrumentationOptions localHttpInstrumentationOptions = this.httpInstrumentationOptions == null
             ? new HttpInstrumentationOptions()
             : this.httpInstrumentationOptions;
+        LibraryInstrumentationOptions libraryInstrumentationOptions = new LibraryInstrumentationOptions("TODO");
         Instrumentation instrumentation
-            = Instrumentation.create(localHttpInstrumentationOptions, LIBRARY_INSTRUMENTATION_OPTIONS, null);
+            = Instrumentation.create(localHttpInstrumentationOptions, libraryInstrumentationOptions);
         return new NullableFloatValueClient(buildInnerClient().getNullableFloatValues(), instrumentation);
     }
 

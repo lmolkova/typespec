@@ -4,13 +4,12 @@
 
 package azure.resourcemanager.operationtemplates.implementation;
 
+import azure.resourcemanager.commontypes.fluent.models.OperationInner;
 import azure.resourcemanager.operationtemplates.fluent.OperationsClient;
-import azure.resourcemanager.operationtemplates.fluent.models.OperationInner;
-import azure.resourcemanager.operationtemplates.models.Operation;
 import azure.resourcemanager.operationtemplates.models.Operations;
-import com.azure.core.http.rest.PagedIterable;
-import com.azure.core.util.Context;
-import com.azure.core.util.logging.ClientLogger;
+import com.azure.v2.core.http.rest.PagedIterable;
+import com.azure.v2.core.util.Context;
+import com.azure.v2.core.util.logging.ClientLogger;
 
 public final class OperationsImpl implements Operations {
     private static final ClientLogger LOGGER = new ClientLogger(OperationsImpl.class);
@@ -25,14 +24,12 @@ public final class OperationsImpl implements Operations {
         this.serviceManager = serviceManager;
     }
 
-    public PagedIterable<Operation> list() {
-        PagedIterable<OperationInner> inner = this.serviceClient().list();
-        return ResourceManagerUtils.mapPage(inner, inner1 -> new OperationImpl(inner1, this.manager()));
+    public PagedIterable<OperationInner> list() {
+        return this.serviceClient().list();
     }
 
-    public PagedIterable<Operation> list(Context context) {
-        PagedIterable<OperationInner> inner = this.serviceClient().list(context);
-        return ResourceManagerUtils.mapPage(inner, inner1 -> new OperationImpl(inner1, this.manager()));
+    public PagedIterable<OperationInner> list(Context context) {
+        return this.serviceClient().list(context);
     }
 
     private OperationsClient serviceClient() {

@@ -4,9 +4,10 @@
 
 package tsptest.armresourceprovider.implementation;
 
-import com.azure.core.management.Region;
-import com.azure.core.management.SystemData;
-import com.azure.core.util.Context;
+import azure.resourcemanager.commontypes.models.ManagedServiceIdentity;
+import com.azure.v2.core.management.Region;
+import com.azure.v2.core.management.SystemData;
+import com.azure.v2.core.util.Context;
 import java.util.Collections;
 import java.util.Map;
 import tsptest.armresourceprovider.fluent.models.CustomTemplateResourceInner;
@@ -15,7 +16,6 @@ import tsptest.armresourceprovider.models.CustomTemplateResourcePatch;
 import tsptest.armresourceprovider.models.CustomTemplateResourcePropertiesAnonymousEmptyModel;
 import tsptest.armresourceprovider.models.Dog;
 import tsptest.armresourceprovider.models.EmptyModel;
-import tsptest.armresourceprovider.models.ManagedServiceIdentity;
 import tsptest.armresourceprovider.models.PriorityModel;
 import tsptest.armresourceprovider.models.ProvisioningState;
 

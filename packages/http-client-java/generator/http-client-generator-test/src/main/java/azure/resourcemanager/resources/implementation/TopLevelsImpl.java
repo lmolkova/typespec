@@ -9,11 +9,11 @@ import azure.resourcemanager.resources.fluent.models.TopLevelTrackedResourceInne
 import azure.resourcemanager.resources.models.NotificationDetails;
 import azure.resourcemanager.resources.models.TopLevelTrackedResource;
 import azure.resourcemanager.resources.models.TopLevels;
-import com.azure.core.http.rest.PagedIterable;
-import com.azure.core.http.rest.Response;
-import com.azure.core.http.rest.SimpleResponse;
-import com.azure.core.util.Context;
-import com.azure.core.util.logging.ClientLogger;
+import com.azure.v2.core.http.rest.PagedIterable;
+import com.azure.v2.core.http.rest.Response;
+import com.azure.v2.core.http.rest.SimpleResponse;
+import com.azure.v2.core.util.Context;
+import com.azure.v2.core.util.logging.ClientLogger;
 
 public final class TopLevelsImpl implements TopLevels {
     private static final ClientLogger LOGGER = new ClientLogger(TopLevelsImpl.class);

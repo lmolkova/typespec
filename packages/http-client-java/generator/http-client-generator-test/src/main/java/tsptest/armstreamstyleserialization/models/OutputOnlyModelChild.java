@@ -4,8 +4,8 @@
 
 package tsptest.armstreamstyleserialization.models;
 
-import com.azure.core.annotation.Immutable;
-import com.azure.core.util.logging.ClientLogger;
+import com.azure.v2.core.annotation.Immutable;
+import com.azure.v2.core.util.logging.ClientLogger;
 import com.azure.json.JsonReader;
 import com.azure.json.JsonToken;
 import com.azure.json.JsonWriter;

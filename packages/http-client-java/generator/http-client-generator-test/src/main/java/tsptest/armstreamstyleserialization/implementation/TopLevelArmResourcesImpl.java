@@ -4,12 +4,12 @@
 
 package tsptest.armstreamstyleserialization.implementation;
 
-import com.azure.core.util.Context;
-import com.azure.core.util.logging.ClientLogger;
+import azure.resourcemanager.foundations.models.TopLevelArmResourceTagsUpdate;
+import com.azure.v2.core.util.Context;
+import com.azure.v2.core.util.logging.ClientLogger;
 import tsptest.armstreamstyleserialization.fluent.TopLevelArmResourcesClient;
 import tsptest.armstreamstyleserialization.fluent.models.TopLevelArmResourceInner;
 import tsptest.armstreamstyleserialization.models.TopLevelArmResource;
-import tsptest.armstreamstyleserialization.models.TopLevelArmResourceTagsUpdate;
 import tsptest.armstreamstyleserialization.models.TopLevelArmResources;
 
 public final class TopLevelArmResourcesImpl implements TopLevelArmResources {

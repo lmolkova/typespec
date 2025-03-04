@@ -1,9 +1,6 @@
 {
-  "flavor": "Azure", 
+  "flavor": "azurev2", 
   "CrossLanguageDefinitionId": {
-    "tsptest.specialchars.SpecialCharsAsyncClient": "TspTest.SpecialChars.BuiltinOp",
-    "tsptest.specialchars.SpecialCharsAsyncClient.read": "TspTest.SpecialChars.BuiltinOp.read",
-    "tsptest.specialchars.SpecialCharsAsyncClient.readWithResponse": "TspTest.SpecialChars.BuiltinOp.read",
     "tsptest.specialchars.SpecialCharsClient": "TspTest.SpecialChars.BuiltinOp",
     "tsptest.specialchars.SpecialCharsClient.read": "TspTest.SpecialChars.BuiltinOp.read",
     "tsptest.specialchars.SpecialCharsClient.readWithResponse": "TspTest.SpecialChars.BuiltinOp.read",

@@ -5,10 +5,10 @@
 package azure.resourcemanager.commonproperties.fluent.models;
 
 import azure.resourcemanager.commonproperties.models.ManagedIdentityTrackedResourceProperties;
-import azure.resourcemanager.commonproperties.models.ManagedServiceIdentity;
-import com.azure.core.annotation.Fluent;
-import com.azure.core.management.Resource;
-import com.azure.core.management.SystemData;
+import azure.resourcemanager.commontypes.models.ManagedServiceIdentity;
+import com.azure.v2.core.annotation.Fluent;
+import com.azure.v2.core.management.Resource;
+import com.azure.v2.core.management.SystemData;
 import com.azure.json.JsonReader;
 import com.azure.json.JsonToken;
 import com.azure.json.JsonWriter;
@@ -161,9 +161,6 @@ public final class ManagedIdentityTrackedResourceInner extends Resource {
     public void validate() {
         if (properties() != null) {
             properties().validate();
-        }
-        if (identity() != null) {
-            identity().validate();
         }
     }
 

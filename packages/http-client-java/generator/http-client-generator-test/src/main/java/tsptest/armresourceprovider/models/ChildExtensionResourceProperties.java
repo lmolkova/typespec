@@ -4,7 +4,7 @@
 
 package tsptest.armresourceprovider.models;
 
-import com.azure.core.annotation.Immutable;
+import com.azure.v2.core.annotation.Immutable;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**

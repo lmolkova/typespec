@@ -7,8 +7,8 @@ package azure.resourcemanager.resources.implementation;
 import azure.resourcemanager.resources.fluent.models.NestedProxyResourceInner;
 import azure.resourcemanager.resources.models.NestedProxyResource;
 import azure.resourcemanager.resources.models.NestedProxyResourceProperties;
-import com.azure.core.management.SystemData;
-import com.azure.core.util.Context;
+import com.azure.v2.core.management.SystemData;
+import com.azure.v2.core.util.Context;
 
 public final class NestedProxyResourceImpl
     implements NestedProxyResource, NestedProxyResource.Definition, NestedProxyResource.Update {

@@ -8,11 +8,11 @@ import azure.resourcemanager.resources.fluent.LocationResourcesClient;
 import azure.resourcemanager.resources.fluent.models.LocationResourceInner;
 import azure.resourcemanager.resources.models.LocationResource;
 import azure.resourcemanager.resources.models.LocationResources;
-import com.azure.core.http.rest.PagedIterable;
-import com.azure.core.http.rest.Response;
-import com.azure.core.http.rest.SimpleResponse;
-import com.azure.core.util.Context;
-import com.azure.core.util.logging.ClientLogger;
+import com.azure.v2.core.http.rest.PagedIterable;
+import com.azure.v2.core.http.rest.Response;
+import com.azure.v2.core.http.rest.SimpleResponse;
+import com.azure.v2.core.util.Context;
+import com.azure.v2.core.util.logging.ClientLogger;
 
 public final class LocationResourcesImpl implements LocationResources {
     private static final ClientLogger LOGGER = new ClientLogger(LocationResourcesImpl.class);

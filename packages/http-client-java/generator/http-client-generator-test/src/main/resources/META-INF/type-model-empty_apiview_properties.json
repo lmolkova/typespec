@@ -1,13 +1,6 @@
 {
-  "flavor": "Azure", 
+  "flavor": "azurev2", 
   "CrossLanguageDefinitionId": {
-    "type.model.empty.EmptyAsyncClient": "Type.Model.Empty",
-    "type.model.empty.EmptyAsyncClient.getEmpty": "Type.Model.Empty.getEmpty",
-    "type.model.empty.EmptyAsyncClient.getEmptyWithResponse": "Type.Model.Empty.getEmpty",
-    "type.model.empty.EmptyAsyncClient.postRoundTripEmpty": "Type.Model.Empty.postRoundTripEmpty",
-    "type.model.empty.EmptyAsyncClient.postRoundTripEmptyWithResponse": "Type.Model.Empty.postRoundTripEmpty",
-    "type.model.empty.EmptyAsyncClient.putEmpty": "Type.Model.Empty.putEmpty",
-    "type.model.empty.EmptyAsyncClient.putEmptyWithResponse": "Type.Model.Empty.putEmpty",
     "type.model.empty.EmptyClient": "Type.Model.Empty",
     "type.model.empty.EmptyClient.getEmpty": "Type.Model.Empty.getEmpty",
     "type.model.empty.EmptyClient.getEmptyWithResponse": "Type.Model.Empty.getEmpty",

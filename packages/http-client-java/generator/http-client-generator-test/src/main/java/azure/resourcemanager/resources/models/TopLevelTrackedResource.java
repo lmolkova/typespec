@@ -5,10 +5,10 @@
 package azure.resourcemanager.resources.models;
 
 import azure.resourcemanager.resources.fluent.models.TopLevelTrackedResourceInner;
-import com.azure.core.http.rest.Response;
-import com.azure.core.management.Region;
-import com.azure.core.management.SystemData;
-import com.azure.core.util.Context;
+import com.azure.v2.core.http.rest.Response;
+import com.azure.v2.core.management.Region;
+import com.azure.v2.core.management.SystemData;
+import com.azure.v2.core.util.Context;
 import java.util.Map;
 
 /**
@@ -270,7 +270,7 @@ public interface TopLevelTrackedResource {
      * @param body The content of the action request.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the {@link Response}.
      */
@@ -281,7 +281,7 @@ public interface TopLevelTrackedResource {
      * 
      * @param body The content of the action request.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      */
     void actionSync(NotificationDetails body);

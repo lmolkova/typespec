@@ -4,12 +4,11 @@
 
 package tsptest.armresourceprovider.implementation;
 
-import com.azure.core.management.SystemData;
-import com.azure.core.util.Context;
+import com.azure.v2.core.management.SystemData;
+import com.azure.v2.core.util.Context;
 import tsptest.armresourceprovider.fluent.models.ChildExtensionResourceInner;
 import tsptest.armresourceprovider.models.ChildExtensionResource;
 import tsptest.armresourceprovider.models.ChildExtensionResourceProperties;
-import tsptest.armresourceprovider.models.ChildExtensionResourceUpdate;
 
 public final class ChildExtensionResourceImpl
     implements ChildExtensionResource, ChildExtensionResource.Definition, ChildExtensionResource.Update {
@@ -51,8 +50,6 @@ public final class ChildExtensionResourceImpl
 
     private String childExtensionResourceName;
 
-    private ChildExtensionResourceUpdate updateProperties;
-
     public ChildExtensionResourceImpl withExistingTopLevelArmResource(String resourceUri,
         String topLevelArmResourceName) {
         this.resourceUri = resourceUri;
@@ -83,25 +80,22 @@ public final class ChildExtensionResourceImpl
     }
 
     public ChildExtensionResourceImpl update() {
-        this.updateProperties = new ChildExtensionResourceUpdate();
         return this;
     }
 
     public ChildExtensionResource apply() {
         this.innerObject = serviceManager.serviceClient()
             .getChildExtensionResourceInterfaces()
-            .updateWithResponse(resourceUri, topLevelArmResourceName, childExtensionResourceName, updateProperties,
-                Context.NONE)
-            .getValue();
+            .createOrUpdate(resourceUri, topLevelArmResourceName, childExtensionResourceName, this.innerModel(),
+                Context.NONE);
         return this;
     }
 
     public ChildExtensionResource apply(Context context) {
         this.innerObject = serviceManager.serviceClient()
             .getChildExtensionResourceInterfaces()
-            .updateWithResponse(resourceUri, topLevelArmResourceName, childExtensionResourceName, updateProperties,
-                context)
-            .getValue();
+            .createOrUpdate(resourceUri, topLevelArmResourceName, childExtensionResourceName, this.innerModel(),
+                context);
         return this;
     }
 

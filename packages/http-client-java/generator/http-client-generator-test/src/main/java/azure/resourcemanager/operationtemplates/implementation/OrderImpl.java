@@ -9,9 +9,9 @@ import azure.resourcemanager.operationtemplates.models.ExportRequest;
 import azure.resourcemanager.operationtemplates.models.ExportResult;
 import azure.resourcemanager.operationtemplates.models.Order;
 import azure.resourcemanager.operationtemplates.models.OrderProperties;
-import com.azure.core.management.Region;
-import com.azure.core.management.SystemData;
-import com.azure.core.util.Context;
+import com.azure.v2.core.management.Region;
+import com.azure.v2.core.management.SystemData;
+import com.azure.v2.core.util.Context;
 import java.util.Collections;
 import java.util.Map;
 

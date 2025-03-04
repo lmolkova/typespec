@@ -1,11 +1,6 @@
 {
-  "flavor": "Azure", 
+  "flavor": "azurev2", 
   "CrossLanguageDefinitionId": {
-    "authentication.union.UnionAsyncClient": "Authentication.Union",
-    "authentication.union.UnionAsyncClient.validKey": "Authentication.Union.validKey",
-    "authentication.union.UnionAsyncClient.validKeyWithResponse": "Authentication.Union.validKey",
-    "authentication.union.UnionAsyncClient.validToken": "Authentication.Union.validToken",
-    "authentication.union.UnionAsyncClient.validTokenWithResponse": "Authentication.Union.validToken",
     "authentication.union.UnionClient": "Authentication.Union",
     "authentication.union.UnionClient.validKey": "Authentication.Union.validKey",
     "authentication.union.UnionClient.validKeyWithResponse": "Authentication.Union.validKey",

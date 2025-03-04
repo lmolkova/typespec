@@ -1,11 +1,10 @@
 {
-  "flavor": "Azure", 
+  "flavor": "azurev2", 
   "CrossLanguageDefinitionId": {
-    "payload.pageable.PageableAsyncClient": "Payload.Pageable.ServerDrivenPagination",
-    "payload.pageable.PageableAsyncClient.link": "Payload.Pageable.ServerDrivenPagination.link",
     "payload.pageable.PageableClient": "Payload.Pageable.ServerDrivenPagination",
     "payload.pageable.PageableClient.link": "Payload.Pageable.ServerDrivenPagination.link",
     "payload.pageable.PageableClientBuilder": "Payload.Pageable",
-    "payload.pageable.models.Pet": "Payload.Pageable.Pet"
+    "payload.pageable.models.Pet": "Payload.Pageable.Pet",
+    "payload.pageable.serverdrivenpagination.implementation.models.LinkResponse": "Payload.Pageable.ServerDrivenPagination.link.Response.anonymous"
   }
 }

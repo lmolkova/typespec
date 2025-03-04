@@ -4,43 +4,43 @@
 
 package tsptest.armresourceprovider.implementation;
 
-import com.azure.core.annotation.BodyParam;
-import com.azure.core.annotation.Delete;
-import com.azure.core.annotation.ExpectedResponses;
-import com.azure.core.annotation.Get;
-import com.azure.core.annotation.HeaderParam;
-import com.azure.core.annotation.Headers;
-import com.azure.core.annotation.Host;
-import com.azure.core.annotation.HostParam;
-import com.azure.core.annotation.Patch;
-import com.azure.core.annotation.PathParam;
-import com.azure.core.annotation.Post;
-import com.azure.core.annotation.Put;
-import com.azure.core.annotation.QueryParam;
-import com.azure.core.annotation.ReturnType;
-import com.azure.core.annotation.ServiceInterface;
-import com.azure.core.annotation.ServiceMethod;
-import com.azure.core.annotation.UnexpectedResponseExceptionType;
-import com.azure.core.http.rest.PagedFlux;
-import com.azure.core.http.rest.PagedIterable;
-import com.azure.core.http.rest.PagedResponse;
-import com.azure.core.http.rest.PagedResponseBase;
-import com.azure.core.http.rest.Response;
-import com.azure.core.http.rest.RestProxy;
-import com.azure.core.management.exception.ManagementException;
-import com.azure.core.management.polling.PollResult;
-import com.azure.core.util.Context;
-import com.azure.core.util.FluxUtil;
-import com.azure.core.util.polling.PollerFlux;
-import com.azure.core.util.polling.SyncPoller;
+import azure.resourcemanager.foundations.models.TopLevelArmResourceUpdate;
+import azure.resourcemanager.implementation.models.TopLevelArmResourceListResult;
+import com.azure.v2.core.annotation.BodyParam;
+import com.azure.v2.core.annotation.Delete;
+import com.azure.v2.core.annotation.ExpectedResponses;
+import com.azure.v2.core.annotation.Get;
+import com.azure.v2.core.annotation.HeaderParam;
+import com.azure.v2.core.annotation.Headers;
+import com.azure.v2.core.annotation.Host;
+import com.azure.v2.core.annotation.HostParam;
+import com.azure.v2.core.annotation.Patch;
+import com.azure.v2.core.annotation.PathParam;
+import com.azure.v2.core.annotation.Post;
+import com.azure.v2.core.annotation.Put;
+import com.azure.v2.core.annotation.QueryParam;
+import com.azure.v2.core.annotation.ReturnType;
+import com.azure.v2.core.annotation.ServiceInterface;
+import com.azure.v2.core.annotation.ServiceMethod;
+import com.azure.v2.core.annotation.UnexpectedResponseExceptionType;
+import com.azure.v2.core.http.rest.PagedFlux;
+import com.azure.v2.core.http.rest.PagedIterable;
+import com.azure.v2.core.http.rest.PagedResponse;
+import com.azure.v2.core.http.rest.PagedResponseBase;
+import com.azure.v2.core.http.rest.Response;
+import com.azure.v2.core.http.rest.RestProxy;
+import com.azure.v2.core.management.exception.ManagementException;
+import com.azure.v2.core.management.polling.PollResult;
+import com.azure.v2.core.util.Context;
+import com.azure.v2.core.util.FluxUtil;
+import com.azure.v2.core.util.polling.PollerFlux;
+import com.azure.v2.core.util.polling.SyncPoller;
 import java.nio.ByteBuffer;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import tsptest.armresourceprovider.fluent.TopLevelArmResourceInterfacesClient;
 import tsptest.armresourceprovider.fluent.models.ResultInner;
 import tsptest.armresourceprovider.fluent.models.TopLevelArmResourceInner;
-import tsptest.armresourceprovider.implementation.models.TopLevelArmResourceListResult;
-import tsptest.armresourceprovider.models.TopLevelArmResourceUpdate;
 
 /**
  * An instance of this class provides access to all the operations defined in TopLevelArmResourceInterfacesClient.
@@ -559,8 +559,6 @@ public final class TopLevelArmResourceInterfacesClientImpl implements TopLevelAr
         }
         if (properties == null) {
             return Mono.error(new IllegalArgumentException("Parameter properties is required and cannot be null."));
-        } else {
-            properties.validate();
         }
         final String contentType = "application/json";
         final String accept = "application/json";
@@ -605,8 +603,6 @@ public final class TopLevelArmResourceInterfacesClientImpl implements TopLevelAr
         }
         if (properties == null) {
             return Mono.error(new IllegalArgumentException("Parameter properties is required and cannot be null."));
-        } else {
-            properties.validate();
         }
         final String contentType = "application/json";
         final String accept = "application/json";

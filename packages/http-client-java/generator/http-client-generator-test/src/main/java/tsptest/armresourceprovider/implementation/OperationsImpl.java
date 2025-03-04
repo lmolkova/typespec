@@ -4,12 +4,11 @@
 
 package tsptest.armresourceprovider.implementation;
 
-import com.azure.core.http.rest.PagedIterable;
-import com.azure.core.util.Context;
-import com.azure.core.util.logging.ClientLogger;
+import azure.resourcemanager.commontypes.fluent.models.OperationInner;
+import com.azure.v2.core.http.rest.PagedIterable;
+import com.azure.v2.core.util.Context;
+import com.azure.v2.core.util.logging.ClientLogger;
 import tsptest.armresourceprovider.fluent.OperationsClient;
-import tsptest.armresourceprovider.fluent.models.OperationInner;
-import tsptest.armresourceprovider.models.Operation;
 import tsptest.armresourceprovider.models.Operations;
 
 public final class OperationsImpl implements Operations {
@@ -25,14 +24,12 @@ public final class OperationsImpl implements Operations {
         this.serviceManager = serviceManager;
     }
 
-    public PagedIterable<Operation> list() {
-        PagedIterable<OperationInner> inner = this.serviceClient().list();
-        return ResourceManagerUtils.mapPage(inner, inner1 -> new OperationImpl(inner1, this.manager()));
+    public PagedIterable<OperationInner> list() {
+        return this.serviceClient().list();
     }
 
-    public PagedIterable<Operation> list(Context context) {
-        PagedIterable<OperationInner> inner = this.serviceClient().list(context);
-        return ResourceManagerUtils.mapPage(inner, inner1 -> new OperationImpl(inner1, this.manager()));
+    public PagedIterable<OperationInner> list(Context context) {
+        return this.serviceClient().list(context);
     }
 
     private OperationsClient serviceClient() {

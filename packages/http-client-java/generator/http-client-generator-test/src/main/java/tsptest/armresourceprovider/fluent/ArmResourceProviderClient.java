@@ -4,7 +4,7 @@
 
 package tsptest.armresourceprovider.fluent;
 
-import com.azure.core.http.HttpPipeline;
+import com.azure.v2.core.http.HttpPipeline;
 import java.time.Duration;
 
 /**

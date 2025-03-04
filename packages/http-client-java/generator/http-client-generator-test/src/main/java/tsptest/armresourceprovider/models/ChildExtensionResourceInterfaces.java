@@ -4,9 +4,10 @@
 
 package tsptest.armresourceprovider.models;
 
-import com.azure.core.http.rest.PagedIterable;
-import com.azure.core.http.rest.Response;
-import com.azure.core.util.Context;
+import azure.resourcemanager.foundations.models.ChildExtensionResourceUpdate;
+import com.azure.v2.core.http.rest.PagedIterable;
+import com.azure.v2.core.http.rest.Response;
+import com.azure.v2.core.util.Context;
 
 /**
  * Resource collection API of ChildExtensionResourceInterfaces.
@@ -20,7 +21,7 @@ public interface ChildExtensionResourceInterfaces {
      * @param childExtensionResourceName ChildExtensionResources.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return a ChildExtensionResource along with {@link Response}.
      */
@@ -34,11 +35,42 @@ public interface ChildExtensionResourceInterfaces {
      * @param topLevelArmResourceName arm resource name for path.
      * @param childExtensionResourceName ChildExtensionResources.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return a ChildExtensionResource.
      */
     ChildExtensionResource get(String resourceUri, String topLevelArmResourceName, String childExtensionResourceName);
+
+    /**
+     * Update a ChildExtensionResource.
+     * 
+     * @param resourceUri The fully qualified Azure Resource manager identifier of the resource.
+     * @param topLevelArmResourceName arm resource name for path.
+     * @param childExtensionResourceName ChildExtensionResources.
+     * @param properties The resource properties to be updated.
+     * @param context The context to associate with this operation.
+     * @throws IllegalArgumentException thrown if parameters fail the validation.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
+     * @return extensionResource of Top Level Arm Resource along with {@link Response}.
+     */
+    Response<ChildExtensionResource> updateWithResponse(String resourceUri, String topLevelArmResourceName,
+        String childExtensionResourceName, ChildExtensionResourceUpdate properties, Context context);
+
+    /**
+     * Update a ChildExtensionResource.
+     * 
+     * @param resourceUri The fully qualified Azure Resource manager identifier of the resource.
+     * @param topLevelArmResourceName arm resource name for path.
+     * @param childExtensionResourceName ChildExtensionResources.
+     * @param properties The resource properties to be updated.
+     * @throws IllegalArgumentException thrown if parameters fail the validation.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
+     * @return extensionResource of Top Level Arm Resource.
+     */
+    ChildExtensionResource update(String resourceUri, String topLevelArmResourceName, String childExtensionResourceName,
+        ChildExtensionResourceUpdate properties);
 
     /**
      * Delete a ChildExtensionResource.
@@ -47,7 +79,7 @@ public interface ChildExtensionResourceInterfaces {
      * @param topLevelArmResourceName arm resource name for path.
      * @param childExtensionResourceName ChildExtensionResources.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      */
     void delete(String resourceUri, String topLevelArmResourceName, String childExtensionResourceName);
@@ -60,7 +92,7 @@ public interface ChildExtensionResourceInterfaces {
      * @param childExtensionResourceName ChildExtensionResources.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      */
     void delete(String resourceUri, String topLevelArmResourceName, String childExtensionResourceName, Context context);
@@ -71,7 +103,7 @@ public interface ChildExtensionResourceInterfaces {
      * @param resourceUri The fully qualified Azure Resource manager identifier of the resource.
      * @param topLevelArmResourceName arm resource name for path.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the response of a ChildExtensionResource list operation as paginated response with {@link PagedIterable}.
      */
@@ -84,7 +116,7 @@ public interface ChildExtensionResourceInterfaces {
      * @param topLevelArmResourceName arm resource name for path.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return the response of a ChildExtensionResource list operation as paginated response with {@link PagedIterable}.
      */
@@ -96,7 +128,7 @@ public interface ChildExtensionResourceInterfaces {
      * 
      * @param id the resource ID.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return a ChildExtensionResource along with {@link Response}.
      */
@@ -108,7 +140,7 @@ public interface ChildExtensionResourceInterfaces {
      * @param id the resource ID.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      * @return a ChildExtensionResource along with {@link Response}.
      */
@@ -119,7 +151,7 @@ public interface ChildExtensionResourceInterfaces {
      * 
      * @param id the resource ID.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      */
     void deleteById(String id);
@@ -130,7 +162,7 @@ public interface ChildExtensionResourceInterfaces {
      * @param id the resource ID.
      * @param context The context to associate with this operation.
      * @throws IllegalArgumentException thrown if parameters fail the validation.
-     * @throws com.azure.core.management.exception.ManagementException thrown if the request is rejected by server.
+     * @throws com.azure.v2.core.management.exception.ManagementException thrown if the request is rejected by server.
      * @throws RuntimeException all other wrapped checked exceptions if the request fails to be sent.
      */
     void deleteByIdWithResponse(String id, Context context);

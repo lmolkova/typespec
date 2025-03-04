@@ -1,11 +1,6 @@
 {
-  "flavor": "Azure", 
+  "flavor": "azurev2", 
   "CrossLanguageDefinitionId": {
-    "tsptest.discriminatoredgecases.DiscriminatorEdgeCasesAsyncClient": "TspTest.DiscriminatorEdgeCases.DiscriminatorEdgeCasesOp",
-    "tsptest.discriminatoredgecases.DiscriminatorEdgeCasesAsyncClient.getChildNewDiscrim": "TspTest.DiscriminatorEdgeCases.DiscriminatorEdgeCasesOp.getChildNewDiscrim",
-    "tsptest.discriminatoredgecases.DiscriminatorEdgeCasesAsyncClient.getChildNewDiscrimWithResponse": "TspTest.DiscriminatorEdgeCases.DiscriminatorEdgeCasesOp.getChildNewDiscrim",
-    "tsptest.discriminatoredgecases.DiscriminatorEdgeCasesAsyncClient.getChildRequiredDiscrim": "TspTest.DiscriminatorEdgeCases.DiscriminatorEdgeCasesOp.getChildRequiredDiscrim",
-    "tsptest.discriminatoredgecases.DiscriminatorEdgeCasesAsyncClient.getChildRequiredDiscrimWithResponse": "TspTest.DiscriminatorEdgeCases.DiscriminatorEdgeCasesOp.getChildRequiredDiscrim",
     "tsptest.discriminatoredgecases.DiscriminatorEdgeCasesClient": "TspTest.DiscriminatorEdgeCases.DiscriminatorEdgeCasesOp",
     "tsptest.discriminatoredgecases.DiscriminatorEdgeCasesClient.getChildNewDiscrim": "TspTest.DiscriminatorEdgeCases.DiscriminatorEdgeCasesOp.getChildNewDiscrim",
     "tsptest.discriminatoredgecases.DiscriminatorEdgeCasesClient.getChildNewDiscrimWithResponse": "TspTest.DiscriminatorEdgeCases.DiscriminatorEdgeCasesOp.getChildNewDiscrim",

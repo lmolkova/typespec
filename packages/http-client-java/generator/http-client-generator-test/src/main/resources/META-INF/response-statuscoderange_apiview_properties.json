@@ -1,16 +1,15 @@
 {
-  "flavor": "Azure", 
+  "flavor": "azurev2", 
   "CrossLanguageDefinitionId": {
-    "response.statuscoderange.StatusCodeRangeAsyncClient": "Response.StatusCodeRange",
-    "response.statuscoderange.StatusCodeRangeAsyncClient.errorResponseStatusCode404": "Response.StatusCodeRange.errorResponseStatusCode404",
-    "response.statuscoderange.StatusCodeRangeAsyncClient.errorResponseStatusCode404WithResponse": "Response.StatusCodeRange.errorResponseStatusCode404",
-    "response.statuscoderange.StatusCodeRangeAsyncClient.errorResponseStatusCodeInRange": "Response.StatusCodeRange.errorResponseStatusCodeInRange",
-    "response.statuscoderange.StatusCodeRangeAsyncClient.errorResponseStatusCodeInRangeWithResponse": "Response.StatusCodeRange.errorResponseStatusCodeInRange",
     "response.statuscoderange.StatusCodeRangeClient": "Response.StatusCodeRange",
     "response.statuscoderange.StatusCodeRangeClient.errorResponseStatusCode404": "Response.StatusCodeRange.errorResponseStatusCode404",
     "response.statuscoderange.StatusCodeRangeClient.errorResponseStatusCode404WithResponse": "Response.StatusCodeRange.errorResponseStatusCode404",
     "response.statuscoderange.StatusCodeRangeClient.errorResponseStatusCodeInRange": "Response.StatusCodeRange.errorResponseStatusCodeInRange",
     "response.statuscoderange.StatusCodeRangeClient.errorResponseStatusCodeInRangeWithResponse": "Response.StatusCodeRange.errorResponseStatusCodeInRange",
-    "response.statuscoderange.StatusCodeRangeClientBuilder": "Response.StatusCodeRange"
+    "response.statuscoderange.StatusCodeRangeClientBuilder": "Response.StatusCodeRange",
+    "response.statuscoderange.models.DefaultError": "Response.StatusCodeRange.DefaultError",
+    "response.statuscoderange.models.ErrorInRange": "Response.StatusCodeRange.ErrorInRange",
+    "response.statuscoderange.models.NotFoundError": "Response.StatusCodeRange.NotFoundError",
+    "response.statuscoderange.models.Standard4XXError": "Response.StatusCodeRange.Standard4XXError"
   }
 }

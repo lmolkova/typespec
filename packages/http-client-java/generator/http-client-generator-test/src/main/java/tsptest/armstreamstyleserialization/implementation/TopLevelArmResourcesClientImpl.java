@@ -4,32 +4,32 @@
 
 package tsptest.armstreamstyleserialization.implementation;
 
-import com.azure.core.annotation.BodyParam;
-import com.azure.core.annotation.ExpectedResponses;
-import com.azure.core.annotation.HeaderParam;
-import com.azure.core.annotation.Host;
-import com.azure.core.annotation.HostParam;
-import com.azure.core.annotation.Patch;
-import com.azure.core.annotation.PathParam;
-import com.azure.core.annotation.QueryParam;
-import com.azure.core.annotation.ReturnType;
-import com.azure.core.annotation.ServiceInterface;
-import com.azure.core.annotation.ServiceMethod;
-import com.azure.core.annotation.UnexpectedResponseExceptionType;
-import com.azure.core.http.rest.Response;
-import com.azure.core.http.rest.RestProxy;
-import com.azure.core.management.exception.ManagementException;
-import com.azure.core.management.polling.PollResult;
-import com.azure.core.util.Context;
-import com.azure.core.util.FluxUtil;
-import com.azure.core.util.polling.PollerFlux;
-import com.azure.core.util.polling.SyncPoller;
+import azure.resourcemanager.foundations.models.TopLevelArmResourceTagsUpdate;
+import com.azure.v2.core.annotation.BodyParam;
+import com.azure.v2.core.annotation.ExpectedResponses;
+import com.azure.v2.core.annotation.HeaderParam;
+import com.azure.v2.core.annotation.Host;
+import com.azure.v2.core.annotation.HostParam;
+import com.azure.v2.core.annotation.Patch;
+import com.azure.v2.core.annotation.PathParam;
+import com.azure.v2.core.annotation.QueryParam;
+import com.azure.v2.core.annotation.ReturnType;
+import com.azure.v2.core.annotation.ServiceInterface;
+import com.azure.v2.core.annotation.ServiceMethod;
+import com.azure.v2.core.annotation.UnexpectedResponseExceptionType;
+import com.azure.v2.core.http.rest.Response;
+import com.azure.v2.core.http.rest.RestProxy;
+import com.azure.v2.core.management.exception.ManagementException;
+import com.azure.v2.core.management.polling.PollResult;
+import com.azure.v2.core.util.Context;
+import com.azure.v2.core.util.FluxUtil;
+import com.azure.v2.core.util.polling.PollerFlux;
+import com.azure.v2.core.util.polling.SyncPoller;
 import java.nio.ByteBuffer;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import tsptest.armstreamstyleserialization.fluent.TopLevelArmResourcesClient;
 import tsptest.armstreamstyleserialization.fluent.models.TopLevelArmResourceInner;
-import tsptest.armstreamstyleserialization.models.TopLevelArmResourceTagsUpdate;
 
 /**
  * An instance of this class provides access to all the operations defined in TopLevelArmResourcesClient.
@@ -107,8 +107,6 @@ public final class TopLevelArmResourcesClientImpl implements TopLevelArmResource
         }
         if (properties == null) {
             return Mono.error(new IllegalArgumentException("Parameter properties is required and cannot be null."));
-        } else {
-            properties.validate();
         }
         final String contentType = "application/json";
         final String accept = "application/json";
@@ -153,8 +151,6 @@ public final class TopLevelArmResourcesClientImpl implements TopLevelArmResource
         }
         if (properties == null) {
             return Mono.error(new IllegalArgumentException("Parameter properties is required and cannot be null."));
-        } else {
-            properties.validate();
         }
         final String contentType = "application/json";
         final String accept = "application/json";

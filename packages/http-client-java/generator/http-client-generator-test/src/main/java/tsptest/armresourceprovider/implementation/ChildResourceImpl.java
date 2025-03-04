@@ -4,14 +4,13 @@
 
 package tsptest.armresourceprovider.implementation;
 
-import com.azure.core.management.Region;
-import com.azure.core.management.SystemData;
-import com.azure.core.util.Context;
+import com.azure.v2.core.management.Region;
+import com.azure.v2.core.management.SystemData;
+import com.azure.v2.core.util.Context;
 import java.util.Collections;
 import java.util.Map;
 import tsptest.armresourceprovider.fluent.models.ChildResourceInner;
 import tsptest.armresourceprovider.models.ChildResource;
-import tsptest.armresourceprovider.models.ChildResourceUpdate;
 import tsptest.armresourceprovider.models.ProvisioningState;
 
 public final class ChildResourceImpl implements ChildResource, ChildResource.Definition, ChildResource.Update {
@@ -78,8 +77,6 @@ public final class ChildResourceImpl implements ChildResource, ChildResource.Def
 
     private String childResourceName;
 
-    private ChildResourceUpdate updateProperties;
-
     public ChildResourceImpl withExistingTopLevelArmResource(String resourceGroupName, String topLevelArmResourceName) {
         this.resourceGroupName = resourceGroupName;
         this.topLevelArmResourceName = topLevelArmResourceName;
@@ -108,25 +105,21 @@ public final class ChildResourceImpl implements ChildResource, ChildResource.Def
     }
 
     public ChildResourceImpl update() {
-        this.updateProperties = new ChildResourceUpdate();
         return this;
     }
 
     public ChildResource apply() {
         this.innerObject = serviceManager.serviceClient()
             .getChildResourcesInterfaces()
-            .updateWithResponse(resourceGroupName, topLevelArmResourceName, childResourceName, updateProperties,
-                Context.NONE)
-            .getValue();
+            .createOrUpdate(resourceGroupName, topLevelArmResourceName, childResourceName, this.innerModel(),
+                Context.NONE);
         return this;
     }
 
     public ChildResource apply(Context context) {
         this.innerObject = serviceManager.serviceClient()
             .getChildResourcesInterfaces()
-            .updateWithResponse(resourceGroupName, topLevelArmResourceName, childResourceName, updateProperties,
-                context)
-            .getValue();
+            .createOrUpdate(resourceGroupName, topLevelArmResourceName, childResourceName, this.innerModel(), context);
         return this;
     }
 
@@ -177,16 +170,7 @@ public final class ChildResourceImpl implements ChildResource, ChildResource.Def
     }
 
     public ChildResourceImpl withTags(Map<String, String> tags) {
-        if (isInCreateMode()) {
-            this.innerModel().withTags(tags);
-            return this;
-        } else {
-            this.updateProperties.withTags(tags);
-            return this;
-        }
-    }
-
-    private boolean isInCreateMode() {
-        return this.innerModel().id() == null;
+        this.innerModel().withTags(tags);
+        return this;
     }
 }

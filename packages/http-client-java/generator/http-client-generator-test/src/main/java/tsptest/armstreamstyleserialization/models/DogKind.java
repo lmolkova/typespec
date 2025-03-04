@@ -4,7 +4,7 @@
 
 package tsptest.armstreamstyleserialization.models;
 
-import com.azure.core.util.ExpandableStringEnum;
+import com.azure.v2.core.util.ExpandableStringEnum;
 import java.util.Collection;
 
 /**

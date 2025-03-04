@@ -4,14 +4,14 @@
 
 package tsptest.armresourceprovider.implementation;
 
-import com.azure.core.annotation.ServiceClientBuilder;
-import com.azure.core.http.HttpPipeline;
-import com.azure.core.http.HttpPipelineBuilder;
-import com.azure.core.http.policy.RetryPolicy;
-import com.azure.core.http.policy.UserAgentPolicy;
-import com.azure.core.management.AzureEnvironment;
-import com.azure.core.management.serializer.SerializerFactory;
-import com.azure.core.util.serializer.SerializerAdapter;
+import com.azure.v2.core.annotation.ServiceClientBuilder;
+import com.azure.v2.core.http.HttpPipeline;
+import com.azure.v2.core.http.HttpPipelineBuilder;
+import com.azure.v2.core.http.policy.RetryPolicy;
+import com.azure.v2.core.http.policy.UserAgentPolicy;
+import com.azure.v2.core.management.AzureEnvironment;
+import com.azure.v2.core.management.serializer.SerializerFactory;
+import com.azure.v2.core.util.serializer.SerializerAdapter;
 import java.time.Duration;
 
 /**

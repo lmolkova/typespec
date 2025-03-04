@@ -4,15 +4,15 @@
 
 package tsptest.armresourceprovider.fluent.models;
 
-import com.azure.core.annotation.Fluent;
-import com.azure.core.management.Resource;
-import com.azure.core.management.SystemData;
+import azure.resourcemanager.commontypes.models.ManagedServiceIdentity;
+import com.azure.v2.core.annotation.Fluent;
+import com.azure.v2.core.management.Resource;
+import com.azure.v2.core.management.SystemData;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Map;
 import tsptest.armresourceprovider.models.CustomTemplateResourcePropertiesAnonymousEmptyModel;
 import tsptest.armresourceprovider.models.Dog;
 import tsptest.armresourceprovider.models.EmptyModel;
-import tsptest.armresourceprovider.models.ManagedServiceIdentity;
 import tsptest.armresourceprovider.models.PriorityModel;
 import tsptest.armresourceprovider.models.ProvisioningState;
 
@@ -211,9 +211,6 @@ public final class CustomTemplateResourceInner extends Resource {
     public void validate() {
         if (innerProperties() != null) {
             innerProperties().validate();
-        }
-        if (identity() != null) {
-            identity().validate();
         }
     }
 }

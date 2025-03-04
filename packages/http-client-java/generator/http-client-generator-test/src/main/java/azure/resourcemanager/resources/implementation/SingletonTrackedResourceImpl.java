@@ -7,7 +7,7 @@ package azure.resourcemanager.resources.implementation;
 import azure.resourcemanager.resources.fluent.models.SingletonTrackedResourceInner;
 import azure.resourcemanager.resources.models.SingletonTrackedResource;
 import azure.resourcemanager.resources.models.SingletonTrackedResourceProperties;
-import com.azure.core.management.SystemData;
+import com.azure.v2.core.management.SystemData;
 import java.util.Collections;
 import java.util.Map;
 

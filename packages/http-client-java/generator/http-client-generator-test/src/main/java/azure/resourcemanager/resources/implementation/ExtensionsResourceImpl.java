@@ -7,8 +7,8 @@ package azure.resourcemanager.resources.implementation;
 import azure.resourcemanager.resources.fluent.models.ExtensionsResourceInner;
 import azure.resourcemanager.resources.models.ExtensionsResource;
 import azure.resourcemanager.resources.models.ExtensionsResourceProperties;
-import com.azure.core.management.SystemData;
-import com.azure.core.util.Context;
+import com.azure.v2.core.management.SystemData;
+import com.azure.v2.core.util.Context;
 
 public final class ExtensionsResourceImpl
     implements ExtensionsResource, ExtensionsResource.Definition, ExtensionsResource.Update {
